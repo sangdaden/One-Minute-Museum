@@ -6,7 +6,7 @@ interface CopyButtonProps {
   text: string;
 }
 
-/** Copies plain text to the clipboard and shows an "Đã copy" confirmation. */
+/** Copies plain text to the clipboard, shows an "Đã copy" confirmation. */
 export default function CopyButton({ text }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
@@ -25,9 +25,12 @@ export default function CopyButton({ text }: CopyButtonProps) {
       type="button"
       onClick={handleCopy}
       aria-live="polite"
-      className="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-ink px-5 py-2.5 text-sm font-medium text-paper-card transition-colors hover:bg-ink/85"
+      className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper-card transition-colors hover:bg-ink/85"
     >
-      {copied ? "✓ Đã copy" : "Copy nội dung"}
+      <span aria-hidden className="text-[13px]">
+        {copied ? "✓" : "⧉"}
+      </span>
+      {copied ? "Đã copy" : "Copy nội dung"}
     </button>
   );
 }

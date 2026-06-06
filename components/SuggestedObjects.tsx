@@ -7,16 +7,22 @@ interface SuggestedObjectsProps {
   disabled?: boolean;
 }
 
-/** Suggested-object chips (docs/mvp_scope.md F06). Clicking picks + generates. */
+/** Suggested-object chips as a named collection (docs/mvp_scope.md F06). */
 export default function SuggestedObjects({
   onPick,
   disabled,
 }: SuggestedObjectsProps) {
   return (
-    <div className="flex flex-col gap-3">
-      <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
-        Hoặc thử một vật quen thuộc
-      </p>
+    <div className="flex flex-col gap-3.5">
+      <div className="flex items-center gap-3">
+        <span className="eyebrow text-ink-faint">
+          Vietnam Everyday Collection
+        </span>
+        <span className="h-px flex-1 bg-border-strong" />
+        <span className="eyebrow text-ink-faint">
+          {String(SUGGESTED_OBJECTS.length).padStart(2, "0")}
+        </span>
+      </div>
       <div className="flex flex-wrap gap-2">
         {SUGGESTED_OBJECTS.map((name) => (
           <button
@@ -24,8 +30,14 @@ export default function SuggestedObjects({
             type="button"
             disabled={disabled}
             onClick={() => onPick(name)}
-            className="rounded-full border border-border bg-paper-card px-4 py-1.5 text-sm text-ink transition-colors hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+            className="group inline-flex items-center gap-1.5 rounded-full border border-border-strong bg-paper-card/60 px-3.5 py-1.5 text-sm text-ink-soft transition-all hover:-translate-y-0.5 hover:border-accent hover:bg-paper-card hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
           >
+            <span
+              aria-hidden
+              className="text-[8px] text-gold transition-colors group-hover:text-accent"
+            >
+              ◆
+            </span>
             {name}
           </button>
         ))}

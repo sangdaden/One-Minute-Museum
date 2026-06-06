@@ -10,7 +10,7 @@ interface ModeSelectorProps {
   disabled?: boolean;
 }
 
-/** Card-style mode selector (docs/mvp_scope.md F02, docs/ui_spec.md §3). */
+/** Mode cards styled like catalogue category plates (docs/mvp_scope.md F02). */
 export default function ModeSelector({
   value,
   onChange,
@@ -20,9 +20,9 @@ export default function ModeSelector({
     <div
       role="radiogroup"
       aria-label="Chọn góc nhìn"
-      className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+      className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border lg:grid-cols-4"
     >
-      {MODES.map((mode) => {
+      {MODES.map((mode, i) => {
         const meta = MODE_META[mode];
         const selected = mode === value;
         return (
@@ -34,21 +34,43 @@ export default function ModeSelector({
             disabled={disabled}
             onClick={() => onChange(mode)}
             className={[
-              "flex flex-col gap-1.5 rounded-xl border p-4 text-left transition-all disabled:opacity-60",
+              "group relative flex min-h-[8.5rem] flex-col justify-between p-4 text-left transition-colors disabled:opacity-60",
               selected
-                ? "border-accent bg-accent/5 shadow-sm ring-1 ring-accent/30"
-                : "border-border bg-paper-card hover:border-accent/40",
+                ? "bg-paper-card"
+                : "bg-paper-card/70 hover:bg-paper-card",
             ].join(" ")}
           >
-            <span className="text-xl" aria-hidden>
-              {meta.icon}
-            </span>
-            <span className="font-serif text-base font-semibold text-ink">
-              {mode}
-            </span>
-            <span className="text-xs leading-relaxed text-ink-soft">
-              {meta.description}
-            </span>
+            {/* selection mark — lacquer top edge */}
+            <span
+              aria-hidden
+              className={[
+                "absolute inset-x-0 top-0 h-[3px] origin-left transition-transform",
+                selected
+                  ? "scale-x-100 bg-accent"
+                  : "scale-x-0 bg-accent/50 group-hover:scale-x-100",
+              ].join(" ")}
+            />
+            <div className="flex items-start justify-between">
+              <span className="text-lg" aria-hidden>
+                {meta.icon}
+              </span>
+              <span
+                className={[
+                  "eyebrow",
+                  selected ? "text-accent" : "text-ink-faint",
+                ].join(" ")}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="space-y-1">
+              <span className="block font-serif text-[15px] font-semibold leading-snug text-ink">
+                {mode}
+              </span>
+              <span className="block text-xs leading-relaxed text-ink-soft">
+                {meta.description}
+              </span>
+            </div>
           </button>
         );
       })}

@@ -9,7 +9,7 @@ interface ObjectInputProps {
   disabled?: boolean;
 }
 
-/** Text input for the object name (docs/mvp_scope.md F01). */
+/** Object-name field, styled like an archive search (docs/mvp_scope.md F01). */
 export default function ObjectInput({
   value,
   onChange,
@@ -22,25 +22,42 @@ export default function ObjectInput({
         e.preventDefault();
         onSubmit();
       }}
-      className="flex w-full flex-col gap-3 sm:flex-row"
+      className="group flex w-full flex-col gap-2"
     >
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        maxLength={OBJECT_NAME_MAX}
-        placeholder="Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá"
-        aria-label="Tên vật thể"
-        disabled={disabled}
-        className="flex-1 rounded-xl border border-border bg-paper-card px-5 py-3.5 text-base text-ink shadow-sm outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent disabled:opacity-60"
-      />
-      <button
-        type="submit"
-        disabled={disabled || value.trim().length === 0}
-        className="rounded-xl bg-accent px-7 py-3.5 text-base font-semibold text-paper-card transition-colors hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-40"
-      >
-        Tạo triển lãm
-      </button>
+      <label className="eyebrow text-ink-faint">Hiện vật của bạn</label>
+      <div className="flex flex-col gap-2.5 sm:flex-row sm:items-stretch">
+        <div className="relative flex-1">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-serif text-lg text-accent/60"
+          >
+            ❡
+          </span>
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            maxLength={OBJECT_NAME_MAX}
+            placeholder="Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá"
+            aria-label="Tên vật thể"
+            disabled={disabled}
+            className="w-full rounded-none border-b-2 border-border-strong bg-transparent py-3.5 pl-10 pr-4 font-serif text-xl text-ink outline-none transition-colors placeholder:font-sans placeholder:text-base placeholder:text-ink-faint/70 focus:border-accent disabled:opacity-60"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={disabled || value.trim().length === 0}
+          className="group/btn inline-flex items-center justify-center gap-2 self-start rounded-full bg-accent px-7 py-3 text-sm font-medium tracking-wide text-paper-card shadow-[0_1px_0_var(--color-accent-deep)] transition-all hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-35 sm:self-stretch"
+        >
+          Tạo triển lãm
+          <span
+            aria-hidden
+            className="transition-transform group-hover/btn:translate-x-0.5"
+          >
+            →
+          </span>
+        </button>
+      </div>
     </form>
   );
 }
