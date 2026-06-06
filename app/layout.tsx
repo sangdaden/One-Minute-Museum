@@ -30,6 +30,10 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
+      // Root <html>/<body> attributes can differ between SSR and the client
+      // (next/font hashing in dev, or browser extensions injecting attributes).
+      // Suppress the warning at this single level only.
+      suppressHydrationWarning
       className={`${lora.variable} ${beVietnam.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
