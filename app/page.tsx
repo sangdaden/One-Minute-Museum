@@ -1,65 +1,133 @@
-import Image from "next/image";
+"use client";
+
+import { useRef, useState } from "react";
+import type { ApiError, Exhibition, Mode } from "@/lib/types";
+import { DEFAULT_MODE } from "@/lib/constants";
+import ObjectInput from "@/components/ObjectInput";
+import ModeSelector from "@/components/ModeSelector";
+import SuggestedObjects from "@/components/SuggestedObjects";
+import ExhibitionCard from "@/components/ExhibitionCard";
+import LoadingExhibition from "@/components/LoadingExhibition";
+import ErrorState from "@/components/ErrorState";
 
 export default function Home() {
+  const [objectName, setObjectName] = useState("");
+  const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [exhibition, setExhibition] = useState<Exhibition | null>(null);
+
+  const inputRef = useRef<HTMLDivElement>(null);
+
+  async function generate(name: string, selectedMode: Mode) {
+    const trimmed = name.trim();
+    if (trimmed.length === 0) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/exhibitions/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          object_name: trimmed,
+          mode: selectedMode,
+          language: "vi",
+        }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json()) as ApiError;
+        throw new Error(data.error?.message);
+      }
+
+      const data = (await res.json()) as Exhibition;
+      // Keep the old result visible until the new one is ready, then swap.
+      setExhibition(data);
+    } catch (err) {
+      setError(
+        err instanceof Error && err.message
+          ? err.message
+          : "Không tạo được triển lãm lúc này. Thử lại nhé.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function handlePickSuggested(name: string) {
+    setObjectName(name);
+    generate(name, mode);
+  }
+
+  function handleChangeObject() {
+    setError(null);
+    setExhibition(null);
+    inputRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-12 px-5 py-12 sm:px-8 sm:py-20">
+      {/* Hero */}
+      <header ref={inputRef} className="flex flex-col gap-6">
+        <div className="space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+            One-Minute Museum
+          </p>
+          <h1 className="font-serif text-4xl leading-tight text-ink sm:text-5xl">
+            Bảo Tàng 1 Phút
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="max-w-xl text-lg leading-relaxed text-ink-soft">
+            Biến những vật bình thường quanh bạn thành một triển lãm mini.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        <ObjectInput
+          value={objectName}
+          onChange={setObjectName}
+          onSubmit={() => generate(objectName, mode)}
+          disabled={isLoading}
+        />
+
+        <SuggestedObjects onPick={handlePickSuggested} disabled={isLoading} />
+      </header>
+
+      {/* Mode selector */}
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-soft">
+          Chọn góc nhìn
+        </h2>
+        <ModeSelector value={mode} onChange={setMode} disabled={isLoading} />
+      </section>
+
+      {/* Result area */}
+      <section className="min-h-[8rem]">
+        {isLoading ? (
+          <LoadingExhibition />
+        ) : error ? (
+          <ErrorState
+            message={error}
+            onRetry={() => generate(objectName, mode)}
+            onChangeObject={handleChangeObject}
+          />
+        ) : exhibition ? (
+          <ExhibitionCard
+            exhibition={exhibition}
+            onRegenerate={() => generate(exhibition.object_name, mode)}
+          />
+        ) : (
+          <div className="rounded-2xl border border-dashed border-border bg-paper-card/60 p-10 text-center">
+            <p className="font-serif text-lg text-ink-soft">
+              Chọn một vật bình thường và biến nó thành một triển lãm nhỏ.
+            </p>
+          </div>
+        )}
+      </section>
+
+      <footer className="border-t border-border pt-6 text-center text-xs text-ink-soft">
+        Bảo Tàng 1 Phút — bản MVP. Nội dung hiện tại được tạo bằng dữ liệu mẫu.
+      </footer>
+    </main>
   );
 }
