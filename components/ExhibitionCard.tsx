@@ -1,5 +1,5 @@
 import type { Exhibition } from "@/lib/types";
-import { formatExhibitionForCopy } from "@/lib/copy-format";
+import { formatExhibitionForSocial } from "@/lib/copy-format";
 import { formatDate, accession } from "@/lib/format";
 import CopyButton from "./CopyButton";
 
@@ -162,7 +162,7 @@ export default function ExhibitionCard({
           Bảo Tàng 1 Phút
         </span>
         <div className="flex flex-wrap items-center gap-2.5">
-          <CopyButton text={formatExhibitionForCopy(ex)} />
+          <CopyButton text={formatExhibitionForSocial(ex)} />
           {onRegenerate && (
             <button
               type="button"

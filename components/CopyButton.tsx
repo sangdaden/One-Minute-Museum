@@ -6,31 +6,67 @@ interface CopyButtonProps {
   text: string;
 }
 
-/** Copies plain text to the clipboard, shows an "Đã copy" confirmation. */
+type CopyStatus = "idle" | "copied" | "error";
+
+/** Best-effort clipboard write with a legacy fallback for non-secure contexts. */
+async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    // fall through to the legacy path
+  }
+
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+/** Copy the social-formatted text; reflects idle / copied / error states. */
 export default function CopyButton({ text }: CopyButtonProps) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<CopyStatus>("idle");
 
   async function handleCopy() {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
-    }
+    const ok = await copyToClipboard(text);
+    setStatus(ok ? "copied" : "error");
+    window.setTimeout(() => setStatus("idle"), 2200);
   }
+
+  const label =
+    status === "copied"
+      ? "Đã copy"
+      : status === "error"
+        ? "Không copy được"
+        : "Copy nội dung";
+
+  const glyph = status === "copied" ? "✓" : status === "error" ? "✕" : "⧉";
 
   return (
     <button
       type="button"
       onClick={handleCopy}
       aria-live="polite"
-      className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper-card transition-colors hover:bg-ink/85"
+      className={[
+        "inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-paper-card transition-colors",
+        status === "error" ? "bg-accent hover:bg-accent-deep" : "bg-ink hover:bg-ink/85",
+      ].join(" ")}
     >
       <span aria-hidden className="text-[13px]">
-        {copied ? "✓" : "⧉"}
+        {glyph}
       </span>
-      {copied ? "Đã copy" : "Copy nội dung"}
+      {label}
     </button>
   );
 }
