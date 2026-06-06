@@ -27,10 +27,26 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const APP_TITLE = "Bảo Tàng 1 Phút — One-Minute Museum";
+const APP_DESC =
+  "Biến những vật bình thường quanh bạn thành một triển lãm mini, đọc trong một phút.";
+
 export const metadata: Metadata = {
-  title: "Bảo Tàng 1 Phút — One-Minute Museum",
-  description:
-    "Biến những vật bình thường quanh bạn thành một triển lãm mini, đọc trong một phút.",
+  title: APP_TITLE,
+  description: APP_DESC,
+  applicationName: "Bảo Tàng 1 Phút",
+  openGraph: {
+    title: APP_TITLE,
+    description: APP_DESC,
+    type: "website",
+    locale: "vi_VN",
+    siteName: "Bảo Tàng 1 Phút",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: APP_TITLE,
+    description: APP_DESC,
+  },
 };
 
 export default function RootLayout({

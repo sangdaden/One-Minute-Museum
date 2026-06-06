@@ -114,8 +114,13 @@ export default function Home() {
             className="reveal max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl"
             style={{ animationDelay: "160ms" }}
           >
-            Biến những vật bình thường quanh bạn thành một triển lãm mini —
-            đọc xong trong đúng một phút.
+            Biến những vật bình thường quanh bạn thành một triển lãm mini.
+          </p>
+          <p
+            className="reveal eyebrow text-ink-faint"
+            style={{ animationDelay: "190ms" }}
+          >
+            One-Minute Museum for everyday objects.
           </p>
         </div>
 
@@ -164,12 +169,16 @@ export default function Home() {
             <ShareCard exhibition={exhibition} />
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-3 border border-dashed border-border-strong bg-paper-card/40 px-6 py-16 text-center">
-            <span aria-hidden className="font-serif text-4xl text-gold/50">
+          <div className="reveal flex flex-col items-center gap-4 border border-dashed border-border-strong bg-paper-card/40 px-6 py-20 text-center">
+            <span className="eyebrow text-ink-faint">Sảnh chờ</span>
+            <span aria-hidden className="font-serif text-5xl text-gold/50">
               ❦
             </span>
-            <p className="max-w-sm font-serif text-lg italic leading-snug text-ink-soft">
+            <p className="max-w-md font-serif text-xl italic leading-snug text-ink">
               Chọn một vật bình thường và biến nó thành một triển lãm nhỏ.
+            </p>
+            <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
+              Nhập một vật ở trên, hoặc chạm vào một gợi ý trong bộ sưu tập.
             </p>
           </div>
         )}
