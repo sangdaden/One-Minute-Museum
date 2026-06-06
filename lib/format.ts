@@ -12,3 +12,19 @@ export function accession(id: string): string {
   const clean = id.replace(/-/g, "").toUpperCase();
   return `${clean.slice(0, 4)}·${clean.slice(4, 8)}`;
 }
+
+/**
+ * ASCII slug for filenames, e.g. "Dép tổ ong" -> "dep-to-ong".
+ * Strips Vietnamese diacritics so downloads are safe across OSes.
+ */
+export function slugifyObjectName(name: string): string {
+  const slug = name
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "") // combining marks (incl. Vietnamese horn/hook)
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "exhibition";
+}

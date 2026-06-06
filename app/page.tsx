@@ -9,6 +9,7 @@ import ObjectInput from "@/components/ObjectInput";
 import ModeSelector from "@/components/ModeSelector";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ExhibitionCard from "@/components/ExhibitionCard";
+import ShareCard from "@/components/ShareCard";
 import LoadingExhibition from "@/components/LoadingExhibition";
 import ErrorState from "@/components/ErrorState";
 
@@ -155,10 +156,13 @@ export default function Home() {
             onChangeObject={handleChangeObject}
           />
         ) : exhibition ? (
-          <ExhibitionCard
-            exhibition={exhibition}
-            onRegenerate={() => generate(exhibition.object_name, mode)}
-          />
+          <div className="space-y-10">
+            <ExhibitionCard
+              exhibition={exhibition}
+              onRegenerate={() => generate(exhibition.object_name, mode)}
+            />
+            <ShareCard exhibition={exhibition} />
+          </div>
         ) : (
           <div className="flex flex-col items-center gap-3 border border-dashed border-border-strong bg-paper-card/40 px-6 py-16 text-center">
             <span aria-hidden className="font-serif text-4xl text-gold/50">
