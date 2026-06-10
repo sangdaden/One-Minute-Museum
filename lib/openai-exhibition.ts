@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { APIError, RateLimitError, AuthenticationError } from "openai";
 import type { ApiErrorCode, Exhibition, GenerateRequest } from "./types";
-import { DEFAULT_LANGUAGE } from "./constants";
+import { DEFAULT_LANGUAGE, DEFAULT_VOICE } from "./constants";
 
 /**
  * Real LLM-backed exhibition generator.
@@ -44,18 +44,30 @@ Nhiệm vụ của bạn:
 - Output phải là JSON hợp lệ, không markdown, không giải thích ngoài JSON.`;
 
 // User prompt template — docs/prompt_spec.md §2.
-function buildUserPrompt(objectName: string, language: string, mode: string) {
+function buildUserPrompt(
+  objectName: string,
+  language: string,
+  mode: string,
+  voice: string,
+) {
   return `Hãy tạo một mini exhibition cho vật thể sau.
 
 Vật thể: ${objectName}
 Ngôn ngữ: ${language}
 Mode: ${mode}
+Giọng kể: ${voice}
 
-Giải thích mode:
+Giải thích mode (kể ĐIỀU GÌ):
 - Vietnamese Culture: liên hệ đời sống Việt Nam, ký ức tập thể, cách vật này xuất hiện trong sinh hoạt hằng ngày.
 - Museum: trang trọng, giàu hình ảnh, giống bảng mô tả trong bảo tàng hiện đại.
 - Fun Fact: vui, ngắn, dễ share, có chút hài hước nhẹ.
 - Design: phân tích vật như một sản phẩm: vật liệu, hình dáng, pain point, use case, trade-off thiết kế.
+
+Giải thích giọng kể (kể BẰNG GIỌNG AI — chỉ đổi tone, không đổi nội dung mode):
+- Nhà nghiên cứu: điềm đạm, chuẩn mực, có chiều sâu; ngôn ngữ sáng rõ, tôn trọng sự thật.
+- Bà kể chuyện: ấm áp, hoài niệm, như người bà kể cho cháu; dùng "hồi đó", "ngày xưa", xưng hô thân mật.
+- Chú bán hàng: đời, dí dỏm, gần gũi kiểu quán xá vỉa hè; câu ngắn, ví von đời thường, tếu nhẹ — không thô tục.
+- Nhà thơ: văn chương, giàu hình ảnh, có nhịp điệu và ẩn dụ nhẹ; vẫn rõ nghĩa, không sáo rỗng.
 
 Ràng buộc:
 - title ngắn gọn, có tên vật.
@@ -63,7 +75,8 @@ Ràng buộc:
 - mỗi fun fact tối đa 1-2 câu, cần đúng 3 fun fact.
 - reflection_question phải gợi suy nghĩ, không quá nghiêm trọng.
 - share_quote tối đa 20 từ.
-- hashtags không dấu hoặc tiếng Anh, dễ dùng trên social, từ 2 đến 5 cái.`;
+- hashtags không dấu hoặc tiếng Anh, dễ dùng trên social, từ 2 đến 5 cái.
+- QUAN TRỌNG: Giọng kể chỉ thay đổi cách diễn đạt và lựa chọn từ ngữ, KHÔNG thay đổi tính chính xác hay mức độ chắc chắn của thông tin. Vẫn dùng ngôn ngữ thận trọng khi không chắc, không bịa năm tháng/người/số liệu, và vẫn đúng JSON schema.`;
 }
 
 /**
@@ -179,6 +192,7 @@ export async function generateExhibitionWithLLM(
 ): Promise<Exhibition> {
   const objectName = req.object_name.trim();
   const language = req.language ?? DEFAULT_LANGUAGE;
+  const voice = req.voice ?? DEFAULT_VOICE;
 
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -191,7 +205,7 @@ export async function generateExhibitionWithLLM(
         { role: "system", content: SYSTEM_PROMPT },
         {
           role: "user",
-          content: buildUserPrompt(objectName, language, req.mode),
+          content: buildUserPrompt(objectName, language, req.mode, voice),
         },
       ],
       response_format: {
@@ -244,6 +258,7 @@ export async function generateExhibitionWithLLM(
     id: crypto.randomUUID(),
     object_name: objectName,
     mode: req.mode,
+    voice,
     language,
     created_at: new Date().toISOString(),
     ...content,

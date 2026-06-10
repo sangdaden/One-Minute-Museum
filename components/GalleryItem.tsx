@@ -25,9 +25,15 @@ export default function GalleryItem({ exhibition, index }: GalleryItemProps) {
         <span className="eyebrow text-ink-faint">{formatDate(ex.created_at)}</span>
       </div>
 
-      {/* Object + mode */}
-      <div className="mb-2 flex items-center gap-2">
+      {/* Object + mode + voice */}
+      <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1">
         <span className="eyebrow text-accent">{ex.mode}</span>
+        {ex.voice && (
+          <>
+            <span className="text-gold">·</span>
+            <span className="eyebrow text-ink-faint">{ex.voice}</span>
+          </>
+        )}
       </div>
 
       <h2 className="font-serif text-[1.45rem] font-medium leading-tight tracking-[-0.01em] text-ink">

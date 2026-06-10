@@ -1,7 +1,10 @@
-import type { Mode } from "./types";
+import type { Mode, Voice } from "./types";
 
 /** Default curatorial lens (docs/mvp_scope.md F02). */
 export const DEFAULT_MODE: Mode = "Vietnamese Culture";
+
+/** Default curator voice — keeps behaviour equivalent to the original tone. */
+export const DEFAULT_VOICE: Voice = "Nhà nghiên cứu";
 
 export const DEFAULT_LANGUAGE = "vi";
 
@@ -28,6 +31,29 @@ export const MODE_META: Record<
   Design: {
     icon: "📐",
     description: "Vật liệu, hình dáng, trade-off thiết kế.",
+  },
+};
+
+/** Short copy shown on each voice option. Icon + one-line persona. */
+export const VOICE_META: Record<
+  Voice,
+  { icon: string; description: string }
+> = {
+  "Nhà nghiên cứu": {
+    icon: "◷",
+    description: "Điềm đạm, chuẩn mực, có chiều sâu.",
+  },
+  "Bà kể chuyện": {
+    icon: "❀",
+    description: "Ấm áp, hoài niệm, “hồi đó…”.",
+  },
+  "Chú bán hàng": {
+    icon: "☕",
+    description: "Đời, dí dỏm, gần gũi vỉa hè.",
+  },
+  "Nhà thơ": {
+    icon: "✦",
+    description: "Văn chương, giàu hình ảnh.",
   },
 };
 

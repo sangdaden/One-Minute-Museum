@@ -10,12 +10,23 @@ export const MODES = [
 
 export type Mode = (typeof MODES)[number];
 
+/** The curator voices — a tone/persona axis, parallel to (not replacing) MODES. */
+export const VOICES = [
+  "Nhà nghiên cứu",
+  "Bà kể chuyện",
+  "Chú bán hàng",
+  "Nhà thơ",
+] as const;
+
+export type Voice = (typeof VOICES)[number];
+
 export type Language = "vi" | "en";
 
 /** Request body for POST /api/exhibitions/generate. */
 export interface GenerateRequest {
   object_name: string;
   mode: Mode;
+  voice?: Voice;
   language?: Language;
 }
 
@@ -39,6 +50,11 @@ export interface Exhibition {
   share_quote: string;
   hashtags: string[];
   created_at: string;
+  /**
+   * Curator voice used. Optional for back-compat: exhibitions saved before the
+   * voice feature won't have this field, so consumers must tolerate undefined.
+   */
+  voice?: string;
 }
 
 /** Error codes from docs/api_spec.md §8. */

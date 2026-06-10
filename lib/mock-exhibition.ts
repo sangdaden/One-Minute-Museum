@@ -1,5 +1,5 @@
 import type { Exhibition, GenerateRequest, Mode } from "./types";
-import { DEFAULT_LANGUAGE } from "./constants";
+import { DEFAULT_LANGUAGE, DEFAULT_VOICE } from "./constants";
 
 /**
  * Mock exhibition generator.
@@ -121,17 +121,37 @@ function buildTemplate(name: string, mode: Mode): Template {
   }
 }
 
+/**
+ * Light, deterministic voice flavour for the dev mock so the persona is
+ * noticeable without a real LLM. The real generator handles tone properly.
+ */
+function voicedShareQuote(base: string, voice: string): string {
+  switch (voice) {
+    case "Bà kể chuyện":
+      return `Hồi đó, ${lower(base)}`;
+    case "Chú bán hàng":
+      return `Nói thiệt nha — ${lower(base)}`;
+    case "Nhà thơ":
+      return `Như một câu thơ nhỏ: ${lower(base)}`;
+    default: // Nhà nghiên cứu
+      return base;
+  }
+}
+
 /** Generate a full mock Exhibition for the given request. */
 export function generateMockExhibition(req: GenerateRequest): Exhibition {
   const name = req.object_name.trim();
+  const voice = req.voice ?? DEFAULT_VOICE;
   const template = buildTemplate(name, req.mode);
 
   return {
     id: crypto.randomUUID(),
     object_name: name,
     mode: req.mode,
+    voice,
     language: req.language ?? DEFAULT_LANGUAGE,
     created_at: new Date().toISOString(),
     ...template,
+    share_quote: voicedShareQuote(template.share_quote, voice),
   };
 }

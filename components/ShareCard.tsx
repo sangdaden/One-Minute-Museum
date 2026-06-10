@@ -175,11 +175,12 @@ function ShareArtwork({
             style={{
               fontFamily: "var(--font-jetbrains), monospace",
               fontSize: 18,
-              letterSpacing: "0.22em",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
               color: "#9b9279",
             }}
           >
-            ★
+            {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
           </span>
         </div>
 

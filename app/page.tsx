@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import type { ApiError, Exhibition, Mode } from "@/lib/types";
-import { DEFAULT_MODE } from "@/lib/constants";
+import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
+import { DEFAULT_MODE, DEFAULT_VOICE } from "@/lib/constants";
 import { saveExhibition } from "@/lib/gallery";
 import ObjectInput from "@/components/ObjectInput";
 import ModeSelector from "@/components/ModeSelector";
+import VoiceSelector from "@/components/VoiceSelector";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ExhibitionCard from "@/components/ExhibitionCard";
 import ShareCard from "@/components/ShareCard";
@@ -16,6 +17,7 @@ import ErrorState from "@/components/ErrorState";
 export default function Home() {
   const [objectName, setObjectName] = useState("");
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
+  const [voice, setVoice] = useState<Voice>(DEFAULT_VOICE);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [exhibition, setExhibition] = useState<Exhibition | null>(null);
@@ -23,7 +25,7 @@ export default function Home() {
   const topRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
-  async function generate(name: string, selectedMode: Mode) {
+  async function generate(name: string, selectedMode: Mode, selectedVoice: Voice) {
     const trimmed = name.trim();
     if (trimmed.length === 0) return;
 
@@ -41,6 +43,7 @@ export default function Home() {
         body: JSON.stringify({
           object_name: trimmed,
           mode: selectedMode,
+          voice: selectedVoice,
           language: "vi",
         }),
       });
@@ -67,7 +70,7 @@ export default function Home() {
 
   function handlePickSuggested(name: string) {
     setObjectName(name);
-    generate(name, mode);
+    generate(name, mode, voice);
   }
 
   function handleChangeObject() {
@@ -128,7 +131,7 @@ export default function Home() {
           <ObjectInput
             value={objectName}
             onChange={setObjectName}
-            onSubmit={() => generate(objectName, mode)}
+            onSubmit={() => generate(objectName, mode, voice)}
             disabled={isLoading}
           />
         </div>
@@ -148,6 +151,12 @@ export default function Home() {
           <span className="h-px flex-1 bg-border-strong" />
         </div>
         <ModeSelector value={mode} onChange={setMode} disabled={isLoading} />
+
+        <div className="mt-2 flex items-center gap-3">
+          <span className="eyebrow text-ink">Chọn giọng kể</span>
+          <span className="h-px flex-1 bg-border-strong" />
+        </div>
+        <VoiceSelector value={voice} onChange={setVoice} disabled={isLoading} />
       </section>
 
       {/* Result */}
@@ -157,14 +166,14 @@ export default function Home() {
         ) : error ? (
           <ErrorState
             message={error}
-            onRetry={() => generate(objectName, mode)}
+            onRetry={() => generate(objectName, mode, voice)}
             onChangeObject={handleChangeObject}
           />
         ) : exhibition ? (
           <div className="space-y-10">
             <ExhibitionCard
               exhibition={exhibition}
-              onRegenerate={() => generate(exhibition.object_name, mode)}
+              onRegenerate={() => generate(exhibition.object_name, mode, voice)}
             />
             <ShareCard exhibition={exhibition} />
           </div>

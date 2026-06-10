@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
-import type { ApiError, GenerateRequest, Mode } from "@/lib/types";
-import { MODES } from "@/lib/types";
-import { OBJECT_NAME_MAX, DEFAULT_LANGUAGE } from "@/lib/constants";
+import type { ApiError, GenerateRequest, Mode, Voice } from "@/lib/types";
+import { MODES, VOICES } from "@/lib/types";
+import {
+  OBJECT_NAME_MAX,
+  DEFAULT_LANGUAGE,
+  DEFAULT_VOICE,
+} from "@/lib/constants";
 import { generateMockExhibition } from "@/lib/mock-exhibition";
 import {
   generateExhibitionWithLLM,
@@ -59,9 +63,16 @@ export async function POST(request: Request) {
   }
 
   const language = body.language ?? DEFAULT_LANGUAGE;
+  // Voice is additive & optional: unknown/missing falls back to default
+  // (never an error) so older clients keep working.
+  const voice: Voice = VOICES.includes(body.voice as Voice)
+    ? (body.voice as Voice)
+    : DEFAULT_VOICE;
+
   const validatedRequest: GenerateRequest = {
     object_name: objectName,
     mode: body.mode as Mode,
+    voice,
     language,
   };
 

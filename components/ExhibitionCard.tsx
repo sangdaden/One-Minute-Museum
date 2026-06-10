@@ -63,6 +63,12 @@ export default function ExhibitionCard({
           {/* Museum "medium" line */}
           <p className="eyebrow text-ink-faint">
             {ex.mode} <span className="text-gold">·</span> {ex.language}
+            {ex.voice && (
+              <>
+                {" "}
+                <span className="text-gold">·</span> Kể bởi {ex.voice}
+              </>
+            )}
           </p>
         </header>
 
