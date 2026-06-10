@@ -144,6 +144,7 @@ export default function Home() {
             onSubmit={() => generate(objectName, mode, voice)}
             disabled={isLoading}
             allowEmpty={!!image}
+            nameDisabled={!!image}
             placeholder={
               image
                 ? "Đã có ảnh — tên sẽ tự nhận diện"
@@ -154,7 +155,10 @@ export default function Home() {
         </div>
 
         <div className="reveal mt-1" style={{ animationDelay: "280ms" }}>
-          <SuggestedObjects onPick={handlePickSuggested} disabled={isLoading} />
+          <SuggestedObjects
+            onPick={handlePickSuggested}
+            disabled={isLoading || !!image}
+          />
         </div>
       </header>
 

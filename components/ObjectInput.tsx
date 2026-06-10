@@ -10,6 +10,8 @@ interface ObjectInputProps {
   disabled?: boolean;
   /** When true, allow submitting with an empty name (e.g. a photo is attached). */
   allowEmpty?: boolean;
+  /** Disable only the text field (not the submit button) — used when a photo wins. */
+  nameDisabled?: boolean;
   placeholder?: string;
 }
 
@@ -20,6 +22,7 @@ export default function ObjectInput({
   onSubmit,
   disabled,
   allowEmpty,
+  nameDisabled,
   placeholder = "Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá",
 }: ObjectInputProps) {
   return (
@@ -45,7 +48,7 @@ export default function ObjectInput({
             maxLength={OBJECT_NAME_MAX}
             placeholder={placeholder}
             aria-label="Tên vật thể"
-            disabled={disabled}
+            disabled={disabled || nameDisabled}
             className="w-full rounded-none border-b-2 border-border-strong bg-transparent py-3.5 pl-10 pr-4 font-serif text-xl text-ink outline-none transition-colors placeholder:font-sans placeholder:text-base placeholder:text-ink-faint/70 focus:border-accent disabled:opacity-60"
           />
         </div>
