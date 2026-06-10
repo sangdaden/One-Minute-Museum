@@ -90,7 +90,7 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-[760px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1040px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div ref={topRef} className="reveal flex items-center justify-between">
         <span className="eyebrow text-ink-faint">Bảo Tàng 1 Phút</span>

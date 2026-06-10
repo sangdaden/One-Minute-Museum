@@ -28,7 +28,7 @@ export default function GalleryPage() {
   const loaded = items !== null;
 
   return (
-    <main className="mx-auto w-full max-w-[920px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1160px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="reveal flex items-center justify-between">
         <Link
