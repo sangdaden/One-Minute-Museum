@@ -5,6 +5,8 @@ import {
   OBJECT_NAME_MAX,
   DEFAULT_LANGUAGE,
   DEFAULT_VOICE,
+  IMAGE_MAX_CHARS,
+  IMAGE_DATA_URI_RE,
 } from "@/lib/constants";
 import { generateMockExhibition } from "@/lib/mock-exhibition";
 import {
@@ -46,7 +48,24 @@ export async function POST(request: Request) {
   const objectName =
     typeof body.object_name === "string" ? body.object_name.trim() : "";
 
-  if (objectName.length < 1 || objectName.length > OBJECT_NAME_MAX) {
+  const image =
+    typeof body.image === "string" && body.image.length > 0
+      ? body.image
+      : undefined;
+
+  if (image) {
+    // Photo path: validate the image; object_name is optional (model identifies).
+    if (!IMAGE_DATA_URI_RE.test(image)) {
+      return errorResponse("VALIDATION_ERROR", "Ảnh không hợp lệ.", 400);
+    }
+    if (image.length > IMAGE_MAX_CHARS) {
+      return errorResponse(
+        "VALIDATION_ERROR",
+        "Ảnh quá lớn. Thử lại với ảnh nhỏ hơn nhé.",
+        400,
+      );
+    }
+  } else if (objectName.length < 1 || objectName.length > OBJECT_NAME_MAX) {
     return errorResponse(
       "VALIDATION_ERROR",
       `Tên vật phải dài từ 1 đến ${OBJECT_NAME_MAX} ký tự.`,
@@ -74,6 +93,7 @@ export async function POST(request: Request) {
     mode: body.mode as Mode,
     voice,
     language,
+    image,
   };
 
   // --- API key handling ---

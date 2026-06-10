@@ -28,6 +28,12 @@ export interface GenerateRequest {
   mode: Mode;
   voice?: Voice;
   language?: Language;
+  /**
+   * Optional downscaled image data URI (JPEG). When present, the object is
+   * generated from the photo (multimodal) and object_name may be empty —
+   * the model identifies it. Never persisted.
+   */
+  image?: string;
 }
 
 /**

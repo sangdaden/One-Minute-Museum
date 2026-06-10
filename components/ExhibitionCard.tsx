@@ -5,6 +5,8 @@ import CopyButton from "./CopyButton";
 
 interface ExhibitionCardProps {
   exhibition: Exhibition;
+  /** Optional in-session photo the exhibition was generated from. */
+  imageUrl?: string;
   onRegenerate?: () => void;
 }
 
@@ -54,6 +56,7 @@ function Tile({
 /** Modern bento layout for an exhibition (docs/superpowers/specs/2026-06-10-bento). */
 export default function ExhibitionCard({
   exhibition,
+  imageUrl,
   onRegenerate,
 }: ExhibitionCardProps) {
   const ex = exhibition;
@@ -62,7 +65,9 @@ export default function ExhibitionCard({
     <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-6 sm:gap-3">
       {/* Title */}
       <section
-        className="reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 sm:col-span-6 sm:p-6"
+        className={`reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 sm:p-6 ${
+          imageUrl ? "sm:col-span-4" : "sm:col-span-6"
+        }`}
         style={{ animationDelay: "0ms" }}
       >
         <div className="mb-3 flex items-center justify-between gap-3">
@@ -85,6 +90,24 @@ export default function ExhibitionCard({
           )}
         </p>
       </section>
+
+      {/* Your photo */}
+      {imageUrl && (
+        <section
+          className="reveal relative col-span-2 min-h-[10rem] overflow-hidden rounded-2xl ring-1 ring-border sm:col-span-2"
+          style={{ animationDelay: "30ms" }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageUrl}
+            alt={ex.object_name}
+            className="h-full max-h-72 w-full object-cover"
+          />
+          <span className="eyebrow absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-1 text-paper-card">
+            Ảnh của bạn
+          </span>
+        </section>
+      )}
 
       {/* Hook — accent */}
       <section

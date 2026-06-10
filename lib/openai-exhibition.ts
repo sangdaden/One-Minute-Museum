@@ -79,6 +79,35 @@ Ràng buộc:
 - QUAN TRỌNG: Giọng kể chỉ thay đổi cách diễn đạt và lựa chọn từ ngữ, KHÔNG thay đổi tính chính xác hay mức độ chắc chắn của thông tin. Vẫn dùng ngôn ngữ thận trọng khi không chắc, không bịa năm tháng/người/số liệu, và vẫn đúng JSON schema.`;
 }
 
+// User prompt for the image (multimodal) path — model identifies the object.
+function buildImageUserPrompt(language: string, mode: string, voice: string) {
+  return `Hãy nhìn ẢNH được cung cấp, nhận diện VẬT CHÍNH trong ảnh, rồi tạo một mini exhibition về vật đó.
+
+Ngôn ngữ: ${language}
+Mode: ${mode}
+Giọng kể: ${voice}
+
+Giải thích mode (kể ĐIỀU GÌ):
+- Vietnamese Culture: liên hệ đời sống Việt Nam, ký ức tập thể, cách vật này xuất hiện trong sinh hoạt hằng ngày.
+- Museum: trang trọng, giàu hình ảnh, giống bảng mô tả trong bảo tàng hiện đại.
+- Fun Fact: vui, ngắn, dễ share, có chút hài hước nhẹ.
+- Design: phân tích vật như một sản phẩm: vật liệu, hình dáng, pain point, use case, trade-off thiết kế.
+
+Giải thích giọng kể (chỉ đổi tone, không đổi nội dung mode):
+- Nhà nghiên cứu: điềm đạm, chuẩn mực, có chiều sâu.
+- Bà kể chuyện: ấm áp, hoài niệm, "hồi đó", xưng hô thân mật.
+- Chú bán hàng: đời, dí dỏm, gần gũi vỉa hè, tếu nhẹ — không thô tục.
+- Nhà thơ: văn chương, giàu hình ảnh, có nhịp — vẫn rõ nghĩa.
+
+Ràng buộc:
+- object_name: tên ngắn gọn của vật chính nhận diện được (tiếng Việt).
+- title ngắn gọn, có tên vật.
+- hook tối đa 2 câu; mỗi fun fact 1-2 câu, đúng 3 fun fact.
+- reflection_question gợi suy nghĩ; share_quote tối đa 20 từ.
+- hashtags không dấu hoặc tiếng Anh, 2-5 cái.
+- QUAN TRỌNG (ảnh): Mô tả VẬT, KHÔNG nhận diện hay mô tả người cụ thể trong ảnh. Không suy đoán thương hiệu/năm/thông số chỉ từ ảnh nếu không chắc — dùng ngôn ngữ thận trọng. Giọng kể chỉ đổi cách diễn đạt, không bịa thông tin. Output đúng JSON schema.`;
+}
+
 /**
  * JSON schema for Structured Outputs. Mirrors docs/prompt_spec.md §3.
  * Note: OpenAI strict mode does not support minItems/maxItems, so array
@@ -110,6 +139,17 @@ const RESPONSE_SCHEMA = {
     reflection_question: { type: "string" },
     share_quote: { type: "string" },
     hashtags: { type: "array", items: { type: "string" } },
+  },
+} as const;
+
+/** Image path schema = base schema + `object_name` (model-identified). */
+const IMAGE_RESPONSE_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["object_name", ...RESPONSE_SCHEMA.required],
+  properties: {
+    object_name: { type: "string" },
+    ...RESPONSE_SCHEMA.properties,
   },
 } as const;
 
@@ -193,8 +233,21 @@ export async function generateExhibitionWithLLM(
   const objectName = req.object_name.trim();
   const language = req.language ?? DEFAULT_LANGUAGE;
   const voice = req.voice ?? DEFAULT_VOICE;
+  const hasImage = isNonEmptyString(req.image);
 
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+  // Image path: multimodal message + schema that also returns object_name.
+  const userContent: string | OpenAI.Chat.Completions.ChatCompletionContentPart[] =
+    hasImage
+      ? [
+          { type: "text", text: buildImageUserPrompt(language, req.mode, voice) },
+          {
+            type: "image_url",
+            image_url: { url: req.image as string, detail: "low" },
+          },
+        ]
+      : buildUserPrompt(objectName, language, req.mode, voice);
 
   let raw: string | null | undefined;
   try {
@@ -203,17 +256,14 @@ export async function generateExhibitionWithLLM(
       temperature: 0.85,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        {
-          role: "user",
-          content: buildUserPrompt(objectName, language, req.mode, voice),
-        },
+        { role: "user", content: userContent },
       ],
       response_format: {
         type: "json_schema",
         json_schema: {
           name: "exhibition",
           strict: true,
-          schema: RESPONSE_SCHEMA,
+          schema: hasImage ? IMAGE_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
         },
       },
     });
@@ -254,9 +304,18 @@ export async function generateExhibitionWithLLM(
 
   const content = validateContent(parsed);
 
+  // object_name: model-identified for the image path, else the user's input.
+  let resolvedName = objectName;
+  if (hasImage) {
+    const identified = (parsed as Record<string, unknown>).object_name;
+    resolvedName = isNonEmptyString(identified)
+      ? identified.trim()
+      : "Vật trong ảnh";
+  }
+
   return {
     id: crypto.randomUUID(),
-    object_name: objectName,
+    object_name: resolvedName,
     mode: req.mode,
     voice,
     language,

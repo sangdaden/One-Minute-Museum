@@ -6,6 +6,7 @@ import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
 import { DEFAULT_MODE, DEFAULT_VOICE } from "@/lib/constants";
 import { saveExhibition } from "@/lib/gallery";
 import ObjectInput from "@/components/ObjectInput";
+import ImageUpload from "@/components/ImageUpload";
 import ModeSelector from "@/components/ModeSelector";
 import VoiceSelector from "@/components/VoiceSelector";
 import SuggestedObjects from "@/components/SuggestedObjects";
@@ -18,16 +19,21 @@ export default function Home() {
   const [objectName, setObjectName] = useState("");
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
   const [voice, setVoice] = useState<Voice>(DEFAULT_VOICE);
+  const [image, setImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [exhibition, setExhibition] = useState<Exhibition | null>(null);
+  // The image actually used for the shown result (so changing the picker later
+  // doesn't retroactively alter the displayed card).
+  const [resultImage, setResultImage] = useState<string | null>(null);
 
   const topRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
   async function generate(name: string, selectedMode: Mode, selectedVoice: Voice) {
     const trimmed = name.trim();
-    if (trimmed.length === 0) return;
+    // Need either a typed name or an attached photo.
+    if (trimmed.length === 0 && !image) return;
 
     setIsLoading(true);
     setError(null);
@@ -45,6 +51,7 @@ export default function Home() {
           mode: selectedMode,
           voice: selectedVoice,
           language: "vi",
+          image: image ?? undefined,
         }),
       });
 
@@ -55,7 +62,8 @@ export default function Home() {
 
       const data = (await res.json()) as Exhibition;
       setExhibition(data);
-      // Persist to the local gallery (dedupes by id).
+      setResultImage(image); // photo shown with this result (not persisted)
+      // Persist to the local gallery (dedupes by id, image excluded).
       saveExhibition(data);
     } catch (err) {
       setError(
@@ -76,6 +84,8 @@ export default function Home() {
   function handleChangeObject() {
     setError(null);
     setExhibition(null);
+    setImage(null);
+    setResultImage(null);
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -127,13 +137,20 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="reveal mt-2" style={{ animationDelay: "220ms" }}>
+        <div className="reveal mt-2 flex flex-col gap-3" style={{ animationDelay: "220ms" }}>
           <ObjectInput
             value={objectName}
             onChange={setObjectName}
             onSubmit={() => generate(objectName, mode, voice)}
             disabled={isLoading}
+            allowEmpty={!!image}
+            placeholder={
+              image
+                ? "Đã có ảnh — tên sẽ tự nhận diện"
+                : "Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá"
+            }
           />
+          <ImageUpload value={image} onChange={setImage} disabled={isLoading} />
         </div>
 
         <div className="reveal mt-1" style={{ animationDelay: "280ms" }}>
@@ -173,9 +190,13 @@ export default function Home() {
           <div className="space-y-10">
             <ExhibitionCard
               exhibition={exhibition}
+              imageUrl={resultImage ?? undefined}
               onRegenerate={() => generate(exhibition.object_name, mode, voice)}
             />
-            <ShareCard exhibition={exhibition} />
+            <ShareCard
+              exhibition={exhibition}
+              imageUrl={resultImage ?? undefined}
+            />
           </div>
         ) : (
           <div className="reveal flex flex-col items-center gap-4 border border-dashed border-border-strong bg-paper-card/40 px-6 py-20 text-center">

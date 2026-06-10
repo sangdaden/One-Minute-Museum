@@ -140,7 +140,9 @@ function voicedShareQuote(base: string, voice: string): string {
 
 /** Generate a full mock Exhibition for the given request. */
 export function generateMockExhibition(req: GenerateRequest): Exhibition {
-  const name = req.object_name.trim();
+  // Image path: the mock can't "see" the photo, so use a placeholder name.
+  const hasImage = typeof req.image === "string" && req.image.length > 0;
+  const name = hasImage ? "Vật trong ảnh" : req.object_name.trim();
   const voice = req.voice ?? DEFAULT_VOICE;
   const template = buildTemplate(name, req.mode);
 

@@ -8,6 +8,9 @@ interface ObjectInputProps {
   onChange: (value: string) => void;
   onSubmit: () => void;
   disabled?: boolean;
+  /** When true, allow submitting with an empty name (e.g. a photo is attached). */
+  allowEmpty?: boolean;
+  placeholder?: string;
 }
 
 /** Object-name field, styled like an archive search (docs/mvp_scope.md F01). */
@@ -16,6 +19,8 @@ export default function ObjectInput({
   onChange,
   onSubmit,
   disabled,
+  allowEmpty,
+  placeholder = "Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá",
 }: ObjectInputProps) {
   return (
     <form
@@ -38,7 +43,7 @@ export default function ObjectInput({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             maxLength={OBJECT_NAME_MAX}
-            placeholder="Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá"
+            placeholder={placeholder}
             aria-label="Tên vật thể"
             disabled={disabled}
             className="w-full rounded-none border-b-2 border-border-strong bg-transparent py-3.5 pl-10 pr-4 font-serif text-xl text-ink outline-none transition-colors placeholder:font-sans placeholder:text-base placeholder:text-ink-faint/70 focus:border-accent disabled:opacity-60"
@@ -46,7 +51,7 @@ export default function ObjectInput({
         </div>
         <button
           type="submit"
-          disabled={disabled || value.trim().length === 0}
+          disabled={disabled || (value.trim().length === 0 && !allowEmpty)}
           className="group/btn inline-flex items-center justify-center gap-2 self-start rounded-full bg-accent px-7 py-3 text-sm font-medium tracking-wide text-paper-card shadow-[0_1px_0_var(--color-accent-deep)] transition-all hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-35 sm:self-stretch"
         >
           Tạo triển lãm

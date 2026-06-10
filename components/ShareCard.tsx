@@ -7,6 +7,8 @@ import { slugifyObjectName } from "@/lib/format";
 
 interface ShareCardProps {
   exhibition: Exhibition;
+  /** Optional in-session photo to feature on the card. */
+  imageUrl?: string;
 }
 
 const SIZE = 1080; // export canvas — 1080×1080
@@ -18,7 +20,7 @@ type Status = "idle" | "working" | "done" | "error";
  * html-to-image is imported lazily inside the click handler so it never runs
  * on the server (avoids SSR issues).
  */
-export default function ShareCard({ exhibition }: ShareCardProps) {
+export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
   const ex = exhibition;
 
   const cardRef = useRef<HTMLDivElement>(null); // the real 1080px node (exported)
@@ -93,7 +95,7 @@ export default function ShareCard({ exhibition }: ShareCardProps) {
         <div
           style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
         >
-          <ShareArtwork ref={cardRef} exhibition={ex} />
+          <ShareArtwork ref={cardRef} exhibition={ex} imageUrl={imageUrl} />
         </div>
       </div>
 
@@ -123,9 +125,11 @@ export default function ShareCard({ exhibition }: ShareCardProps) {
 function ShareArtwork({
   ref,
   exhibition: ex,
+  imageUrl,
 }: {
   ref: React.Ref<HTMLDivElement>;
   exhibition: Exhibition;
+  imageUrl?: string;
 }) {
   return (
     <div
@@ -138,6 +142,7 @@ function ShareArtwork({
         fontFamily: "var(--font-be-vietnam), system-ui, sans-serif",
         padding: 64,
         boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
       {/* Inner catalogue frame */}
@@ -185,8 +190,25 @@ function ShareArtwork({
           </span>
         </div>
 
+        {/* Optional featured photo */}
+        {imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={imageUrl}
+            alt=""
+            style={{
+              width: "100%",
+              height: 240,
+              objectFit: "cover",
+              borderRadius: 16,
+              marginTop: 24,
+              display: "block",
+            }}
+          />
+        )}
+
         {/* Hero — object name */}
-        <div style={{ marginTop: 28 }}>
+        <div style={{ marginTop: imageUrl ? 22 : 28 }}>
           <div
             style={{
               fontFamily: "var(--font-jetbrains), monospace",
@@ -202,7 +224,7 @@ function ShareArtwork({
           <div
             style={{
               fontFamily: "var(--font-display), ui-sans-serif, system-ui, sans-serif",
-              fontSize: 78,
+              fontSize: imageUrl ? 56 : 78,
               fontWeight: 600,
               lineHeight: 1.02,
               letterSpacing: "-0.01em",

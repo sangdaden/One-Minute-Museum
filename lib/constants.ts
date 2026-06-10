@@ -11,6 +11,15 @@ export const DEFAULT_LANGUAGE = "vi";
 /** Max length accepted for an object name (docs/api_spec.md validation). */
 export const OBJECT_NAME_MAX = 80;
 
+/**
+ * Max length of an image data URI accepted by the API (~1.5MB encoded).
+ * The client downscales before upload, so this is a safety cap.
+ */
+export const IMAGE_MAX_CHARS = 2_000_000;
+
+/** Allowed image data-URI prefixes for the photo path. */
+export const IMAGE_DATA_URI_RE = /^data:image\/(png|jpe?g|webp);base64,/;
+
 /** Short copy shown on each mode card. (Icons live in ModeSelector.) */
 export const MODE_META: Record<Mode, { description: string }> = {
   "Vietnamese Culture": {
