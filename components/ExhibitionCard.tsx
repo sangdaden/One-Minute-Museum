@@ -8,27 +8,50 @@ interface ExhibitionCardProps {
   onRegenerate?: () => void;
 }
 
-function Section({
+type Variant = "ink" | "brass" | "accentDeep" | "sunk";
+
+const VARIANT: Record<Variant, { wrap: string; label: string; body: string }> = {
+  ink: { wrap: "bg-ink", label: "text-gold", body: "text-paper-card/85" },
+  brass: { wrap: "bg-gold", label: "text-paper-card/85", body: "text-paper-card" },
+  accentDeep: {
+    wrap: "bg-accent-deep",
+    label: "text-paper-card/75",
+    body: "text-paper-card/90",
+  },
+  sunk: {
+    wrap: "bg-paper-sunk border border-border-strong",
+    label: "text-accent",
+    body: "text-ink/90",
+  },
+};
+
+/** A labelled bento tile: short uppercase label + body text. */
+function Tile({
+  variant,
   label,
-  children,
+  span,
   delay,
+  text,
 }: {
+  variant: Variant;
   label: string;
-  children: string;
+  span: string;
   delay: number;
+  text: string;
 }) {
+  const v = VARIANT[variant];
   return (
     <section
-      className="reveal space-y-2"
+      className={`reveal rounded-2xl p-4 sm:p-5 ${v.wrap} ${span}`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <h3 className="eyebrow text-accent">{label}</h3>
-      <p className="text-[15.5px] leading-[1.75] text-ink/90">{children}</p>
+      <h3 className={`eyebrow mb-2 ${v.label}`}>{label}</h3>
+      <p className={`text-[14px] leading-relaxed ${v.body}`}>{text}</p>
     </section>
   );
 }
 
-/** Museum wall-label result card (docs/ui_spec.md §4). */
+/** Modern bento layout for an exhibition (docs/superpowers/specs/2026-06-10-bento). */
 export default function ExhibitionCard({
   exhibition,
   onRegenerate,
@@ -36,138 +59,119 @@ export default function ExhibitionCard({
   const ex = exhibition;
 
   return (
-    <article className="reveal relative bg-paper-card shadow-[0_1px_2px_rgba(27,22,17,0.05),0_18px_40px_-24px_rgba(27,22,17,0.35)] ring-1 ring-border">
-      {/* Inset catalogue frame */}
-      <div className="pointer-events-none absolute inset-[7px] border border-border/70" />
-
-      <div className="relative px-6 py-7 sm:px-10 sm:py-11">
-        {/* Accession strip */}
-        <div className="mb-7 flex items-center justify-between">
-          <span className="eyebrow text-ink-faint">
-            No. {accession(ex.id)}
-          </span>
-          <span className="eyebrow text-ink-faint">
+    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-6 sm:gap-3">
+      {/* Title */}
+      <section
+        className="reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 sm:col-span-6 sm:p-6"
+        style={{ animationDelay: "0ms" }}
+      >
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <span className="eyebrow text-accent">One-Minute Museum</span>
+          <span className="eyebrow text-right text-ink-faint">
+            No. {accession(ex.id)} <span className="text-gold">·</span>{" "}
             {formatDate(ex.created_at)}
           </span>
         </div>
+        <h2 className="font-serif text-[1.9rem] font-semibold leading-[1.05] tracking-[-0.01em] text-ink sm:text-[2.5rem]">
+          {ex.title}
+        </h2>
+        <p className="eyebrow mt-3 text-ink-faint">
+          {ex.mode} <span className="text-gold">·</span> {ex.language}
+          {ex.voice && (
+            <>
+              {" "}
+              <span className="text-gold">·</span> Kể bởi {ex.voice}
+            </>
+          )}
+        </p>
+      </section>
 
-        {/* Header */}
-        <header
-          className="reveal space-y-4"
-          style={{ animationDelay: "60ms" }}
-        >
-          <p className="eyebrow text-accent">One-Minute Museum</p>
-          <h2 className="font-serif text-[2rem] font-medium leading-[1.08] tracking-[-0.01em] text-ink sm:text-[2.7rem]">
-            {ex.title}
-          </h2>
-          {/* Museum "medium" line */}
-          <p className="eyebrow text-ink-faint">
-            {ex.mode} <span className="text-gold">·</span> {ex.language}
-            {ex.voice && (
-              <>
-                {" "}
-                <span className="text-gold">·</span> Kể bởi {ex.voice}
-              </>
-            )}
-          </p>
-        </header>
+      {/* Hook — accent */}
+      <section
+        className="reveal col-span-2 rounded-2xl bg-accent p-5 sm:col-span-6 sm:p-7"
+        style={{ animationDelay: "60ms" }}
+      >
+        <h3 className="eyebrow mb-2 text-paper-card/70">Mở đầu</h3>
+        <p className="font-serif text-[1.3rem] font-medium leading-snug text-paper-card sm:text-[1.7rem]">
+          {ex.hook}
+        </p>
+      </section>
 
-        {/* Hook — pulled display quote */}
-        <blockquote
-          className="reveal relative my-8 border-l-2 border-gold pl-5"
-          style={{ animationDelay: "120ms" }}
+      {/* What it is + Story */}
+      <Tile
+        variant="ink"
+        label="Đây là gì?"
+        span="col-span-2 sm:col-span-3"
+        delay={110}
+        text={ex.what_it_is}
+      />
+      <Tile
+        variant="brass"
+        label="Câu chuyện phía sau"
+        span="col-span-2 sm:col-span-3"
+        delay={150}
+        text={ex.origin_or_context}
+      />
+
+      {/* 3 fun facts — gold tint */}
+      {ex.three_fun_facts.slice(0, 3).map((fact, i) => (
+        <section
+          key={i}
+          className="reveal col-span-2 rounded-2xl border border-gold/40 bg-gold/15 p-4 sm:col-span-2"
+          style={{ animationDelay: `${190 + i * 40}ms` }}
         >
-          <span
-            aria-hidden
-            className="absolute -left-1 -top-4 font-serif text-5xl leading-none text-gold/40"
-          >
-            “
+          <span className="block font-serif text-3xl font-semibold leading-none text-gold">
+            {String(i + 1).padStart(2, "0")}
           </span>
-          <p className="font-serif text-[1.35rem] font-light leading-snug text-ink/85 sm:text-[1.6rem]">
-            {ex.hook}
+          <p className="mt-2 text-[13.5px] leading-relaxed text-ink/85">
+            {fact}
           </p>
-        </blockquote>
+        </section>
+      ))}
 
-        {/* Body */}
-        <div className="space-y-7">
-          <Section label="Đây là gì?" delay={160}>
-            {ex.what_it_is}
-          </Section>
+      {/* Insight + Why */}
+      <Tile
+        variant="sunk"
+        label="Góc nhìn thiết kế / văn hóa"
+        span="col-span-2 sm:col-span-4"
+        delay={320}
+        text={ex.design_or_cultural_insight}
+      />
+      <Tile
+        variant="accentDeep"
+        label="Vì sao đáng chú ý?"
+        span="col-span-2 sm:col-span-2"
+        delay={360}
+        text={ex.why_it_matters}
+      />
 
-          <div className="rule" />
+      {/* Reflection — prompt */}
+      <section
+        className="reveal col-span-2 rounded-2xl border border-dashed border-gold/60 bg-accent/[0.06] p-5 text-center sm:col-span-6"
+        style={{ animationDelay: "400ms" }}
+      >
+        <h3 className="eyebrow mb-2 text-gold">Câu hỏi suy ngẫm</h3>
+        <p className="font-serif text-[1.2rem] font-medium leading-snug text-ink">
+          {ex.reflection_question}
+        </p>
+      </section>
 
-          <Section label="Câu chuyện phía sau" delay={200}>
-            {ex.origin_or_context}
-          </Section>
-
-          <div className="rule" />
-
-          {/* 3 fun facts */}
-          <section
-            className="reveal space-y-4"
-            style={{ animationDelay: "240ms" }}
-          >
-            <h3 className="eyebrow text-accent">Ba điều thú vị</h3>
-            <ol className="grid gap-x-6 gap-y-5 sm:grid-cols-3">
-              {ex.three_fun_facts.map((fact, i) => (
-                <li key={i} className="space-y-2">
-                  <span className="block font-serif text-3xl font-medium leading-none text-gold">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="text-[14px] leading-relaxed text-ink/85">
-                    {fact}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <div className="rule" />
-
-          <Section label="Góc nhìn thiết kế / văn hóa" delay={280}>
-            {ex.design_or_cultural_insight}
-          </Section>
-
-          <Section label="Vì sao đáng chú ý?" delay={320}>
-            {ex.why_it_matters}
-          </Section>
-
-          {/* Reflection question — highlighted plate */}
-          <section
-            className="reveal border border-dashed border-gold/60 bg-paper-sunk/40 px-5 py-5 text-center"
-            style={{ animationDelay: "360ms" }}
-          >
-            <h3 className="eyebrow mb-2 text-gold">Câu hỏi suy ngẫm</h3>
-            <p className="font-serif text-[1.2rem] font-light leading-snug text-ink/90">
-              {ex.reflection_question}
-            </p>
-          </section>
+      {/* Footer — caption + hashtags + actions */}
+      <section
+        className="reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 sm:col-span-6"
+        style={{ animationDelay: "440ms" }}
+      >
+        <p className="text-center font-serif text-[1.02rem] text-ink/75">
+          {ex.share_quote}
+        </p>
+        <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1">
+          {ex.hashtags.map((tag) => (
+            <span key={tag} className="eyebrow text-ink-faint">
+              #{tag}
+            </span>
+          ))}
         </div>
-
-        {/* Caption plate — share quote + hashtags */}
-        <footer
-          className="reveal mt-9 border-t border-border-strong pt-6"
-          style={{ animationDelay: "400ms" }}
-        >
-          <p className="text-center font-serif text-[1.05rem] text-ink/75">
-            {ex.share_quote}
-          </p>
-          <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1">
-            {ex.hashtags.map((tag) => (
-              <span key={tag} className="eyebrow text-ink-faint">
-                #{tag}
-              </span>
-            ))}
-          </div>
-        </footer>
-      </div>
-
-      {/* Action bar */}
-      <div className="relative flex flex-wrap items-center justify-between gap-3 border-t border-border bg-paper-sunk/50 px-6 py-4 sm:px-10">
-        <span className="eyebrow hidden text-ink-faint sm:block">
-          Bảo Tàng 1 Phút
-        </span>
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 border-t border-border pt-4">
           <CopyButton text={formatExhibitionForSocial(ex)} />
           {onRegenerate && (
             <button
@@ -179,7 +183,7 @@ export default function ExhibitionCard({
             </button>
           )}
         </div>
-      </div>
-    </article>
+      </section>
+    </div>
   );
 }
