@@ -55,7 +55,7 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
         canvasHeight: SIZE,
         pixelRatio: 1,
         cacheBust: true,
-        backgroundColor: "#f4eee1",
+        backgroundColor: "#fcf5f2",
       });
 
       const link = document.createElement("a");
@@ -137,8 +137,8 @@ function ShareArtwork({
       style={{
         width: SIZE,
         height: SIZE,
-        background: "#f4eee1",
-        color: "#1b1611",
+        background: "#fcf5f2",
+        color: "#211712",
         fontFamily: "var(--font-be-vietnam), system-ui, sans-serif",
         padding: 64,
         boxSizing: "border-box",
@@ -150,7 +150,7 @@ function ShareArtwork({
         style={{
           height: "100%",
           width: "100%",
-          border: "1px solid #cabfa4",
+          border: "1px solid #e3d0c9",
           padding: "56px 60px",
           boxSizing: "border-box",
           display: "flex",
@@ -183,7 +183,7 @@ function ShareArtwork({
               fontSize: 18,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#9b9279",
+              color: "#9c8b85",
             }}
           >
             {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
@@ -215,7 +215,7 @@ function ShareArtwork({
               fontSize: 17,
               letterSpacing: "0.24em",
               textTransform: "uppercase",
-              color: "#9b9279",
+              color: "#9c8b85",
               marginBottom: 18,
             }}
           >
@@ -253,7 +253,7 @@ function ShareArtwork({
               fontWeight: 300,
               fontSize: 40,
               lineHeight: 1.3,
-              color: "#322a22",
+              color: "#3a2a24",
               margin: 0,
               display: "-webkit-box",
               WebkitLineClamp: 3,
@@ -305,7 +305,7 @@ function ShareArtwork({
                   style={{
                     fontSize: 25,
                     lineHeight: 1.34,
-                    color: "#3a322a",
+                    color: "#4a3a34",
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
@@ -322,7 +322,7 @@ function ShareArtwork({
         {/* Footer — hashtags */}
         <div
           style={{
-            borderTop: "1px solid #cabfa4",
+            borderTop: "1px solid #e3d0c9",
             paddingTop: 22,
             display: "flex",
             flexWrap: "wrap",
@@ -336,7 +336,7 @@ function ShareArtwork({
                 fontFamily: "var(--font-jetbrains), monospace",
                 fontSize: 20,
                 letterSpacing: "0.12em",
-                color: "#6a6154",
+                color: "#6b5a54",
               }}
             >
               #{tag.replace(/^#+/, "")}

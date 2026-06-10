@@ -65,7 +65,7 @@ export default function ExhibitionCard({
     <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-6 sm:gap-3">
       {/* Title */}
       <section
-        className={`reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 sm:p-6 ${
+        className={`reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 shadow-[0_8px_24px_-18px_rgba(120,40,30,0.45)] sm:p-6 ${
           imageUrl ? "sm:col-span-4" : "sm:col-span-6"
         }`}
         style={{ animationDelay: "0ms" }}
@@ -94,7 +94,7 @@ export default function ExhibitionCard({
       {/* Your photo */}
       {imageUrl && (
         <section
-          className="reveal relative col-span-2 min-h-[10rem] overflow-hidden rounded-2xl ring-1 ring-border sm:col-span-2"
+          className="reveal relative col-span-2 min-h-[10rem] overflow-hidden rounded-2xl shadow-[0_8px_24px_-18px_rgba(120,40,30,0.45)] ring-1 ring-border sm:col-span-2"
           style={{ animationDelay: "30ms" }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -181,7 +181,7 @@ export default function ExhibitionCard({
 
       {/* Footer — caption + hashtags + actions */}
       <section
-        className="reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 sm:col-span-6"
+        className="reveal col-span-2 rounded-2xl border border-border bg-paper-card p-5 shadow-[0_8px_24px_-18px_rgba(120,40,30,0.45)] sm:col-span-6"
         style={{ animationDelay: "440ms" }}
       >
         <p className="text-center font-serif text-[1.02rem] text-ink/75">

@@ -6,20 +6,21 @@
   Archival warm paper, lacquer-red accent, brass hairlines, mono accession type.
 */
 :root {
-  --paper: #f1eadb;
-  --paper-card: #fbf7ee;
-  --paper-sunk: #ece3d1;
+  /* Sơn mài accent on a fresh blush off-white with white floating cards. */
+  --paper: #fcf5f2;
+  --paper-card: #ffffff;
+  --paper-sunk: #f6ede9;
 
-  --ink: #1b1611;
-  --ink-soft: #6a6154;
-  --ink-faint: #9b9279;
+  --ink: #211712;
+  --ink-soft: #6b5a54;
+  --ink-faint: #9c8b85;
 
   --accent: #9e3322; /* lacquer / sơn mài oxblood */
   --accent-deep: #6f2417;
   --gold: #b0894a; /* muted brass */
 
-  --border: #e1d6c1;
-  --border-strong: #cabfa4;
+  --border: #f0e2dd;
+  --border-strong: #e3d0c9;
 }
 
 @theme inline {
