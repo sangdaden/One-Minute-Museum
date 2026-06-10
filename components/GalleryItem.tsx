@@ -43,7 +43,7 @@ export default function GalleryItem({ exhibition, index }: GalleryItemProps) {
       <p className="mt-1.5 eyebrow text-ink-faint">{ex.object_name}</p>
 
       {/* Hook preview */}
-      <p className="mt-3 line-clamp-3 font-serif text-[0.98rem] italic leading-snug text-ink-soft">
+      <p className="mt-3 line-clamp-3 font-serif text-[0.98rem] leading-snug text-ink-soft">
         {ex.hook}
       </p>
 

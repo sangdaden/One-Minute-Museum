@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Download } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
 import { slugifyObjectName } from "@/lib/format";
 
@@ -106,7 +107,7 @@ export default function ShareCard({ exhibition }: ShareCardProps) {
             status === "error" ? "bg-accent-deep" : "bg-accent hover:bg-accent-deep",
           ].join(" ")}
         >
-          <span aria-hidden>↓</span>
+          <Download aria-hidden className="h-4 w-4" strokeWidth={2} />
           {buttonLabel}
         </button>
         <span className="eyebrow text-ink-faint">PNG · vuông</span>
@@ -200,7 +201,7 @@ function ShareArtwork({
           </div>
           <div
             style={{
-              fontFamily: "var(--font-fraunces), Georgia, serif",
+              fontFamily: "var(--font-display), ui-sans-serif, system-ui, sans-serif",
               fontSize: 78,
               fontWeight: 600,
               lineHeight: 1.02,
@@ -226,8 +227,7 @@ function ShareArtwork({
         >
           <p
             style={{
-              fontFamily: "var(--font-fraunces), Georgia, serif",
-              fontStyle: "italic",
+              fontFamily: "var(--font-display), ui-sans-serif, system-ui, sans-serif",
               fontWeight: 300,
               fontSize: 40,
               lineHeight: 1.3,
@@ -270,7 +270,7 @@ function ShareArtwork({
               >
                 <span
                   style={{
-                    fontFamily: "var(--font-fraunces), Georgia, serif",
+                    fontFamily: "var(--font-display), ui-sans-serif, system-ui, sans-serif",
                     fontSize: 24,
                     color: "#b0894a",
                     flex: "0 0 auto",

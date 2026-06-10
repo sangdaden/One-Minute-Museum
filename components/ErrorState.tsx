@@ -20,7 +20,7 @@ export default function ErrorState({
       <div className="relative mx-auto max-w-md space-y-5">
         <span
           aria-hidden
-          className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-gold/50 font-serif text-2xl italic text-gold"
+          className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-gold/50 font-serif text-2xl text-gold"
         >
           !
         </span>

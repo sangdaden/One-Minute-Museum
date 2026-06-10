@@ -1,8 +1,17 @@
 "use client";
 
+import { Home, Landmark, Sparkles, Ruler } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { MODES } from "@/lib/types";
 import type { Mode } from "@/lib/types";
 import { MODE_META } from "@/lib/constants";
+
+const MODE_ICONS: Record<Mode, LucideIcon> = {
+  "Vietnamese Culture": Home,
+  Museum: Landmark,
+  "Fun Fact": Sparkles,
+  Design: Ruler,
+};
 
 interface ModeSelectorProps {
   value: Mode;
@@ -24,6 +33,7 @@ export default function ModeSelector({
     >
       {MODES.map((mode, i) => {
         const meta = MODE_META[mode];
+        const Icon = MODE_ICONS[mode];
         const selected = mode === value;
         return (
           <button
@@ -51,9 +61,14 @@ export default function ModeSelector({
               ].join(" ")}
             />
             <div className="flex items-start justify-between">
-              <span className="text-lg" aria-hidden>
-                {meta.icon}
-              </span>
+              <Icon
+                aria-hidden
+                strokeWidth={1.75}
+                className={[
+                  "h-[22px] w-[22px]",
+                  selected ? "text-accent" : "text-ink-soft",
+                ].join(" ")}
+              />
               <span
                 className={[
                   "eyebrow",

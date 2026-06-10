@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Be_Vietnam_Pro, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Be_Vietnam_Pro, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-// Display serif — warm, editorial, characterful (with optical-size soft serifs).
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+// Display — modern grotesque with character; carries headings & pull quotes.
+const display = Bricolage_Grotesque({
+  variable: "--font-display",
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700", "900"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -61,7 +60,7 @@ export default function RootLayout({
       // (next/font hashing in dev, or browser extensions injecting attributes).
       // Suppress the warning at this single level only.
       suppressHydrationWarning
-      className={`${fraunces.variable} ${beVietnam.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${display.variable} ${beVietnam.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="relative min-h-full">
         <div className="grain" aria-hidden />

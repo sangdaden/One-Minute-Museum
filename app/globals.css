@@ -35,7 +35,10 @@
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
 
-  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  /* Display headings & pull quotes (Tailwind `font-serif` keeps the class name
+     but now resolves to a modern grotesque). */
+  --font-serif: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-be-vietnam), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", monospace;
 }

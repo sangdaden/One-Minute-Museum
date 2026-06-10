@@ -1,8 +1,17 @@
 "use client";
 
+import { GraduationCap, Armchair, Store, Feather } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { VOICES } from "@/lib/types";
 import type { Voice } from "@/lib/types";
 import { VOICE_META } from "@/lib/constants";
+
+const VOICE_ICONS: Record<Voice, LucideIcon> = {
+  "Nhà nghiên cứu": GraduationCap,
+  "Bà kể chuyện": Armchair,
+  "Chú bán hàng": Store,
+  "Nhà thơ": Feather,
+};
 
 interface VoiceSelectorProps {
   value: Voice;
@@ -27,6 +36,7 @@ export default function VoiceSelector({
     >
       {VOICES.map((voice) => {
         const meta = VOICE_META[voice];
+        const Icon = VOICE_ICONS[voice];
         const selected = voice === value;
         return (
           <button
@@ -44,12 +54,14 @@ export default function VoiceSelector({
                 : "border-border-strong bg-paper-card/60 text-ink-soft hover:border-accent/50 hover:text-ink",
             ].join(" ")}
           >
-            <span
+            <Icon
               aria-hidden
-              className={selected ? "text-accent" : "text-gold"}
-            >
-              {meta.icon}
-            </span>
+              strokeWidth={1.75}
+              className={[
+                "h-4 w-4",
+                selected ? "text-accent" : "text-gold",
+              ].join(" ")}
+            />
             {voice}
           </button>
         );

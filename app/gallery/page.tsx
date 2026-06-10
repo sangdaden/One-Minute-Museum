@@ -106,7 +106,7 @@ export default function GalleryPage() {
             <span aria-hidden className="font-serif text-5xl text-gold/50">
               ❦
             </span>
-            <p className="font-serif text-xl italic leading-snug text-ink">
+            <p className="font-serif text-xl leading-snug text-ink">
               Bảo tàng của bạn chưa có hiện vật nào.
             </p>
             <p className="max-w-sm text-sm leading-relaxed text-ink-soft">

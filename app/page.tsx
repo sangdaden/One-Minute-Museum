@@ -111,7 +111,7 @@ export default function Home() {
           >
             Bảo Tàng
             <br />
-            <span className="italic text-accent">Một Phút</span>
+            <span className="text-accent">Một Phút</span>
           </h1>
           <p
             className="reveal max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl"
@@ -183,7 +183,7 @@ export default function Home() {
             <span aria-hidden className="font-serif text-5xl text-gold/50">
               ❦
             </span>
-            <p className="max-w-md font-serif text-xl italic leading-snug text-ink">
+            <p className="max-w-md font-serif text-xl leading-snug text-ink">
               Chọn một vật bình thường và biến nó thành một triển lãm nhỏ.
             </p>
             <p className="max-w-sm text-sm leading-relaxed text-ink-soft">

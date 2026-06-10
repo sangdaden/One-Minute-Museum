@@ -83,7 +83,7 @@ export default function ExhibitionCard({
           >
             “
           </span>
-          <p className="font-serif text-[1.35rem] font-light italic leading-snug text-ink/85 sm:text-[1.6rem]">
+          <p className="font-serif text-[1.35rem] font-light leading-snug text-ink/85 sm:text-[1.6rem]">
             {ex.hook}
           </p>
         </blockquote>
@@ -138,7 +138,7 @@ export default function ExhibitionCard({
             style={{ animationDelay: "360ms" }}
           >
             <h3 className="eyebrow mb-2 text-gold">Câu hỏi suy ngẫm</h3>
-            <p className="font-serif text-[1.2rem] font-light italic leading-snug text-ink/90">
+            <p className="font-serif text-[1.2rem] font-light leading-snug text-ink/90">
               {ex.reflection_question}
             </p>
           </section>
@@ -149,7 +149,7 @@ export default function ExhibitionCard({
           className="reveal mt-9 border-t border-border-strong pt-6"
           style={{ animationDelay: "400ms" }}
         >
-          <p className="text-center font-serif text-[1.05rem] italic text-ink/75">
+          <p className="text-center font-serif text-[1.05rem] text-ink/75">
             {ex.share_quote}
           </p>
           <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1">

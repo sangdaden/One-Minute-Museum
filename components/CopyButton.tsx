@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Copy, Check, X } from "lucide-react";
 
 interface CopyButtonProps {
   text: string;
@@ -51,7 +52,7 @@ export default function CopyButton({ text }: CopyButtonProps) {
         ? "Không copy được"
         : "Copy nội dung";
 
-  const glyph = status === "copied" ? "✓" : status === "error" ? "✕" : "⧉";
+  const Icon = status === "copied" ? Check : status === "error" ? X : Copy;
 
   return (
     <button
@@ -63,9 +64,7 @@ export default function CopyButton({ text }: CopyButtonProps) {
         status === "error" ? "bg-accent hover:bg-accent-deep" : "bg-ink hover:bg-ink/85",
       ].join(" ")}
     >
-      <span aria-hidden className="text-[13px]">
-        {glyph}
-      </span>
+      <Icon aria-hidden strokeWidth={2} className="h-4 w-4" />
       {label}
     </button>
   );

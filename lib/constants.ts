@@ -11,50 +11,28 @@ export const DEFAULT_LANGUAGE = "vi";
 /** Max length accepted for an object name (docs/api_spec.md validation). */
 export const OBJECT_NAME_MAX = 80;
 
-/** Short copy shown on each mode card. */
-export const MODE_META: Record<
-  Mode,
-  { icon: string; description: string }
-> = {
+/** Short copy shown on each mode card. (Icons live in ModeSelector.) */
+export const MODE_META: Record<Mode, { description: string }> = {
   "Vietnamese Culture": {
-    icon: "🇻🇳",
     description: "Ký ức tập thể, đời sống Việt Nam hằng ngày.",
   },
   Museum: {
-    icon: "🏛️",
     description: "Trang trọng, giàu hình ảnh như bảng mô tả bảo tàng.",
   },
   "Fun Fact": {
-    icon: "✨",
     description: "Vui, ngắn, dễ share, có chút hài hước nhẹ.",
   },
   Design: {
-    icon: "📐",
     description: "Vật liệu, hình dáng, trade-off thiết kế.",
   },
 };
 
-/** Short copy shown on each voice option. Icon + one-line persona. */
-export const VOICE_META: Record<
-  Voice,
-  { icon: string; description: string }
-> = {
-  "Nhà nghiên cứu": {
-    icon: "◷",
-    description: "Điềm đạm, chuẩn mực, có chiều sâu.",
-  },
-  "Bà kể chuyện": {
-    icon: "❀",
-    description: "Ấm áp, hoài niệm, “hồi đó…”.",
-  },
-  "Chú bán hàng": {
-    icon: "☕",
-    description: "Đời, dí dỏm, gần gũi vỉa hè.",
-  },
-  "Nhà thơ": {
-    icon: "✦",
-    description: "Văn chương, giàu hình ảnh.",
-  },
+/** One-line persona per voice. (Icons live in VoiceSelector.) */
+export const VOICE_META: Record<Voice, { description: string }> = {
+  "Nhà nghiên cứu": { description: "Điềm đạm, chuẩn mực, có chiều sâu." },
+  "Bà kể chuyện": { description: "Ấm áp, hoài niệm, “hồi đó…”." },
+  "Chú bán hàng": { description: "Đời, dí dỏm, gần gũi vỉa hè." },
+  "Nhà thơ": { description: "Văn chương, giàu hình ảnh." },
 };
 
 /**
