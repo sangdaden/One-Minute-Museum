@@ -97,12 +97,37 @@ OPENAI_API_KEY=sk-your-key-here
 |---|---|---|---|
 | `OPENAI_API_KEY` | Có¹ | — | Khóa OpenAI. Không bao giờ lộ ra frontend. |
 | `OPENAI_MODEL` | Không | `gpt-4o-mini` | Model hỗ trợ JSON output tốt. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Không² | — | URL project Supabase (tính năng cộng đồng). |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Không² | — | Anon key Supabase. |
 
 > ¹ **Dev fallback:** Khi `NODE_ENV=development` và **không có** `OPENAI_API_KEY`,
 > API `/api/exhibitions/generate` trả về **dữ liệu mẫu (mock)** đúng schema để bạn
 > phát triển UI mà không tốn chi phí. Ở production, thiếu key sẽ trả lỗi rõ ràng.
 >
+> ² **Không có Supabase:** app vẫn chạy bình thường; nút **Đăng nhập / Đăng bài**
+> tự ẩn. Có Supabase mới bật được tính năng cộng đồng.
+>
 > `.env.local` đã nằm trong `.gitignore` — đừng commit khóa.
+
+---
+
+## Cộng đồng (Supabase)
+
+Tính năng đăng nhập + đăng bài lên feed dùng **Supabase** (Postgres + Auth). Để bật:
+
+1. Tạo project tại [supabase.com](https://supabase.com).
+2. **SQL Editor** → chạy `supabase/migrations/0001_foundation.sql` (tạo bảng
+   `profiles`, `posts` + RLS + trigger).
+3. **Authentication → Providers → Google**: bật, điền OAuth client ID/secret
+   (tạo ở Google Cloud Console). Redirect URL trong Google trỏ tới
+   `https://<project>.supabase.co/auth/v1/callback`.
+4. **Authentication → URL Configuration**: thêm `http://localhost:3000/auth/callback`
+   (và domain production) vào *Redirect URLs*.
+5. Lấy **Project URL** + **anon key** (Settings → API) điền vào `.env.local`:
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+
+Tạo exhibition **không cần đăng nhập**; chỉ cần đăng nhập khi **Đăng lên cộng đồng**.
+Bài đã đăng xem ở **`/me`**.
 
 ---
 

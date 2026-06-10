@@ -12,6 +12,8 @@ import VoiceSelector from "@/components/VoiceSelector";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ExhibitionCard from "@/components/ExhibitionCard";
 import ShareCard from "@/components/ShareCard";
+import PublishButton from "@/components/PublishButton";
+import AuthButton from "@/components/AuthButton";
 import LoadingExhibition from "@/components/LoadingExhibition";
 import ErrorState from "@/components/ErrorState";
 
@@ -92,20 +94,23 @@ export default function Home() {
   return (
     <main className="mx-auto w-full max-w-[1040px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
-      <div ref={topRef} className="reveal flex items-center justify-between">
+      <div ref={topRef} className="reveal flex items-center justify-between gap-3">
         <span className="eyebrow text-ink-faint">Bảo Tàng 1 Phút</span>
-        <Link
-          href="/gallery"
-          className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
-        >
-          Bộ sưu tập
-          <span
-            aria-hidden
-            className="transition-transform group-hover:translate-x-0.5"
+        <div className="flex items-center gap-4">
+          <Link
+            href="/gallery"
+            className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
           >
-            →
-          </span>
-        </Link>
+            Bộ sưu tập
+            <span
+              aria-hidden
+              className="transition-transform group-hover:translate-x-0.5"
+            >
+              →
+            </span>
+          </Link>
+          <AuthButton />
+        </div>
       </div>
       <div
         className="reveal mt-3 h-px bg-ink/80"
@@ -197,6 +202,9 @@ export default function Home() {
               imageUrl={resultImage ?? undefined}
               onRegenerate={() => generate(exhibition.object_name, mode, voice)}
             />
+            <div className="flex justify-center">
+              <PublishButton exhibition={exhibition} />
+            </div>
             <ShareCard
               exhibition={exhibition}
               imageUrl={resultImage ?? undefined}

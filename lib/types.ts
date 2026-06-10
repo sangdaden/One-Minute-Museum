@@ -63,6 +63,25 @@ export interface Exhibition {
   voice?: string;
 }
 
+/** The exhibition content fields only (no id/meta) — stored as `content` jsonb. */
+export type ExhibitionContent = Omit<
+  Exhibition,
+  "id" | "object_name" | "mode" | "voice" | "language" | "created_at"
+>;
+
+/** A published exhibition (row in `posts`), optionally with its author. */
+export interface Post {
+  id: string;
+  user_id: string;
+  object_name: string;
+  mode: string;
+  voice: string | null;
+  language: string;
+  created_at: string;
+  content: ExhibitionContent;
+  author?: { display_name: string | null; avatar_url: string | null };
+}
+
 /** Error codes from docs/api_spec.md §8. */
 export type ApiErrorCode =
   | "VALIDATION_ERROR"
