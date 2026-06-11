@@ -128,31 +128,57 @@ export default function CreatePage() {
       />
 
       {/* Hero */}
-      <header className="mt-9 flex flex-col gap-6 sm:mt-12">
-        <div className="space-y-4">
-          <h1
-            className="reveal font-serif text-[2.9rem] font-medium leading-[0.98] tracking-[-0.02em] text-ink sm:text-[4.2rem]"
-            style={{ animationDelay: "100ms" }}
-          >
-            Bảo Tàng
-            <br />
-            <span className="text-accent">Một Phút</span>
-          </h1>
-          <p
-            className="reveal max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl"
-            style={{ animationDelay: "160ms" }}
-          >
-            Biến những vật bình thường quanh bạn thành một triển lãm mini.
-          </p>
-          <p
-            className="reveal eyebrow text-ink-faint"
-            style={{ animationDelay: "190ms" }}
-          >
-            One-Minute Museum for everyday objects.
-          </p>
-        </div>
+      <header className="mt-9 space-y-4 sm:mt-12">
+        <h1
+          className="reveal font-serif text-[2.9rem] font-medium leading-[0.98] tracking-[-0.02em] text-ink sm:text-[4.2rem]"
+          style={{ animationDelay: "100ms" }}
+        >
+          Bảo Tàng
+          <br />
+          <span className="text-accent">Một Phút</span>
+        </h1>
+        <p
+          className="reveal max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl"
+          style={{ animationDelay: "160ms" }}
+        >
+          Biến những vật bình thường quanh bạn thành một triển lãm mini.
+        </p>
+        <p
+          className="reveal eyebrow text-ink-faint"
+          style={{ animationDelay: "190ms" }}
+        >
+          One-Minute Museum for everyday objects.
+        </p>
+      </header>
 
-        <div className="reveal mt-2 flex flex-col gap-3" style={{ animationDelay: "220ms" }}>
+      {/* Góc nhìn + giọng kể TRƯỚC — vì chạm một gợi ý là tạo ngay. */}
+      <section
+        className="reveal mt-10 flex flex-col gap-4"
+        style={{ animationDelay: "220ms" }}
+      >
+        <div className="flex items-center gap-3">
+          <span className="eyebrow text-ink">Chọn góc nhìn</span>
+          <span className="h-px flex-1 bg-border-strong" />
+        </div>
+        <ModeSelector value={mode} onChange={setMode} disabled={isLoading} />
+
+        <div className="mt-2 flex items-center gap-3">
+          <span className="eyebrow text-ink">Chọn giọng kể</span>
+          <span className="h-px flex-1 bg-border-strong" />
+        </div>
+        <VoiceSelector value={voice} onChange={setVoice} disabled={isLoading} />
+      </section>
+
+      {/* Hiện vật — nhập tên/ảnh, hoặc chạm gợi ý (chạm là tạo ngay). */}
+      <section
+        className="reveal mt-10 flex flex-col gap-4"
+        style={{ animationDelay: "300ms" }}
+      >
+        <div className="flex items-center gap-3">
+          <span className="eyebrow text-ink">Chọn hiện vật</span>
+          <span className="h-px flex-1 bg-border-strong" />
+        </div>
+        <div className="flex flex-col gap-3">
           <ObjectInput
             value={objectName}
             onChange={setObjectName}
@@ -168,31 +194,10 @@ export default function CreatePage() {
           />
           <ImageUpload value={image} onChange={setImage} disabled={isLoading} />
         </div>
-
-        <div className="reveal mt-1" style={{ animationDelay: "280ms" }}>
-          <SuggestedObjects
-            onPick={handlePickSuggested}
-            disabled={isLoading || !!image}
-          />
-        </div>
-      </header>
-
-      {/* Mode selector */}
-      <section
-        className="reveal mt-14 flex flex-col gap-4"
-        style={{ animationDelay: "340ms" }}
-      >
-        <div className="flex items-center gap-3">
-          <span className="eyebrow text-ink">Chọn góc nhìn</span>
-          <span className="h-px flex-1 bg-border-strong" />
-        </div>
-        <ModeSelector value={mode} onChange={setMode} disabled={isLoading} />
-
-        <div className="mt-2 flex items-center gap-3">
-          <span className="eyebrow text-ink">Chọn giọng kể</span>
-          <span className="h-px flex-1 bg-border-strong" />
-        </div>
-        <VoiceSelector value={voice} onChange={setVoice} disabled={isLoading} />
+        <SuggestedObjects
+          onPick={handlePickSuggested}
+          disabled={isLoading || !!image}
+        />
       </section>
 
       {/* Result */}
