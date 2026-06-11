@@ -79,6 +79,8 @@ export interface Post {
   language: string;
   created_at: string;
   content: ExhibitionContent;
+  /** Public URL of the object photo (Supabase Storage), if published with one. */
+  image_url?: string | null;
   author?: { display_name: string | null; avatar_url: string | null };
   /** Loaded for feed/detail: who reacted with what. */
   reactions?: { type: string; user_id: string }[];

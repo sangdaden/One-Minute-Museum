@@ -232,7 +232,10 @@ export default function CreatePage() {
                 >
                   Sửa nội dung
                 </button>
-                <PublishButton exhibition={exhibition} />
+                <PublishButton
+                  exhibition={exhibition}
+                  imageUrl={resultImage ?? undefined}
+                />
               </div>
               <ShareCard
                 exhibition={exhibition}

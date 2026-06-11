@@ -42,7 +42,10 @@ export default function FeedPost({ post }: { post: Post }) {
         </div>
       </Link>
 
-      <ExhibitionCard exhibition={postToExhibition(post)} />
+      <ExhibitionCard
+        exhibition={postToExhibition(post)}
+        imageUrl={post.image_url ?? undefined}
+      />
 
       <div className="flex flex-wrap items-center justify-between gap-3 px-1">
         <ReactionBar postId={post.id} initialReactions={post.reactions ?? []} />

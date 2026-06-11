@@ -51,3 +51,13 @@ export async function fileToDownscaledDataUrl(
 
   return canvas.toDataURL("image/jpeg", quality);
 }
+
+/** Decode a base64 data URI into a Blob (for uploading to storage). Browser-only. */
+export function dataUrlToBlob(dataUrl: string): Blob {
+  const [head, base64] = dataUrl.split(",");
+  const mime = head.match(/data:(.*?);base64/)?.[1] ?? "image/jpeg";
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new Blob([bytes], { type: mime });
+}

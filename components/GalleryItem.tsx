@@ -4,10 +4,16 @@ import { formatDate, accession } from "@/lib/format";
 interface GalleryItemProps {
   exhibition: Exhibition;
   index: number;
+  /** Optional cover photo (for published posts). */
+  imageUrl?: string;
 }
 
 /** A single collected object, styled as a catalogue entry. */
-export default function GalleryItem({ exhibition, index }: GalleryItemProps) {
+export default function GalleryItem({
+  exhibition,
+  index,
+  imageUrl,
+}: GalleryItemProps) {
   const ex = exhibition;
   return (
     <article
@@ -18,6 +24,15 @@ export default function GalleryItem({ exhibition, index }: GalleryItemProps) {
         aria-hidden
         className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100"
       />
+
+      {imageUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={imageUrl}
+          alt=""
+          className="mb-4 h-32 w-full rounded-lg object-cover ring-1 ring-border"
+        />
+      )}
 
       {/* Accession strip */}
       <div className="mb-4 flex items-center justify-between">

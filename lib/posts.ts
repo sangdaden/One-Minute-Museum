@@ -38,6 +38,7 @@ interface PostRow {
   language: string;
   created_at: string;
   content: ExhibitionContent;
+  image_url?: string | null;
   profiles?: { display_name: string | null; avatar_url: string | null } | null;
   reactions?: { type: string; user_id: string }[] | null;
   comments?: { count: number }[] | null;
@@ -54,6 +55,7 @@ export function rowToPost(row: PostRow): Post {
     language: row.language,
     created_at: row.created_at,
     content: row.content,
+    image_url: row.image_url ?? null,
     author: row.profiles
       ? {
           display_name: row.profiles.display_name,

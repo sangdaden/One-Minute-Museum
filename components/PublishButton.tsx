@@ -6,15 +6,21 @@ import type { Exhibition } from "@/lib/types";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/client";
 import { exhibitionToPostInsert } from "@/lib/posts";
+import { dataUrlToBlob } from "@/lib/image";
 
 interface PublishButtonProps {
   exhibition: Exhibition;
+  /** In-session object photo (data URI) to publish alongside the post. */
+  imageUrl?: string;
 }
 
 type Status = "idle" | "working" | "done" | "error" | "need-login";
 
-/** Publish a generated exhibition to the public feed (login required). */
-export default function PublishButton({ exhibition }: PublishButtonProps) {
+/** Publish a generated exhibition (and its photo, if any) to the public feed. */
+export default function PublishButton({
+  exhibition,
+  imageUrl,
+}: PublishButtonProps) {
   const [status, setStatus] = useState<Status>("idle");
 
   if (!isSupabaseConfigured()) return null;
@@ -36,9 +42,30 @@ export default function PublishButton({ exhibition }: PublishButtonProps) {
       return;
     }
 
+    // Upload the photo to Storage first (if present).
+    let publishedImageUrl: string | null = null;
+    if (imageUrl) {
+      const path = `${user.id}/${crypto.randomUUID()}.jpg`;
+      const { error: upErr } = await supabase.storage
+        .from("post-images")
+        .upload(path, dataUrlToBlob(imageUrl), { contentType: "image/jpeg" });
+      if (upErr) {
+        setStatus("error");
+        return;
+      }
+      publishedImageUrl = supabase.storage
+        .from("post-images")
+        .getPublicUrl(path).data.publicUrl;
+    }
+
+    // Only reference image_url when there's an image, so text-only publishing
+    // still works on databases that haven't run the 0003 migration yet.
+    const base = exhibitionToPostInsert(exhibition, user.id);
     const { error } = await supabase
       .from("posts")
-      .insert(exhibitionToPostInsert(exhibition, user.id));
+      .insert(
+        publishedImageUrl ? { ...base, image_url: publishedImageUrl } : base,
+      );
 
     setStatus(error ? "error" : "done");
   }

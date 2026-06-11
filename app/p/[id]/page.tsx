@@ -84,7 +84,10 @@ export default async function PostPage({
       </Link>
 
       <div className="mt-4">
-        <ExhibitionCard exhibition={postToExhibition(post)} />
+        <ExhibitionCard
+          exhibition={postToExhibition(post)}
+          imageUrl={post.image_url ?? undefined}
+        />
       </div>
 
       <div className="mt-5">

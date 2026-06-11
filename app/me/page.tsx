@@ -67,7 +67,11 @@ export default async function MePage() {
             {posts.map((post, i) => (
               <li key={post.id}>
                 <Link href={`/p/${post.id}`} className="block">
-                  <GalleryItem exhibition={postToExhibition(post)} index={i} />
+                  <GalleryItem
+                    exhibition={postToExhibition(post)}
+                    index={i}
+                    imageUrl={post.image_url ?? undefined}
+                  />
                 </Link>
               </li>
             ))}
