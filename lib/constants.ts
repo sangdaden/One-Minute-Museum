@@ -20,6 +20,9 @@ export const IMAGE_MAX_CHARS = 2_000_000;
 /** Allowed image data-URI prefixes for the photo path. */
 export const IMAGE_DATA_URI_RE = /^data:image\/(png|jpe?g|webp);base64,/;
 
+/** Number of feed posts per page (initial + each "Tải thêm"). */
+export const FEED_PAGE_SIZE = 20;
+
 /** Short copy shown on each mode card. (Icons live in ModeSelector.) */
 export const MODE_META: Record<Mode, { description: string }> = {
   "Vietnamese Culture": {
