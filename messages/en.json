@@ -228,5 +228,18 @@
     "factKicker": "Fun fact {n}",
     "outro": "Share",
     "hint": "Tap to continue"
+  },
+  "Flashcards": {
+    "view": "Flashcards",
+    "title": "Flashcards",
+    "shareAll": "Share all",
+    "shareOne": "Share this card",
+    "download": "Save this card",
+    "downloadAll": "Save all",
+    "working": "Working…",
+    "error": "Couldn't export the image. Please try again.",
+    "close": "Close",
+    "next": "Next card",
+    "prev": "Previous card"
   }
 }

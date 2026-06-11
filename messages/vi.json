@@ -228,5 +228,18 @@
     "factKicker": "Fun fact {n}",
     "outro": "Chia sẻ",
     "hint": "Chạm để lướt tiếp"
+  },
+  "Flashcards": {
+    "view": "Flashcard",
+    "title": "Flashcard",
+    "shareAll": "Chia sẻ cả bộ",
+    "shareOne": "Chia sẻ thẻ này",
+    "download": "Tải thẻ này",
+    "downloadAll": "Tải tất cả",
+    "working": "Đang xử lý…",
+    "error": "Không xuất được ảnh. Thử lại nhé.",
+    "close": "Đóng",
+    "next": "Thẻ sau",
+    "prev": "Thẻ trước"
   }
 }

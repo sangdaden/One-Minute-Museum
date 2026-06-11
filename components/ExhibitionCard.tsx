@@ -5,6 +5,7 @@ import { formatDate, accession } from "@/lib/format";
 import { getTheme } from "@/lib/themes";
 import CopyButton from "./CopyButton";
 import StoryButton from "./StoryButton";
+import FlashcardsButton from "./FlashcardsButton";
 import ThemedCard from "./ThemedCard";
 
 export interface ExhibitionCardProps {
@@ -209,6 +210,7 @@ function BentoCard({
         <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 border-t border-border pt-4">
           <CopyButton text={formatExhibitionForSocial(ex)} />
           <StoryButton exhibition={ex} imageUrl={imageUrl} />
+          <FlashcardsButton exhibition={ex} imageUrl={imageUrl} />
           {onRegenerate && (
             <button
               type="button"
