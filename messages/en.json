@@ -226,7 +226,6 @@
     "error": "Couldn't generate images right now. Please try again."
   },
   "Story": {
-    "view": "View as story",
     "close": "Close",
     "next": "Next",
     "prev": "Back",

@@ -2,8 +2,8 @@ import type { Exhibition } from "@/lib/types";
 import { cleanHashtag } from "@/lib/format";
 
 /**
- * Shared slide model + renderer for the story experiences (single-exhibition
- * StoryViewer and the multi-post StoriesPlayer). Pure: no hooks, no portal.
+ * Shared slide model + renderer for the multi-post StoriesPlayer.
+ * Pure: no hooks, no portal.
  */
 
 export type Slide =
