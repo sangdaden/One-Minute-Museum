@@ -4,13 +4,14 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
 import { DEFAULT_MODE, DEFAULT_VOICE } from "@/lib/constants";
-import { saveExhibition } from "@/lib/gallery";
+import { saveExhibition, updateExhibition } from "@/lib/gallery";
 import ObjectInput from "@/components/ObjectInput";
 import ImageUpload from "@/components/ImageUpload";
 import ModeSelector from "@/components/ModeSelector";
 import VoiceSelector from "@/components/VoiceSelector";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ExhibitionCard from "@/components/ExhibitionCard";
+import EditExhibitionForm from "@/components/EditExhibitionForm";
 import ShareCard from "@/components/ShareCard";
 import PublishButton from "@/components/PublishButton";
 import AuthButton from "@/components/AuthButton";
@@ -28,6 +29,7 @@ export default function CreatePage() {
   // The image actually used for the shown result (so changing the picker later
   // doesn't retroactively alter the displayed card).
   const [resultImage, setResultImage] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
 
   const topRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,7 @@ export default function CreatePage() {
       const data = (await res.json()) as Exhibition;
       setExhibition(data);
       setResultImage(image); // photo shown with this result (not persisted)
+      setEditing(false);
       // Persist to the local gallery (dedupes by id, image excluded).
       saveExhibition(data);
     } catch (err) {
@@ -88,6 +91,7 @@ export default function CreatePage() {
     setExhibition(null);
     setImage(null);
     setResultImage(null);
+    setEditing(false);
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -201,20 +205,41 @@ export default function CreatePage() {
             onChangeObject={handleChangeObject}
           />
         ) : exhibition ? (
-          <div className="space-y-10">
-            <ExhibitionCard
+          editing ? (
+            <EditExhibitionForm
               exhibition={exhibition}
-              imageUrl={resultImage ?? undefined}
-              onRegenerate={() => generate(exhibition.object_name, mode, voice)}
+              onSave={(updated) => {
+                setExhibition(updated);
+                updateExhibition(updated);
+                setEditing(false);
+              }}
+              onCancel={() => setEditing(false)}
             />
-            <div className="flex justify-center">
-              <PublishButton exhibition={exhibition} />
+          ) : (
+            <div className="space-y-8">
+              <ExhibitionCard
+                exhibition={exhibition}
+                imageUrl={resultImage ?? undefined}
+                onRegenerate={() =>
+                  generate(exhibition.object_name, mode, voice)
+                }
+              />
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setEditing(true)}
+                  className="rounded-full border border-border-strong px-5 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                >
+                  Sửa nội dung
+                </button>
+                <PublishButton exhibition={exhibition} />
+              </div>
+              <ShareCard
+                exhibition={exhibition}
+                imageUrl={resultImage ?? undefined}
+              />
             </div>
-            <ShareCard
-              exhibition={exhibition}
-              imageUrl={resultImage ?? undefined}
-            />
-          </div>
+          )
         ) : (
           <div className="reveal flex flex-col items-center gap-4 border border-dashed border-border-strong bg-paper-card/40 px-6 py-20 text-center">
             <span className="eyebrow text-ink-faint">Sảnh chờ</span>

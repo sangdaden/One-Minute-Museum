@@ -47,6 +47,25 @@ export function saveExhibition(exhibition: Exhibition): Exhibition[] {
   return next;
 }
 
+/**
+ * Replace a saved exhibition (matched by id) with an edited version; inserts it
+ * at the front if it wasn't saved yet. Returns the resulting list.
+ */
+export function updateExhibition(exhibition: Exhibition): Exhibition[] {
+  if (!isBrowser()) return [];
+  const existing = getExhibitions();
+  const found = existing.some((e) => e.id === exhibition.id);
+  const next = found
+    ? existing.map((e) => (e.id === exhibition.id ? exhibition : e))
+    : [exhibition, ...existing];
+  try {
+    window.localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    // ignore quota / serialization errors
+  }
+  return next;
+}
+
 /** Remove every saved exhibition. */
 export function clearExhibitions(): void {
   if (!isBrowser()) return;
