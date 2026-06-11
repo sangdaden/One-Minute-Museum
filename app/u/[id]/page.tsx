@@ -5,8 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { rowToPost, postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
 import type { Post } from "@/lib/types";
-import AuthButton from "@/components/AuthButton";
-import ThemeToggle from "@/components/ThemeToggle";
+import AccountMenu from "@/components/AccountMenu";
 import GalleryItem from "@/components/GalleryItem";
 
 export const dynamic = "force-dynamic";
@@ -38,7 +37,7 @@ export default async function ProfilePage({
   const name = profile.display_name || "Người dùng ẩn danh";
 
   return (
-    <main className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="flex items-center justify-between gap-3">
         <Link
@@ -47,10 +46,7 @@ export default async function ProfilePage({
         >
           <span aria-hidden>←</span> Khám phá
         </Link>
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <AuthButton />
-        </div>
+        <AccountMenu />
       </div>
       <div className="mt-3 h-px bg-ink/80" />
 

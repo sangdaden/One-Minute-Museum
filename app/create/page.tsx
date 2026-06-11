@@ -15,8 +15,7 @@ import ExhibitionCard from "@/components/ExhibitionCard";
 import EditExhibitionForm from "@/components/EditExhibitionForm";
 import ShareCard from "@/components/ShareCard";
 import PublishButton from "@/components/PublishButton";
-import AuthButton from "@/components/AuthButton";
-import ThemeToggle from "@/components/ThemeToggle";
+import AccountMenu from "@/components/AccountMenu";
 import LoadingExhibition from "@/components/LoadingExhibition";
 import ErrorState from "@/components/ErrorState";
 
@@ -98,7 +97,7 @@ export default function CreatePage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div ref={topRef} className="reveal flex items-center justify-between gap-3">
         <Link
@@ -113,16 +112,7 @@ export default function CreatePage() {
           </span>
           Khám phá
         </Link>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/gallery"
-            className="eyebrow text-ink-soft transition-colors hover:text-accent"
-          >
-            Bộ sưu tập
-          </Link>
-          <ThemeToggle />
-          <AuthButton />
-        </div>
+        <AccountMenu />
       </div>
       <div
         className="reveal mt-3 h-px bg-ink/80"

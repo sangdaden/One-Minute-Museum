@@ -4,8 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { rowToPost, postToExhibition } from "@/lib/posts";
 import type { Post } from "@/lib/types";
 import GalleryItem from "@/components/GalleryItem";
-import AuthButton from "@/components/AuthButton";
-import ThemeToggle from "@/components/ThemeToggle";
+import AccountMenu from "@/components/AccountMenu";
 
 // Auth-dependent page — always render per-request (read the session fresh).
 export const dynamic = "force-dynamic";
@@ -32,7 +31,7 @@ export default async function MePage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="flex items-center justify-between gap-3">
         <Link
@@ -41,10 +40,7 @@ export default async function MePage() {
         >
           <span aria-hidden>←</span> Trang chủ
         </Link>
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <AuthButton />
-        </div>
+        <AccountMenu />
       </div>
       <div className="mt-3 h-px bg-ink/80" />
 

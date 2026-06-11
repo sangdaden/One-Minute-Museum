@@ -8,7 +8,7 @@ import {
   clearExhibitions,
 } from "@/lib/gallery";
 import GalleryItem from "@/components/GalleryItem";
-import ThemeToggle from "@/components/ThemeToggle";
+import AccountMenu from "@/components/AccountMenu";
 
 export default function GalleryPage() {
   // null = not yet loaded from localStorage (client-only).
@@ -29,7 +29,7 @@ export default function GalleryPage() {
   const loaded = items !== null;
 
   return (
-    <main className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="reveal flex items-center justify-between">
         <Link
@@ -44,10 +44,7 @@ export default function GalleryPage() {
           </span>
           Trang chủ
         </Link>
-        <div className="flex items-center gap-3">
-          <span className="eyebrow text-ink-faint">Bộ sưu tập</span>
-          <ThemeToggle />
-        </div>
+        <AccountMenu />
       </div>
       <div
         className="reveal mt-3 h-px bg-ink/80"

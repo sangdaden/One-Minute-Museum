@@ -4,8 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { rowToPost } from "@/lib/posts";
 import { FEED_PAGE_SIZE } from "@/lib/constants";
 import type { Post } from "@/lib/types";
-import AuthButton from "@/components/AuthButton";
-import ThemeToggle from "@/components/ThemeToggle";
+import AccountMenu from "@/components/AccountMenu";
 import FeedPost from "@/components/FeedPost";
 import FeedLoadMore from "@/components/FeedLoadMore";
 
@@ -34,20 +33,11 @@ export default async function FeedPage() {
       : null;
 
   return (
-    <main className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="flex items-center justify-between gap-3">
         <span className="eyebrow text-ink-faint">Bảo Tàng 1 Phút</span>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/gallery"
-            className="eyebrow text-ink-soft transition-colors hover:text-accent"
-          >
-            Bộ sưu tập
-          </Link>
-          <ThemeToggle />
-          <AuthButton />
-        </div>
+        <AccountMenu />
       </div>
       <div className="mt-3 h-px bg-ink/80" />
 

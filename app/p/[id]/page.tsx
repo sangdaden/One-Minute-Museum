@@ -6,8 +6,7 @@ import { rowToPost, rowToComment, postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
 import type { Comment } from "@/lib/types";
 import ExhibitionCard from "@/components/ExhibitionCard";
-import AuthButton from "@/components/AuthButton";
-import ThemeToggle from "@/components/ThemeToggle";
+import AccountMenu from "@/components/AccountMenu";
 import ReactionBar from "@/components/ReactionBar";
 import CommentList from "@/components/CommentList";
 import CommentForm from "@/components/CommentForm";
@@ -53,10 +52,7 @@ export default async function PostPage({
         >
           <span aria-hidden>←</span> Khám phá
         </Link>
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <AuthButton />
-        </div>
+        <AccountMenu />
       </div>
       <div className="mt-3 h-px bg-ink/80" />
 
