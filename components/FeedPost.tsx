@@ -39,7 +39,7 @@ export default function FeedPost({ post }: { post: Post }) {
             className="h-7 w-7 rounded-full object-cover ring-1 ring-border"
           />
         ) : (
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-paper-sunk text-xs font-medium text-ink-soft">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal/10 text-xs font-medium text-teal">
             {name.charAt(0).toUpperCase()}
           </span>
         )}

@@ -56,7 +56,7 @@ export default async function ProfilePage({
             className="h-20 w-20 rounded-full object-cover ring-1 ring-border"
           />
         ) : (
-          <span className="flex h-20 w-20 items-center justify-center rounded-full bg-paper-sunk font-serif text-3xl text-ink-soft">
+          <span className="flex h-20 w-20 items-center justify-center rounded-full bg-teal/10 font-serif text-3xl text-teal">
             {name.charAt(0).toUpperCase()}
           </span>
         )}

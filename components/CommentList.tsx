@@ -53,7 +53,7 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
                   className="mt-0.5 h-8 w-8 rounded-full object-cover ring-1 ring-border"
                 />
               ) : (
-                <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-paper-sunk text-sm font-medium text-ink-soft">
+                <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-teal/10 text-sm font-medium text-teal">
                   {name.charAt(0).toUpperCase()}
                 </span>
               )}

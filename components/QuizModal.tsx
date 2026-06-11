@@ -158,9 +158,9 @@ export default function QuizModal({ exhibition, onClose }: QuizModalProps) {
                 const cls = !answered
                   ? "border-border-strong text-ink-soft hover:border-accent hover:text-ink"
                   : isAnswer
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-600"
+                    ? "border-teal bg-teal/10 text-teal"
                     : isPicked
-                      ? "border-red-500 bg-red-500/10 text-red-600"
+                      ? "border-accent bg-accent/10 text-accent"
                       : "border-border text-ink-faint opacity-60";
                 return (
                   <button
@@ -185,7 +185,7 @@ export default function QuizModal({ exhibition, onClose }: QuizModalProps) {
             {selected !== null && (
               <div className="space-y-3 rounded-xl bg-paper-sunk p-3.5">
                 <p
-                  className={`text-sm font-semibold ${isCorrect ? "text-emerald-600" : "text-red-600"}`}
+                  className={`text-sm font-semibold ${isCorrect ? "text-teal" : "text-accent"}`}
                 >
                   {isCorrect ? t("correct") : t("wrong")}
                 </p>

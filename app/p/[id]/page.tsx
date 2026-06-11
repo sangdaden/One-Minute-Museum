@@ -67,7 +67,7 @@ export default async function PostPage({
                 className="h-12 w-12 rounded-full object-cover ring-1 ring-border"
               />
             ) : (
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-paper-sunk font-serif text-lg text-ink-soft">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-teal/10 font-serif text-lg text-teal">
                 {authorName.charAt(0).toUpperCase()}
               </span>
             )}
