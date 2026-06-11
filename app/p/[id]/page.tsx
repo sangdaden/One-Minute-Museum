@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
@@ -48,58 +49,70 @@ export default async function PostPage({
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto w-full max-w-[760px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
-      {/* Author */}
-      <Link
-        href={`/u/${post.user_id}`}
-        className="group inline-flex items-center gap-2.5"
-      >
-        {post.author?.avatar_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={post.author.avatar_url}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="h-8 w-8 rounded-full object-cover ring-1 ring-border"
+      <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
+      <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+        {/* Left: author + reactions + comment count (sticky) */}
+        <aside className="space-y-5 lg:sticky lg:top-24">
+          <Link
+            href={`/u/${post.user_id}`}
+            className="group flex items-center gap-3"
+          >
+            {post.author?.avatar_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={post.author.avatar_url}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="h-12 w-12 rounded-full object-cover ring-1 ring-border"
+              />
+            ) : (
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-paper-sunk font-serif text-lg text-ink-soft">
+                {authorName.charAt(0).toUpperCase()}
+              </span>
+            )}
+            <div className="flex flex-col leading-tight">
+              <span className="font-medium text-ink group-hover:text-accent">
+                {authorName}
+              </span>
+              <span className="eyebrow text-ink-faint">
+                {formatDate(post.created_at)}
+              </span>
+            </div>
+          </Link>
+
+          <div className="space-y-3 border-t border-border pt-5">
+            <ReactionBar
+              postId={post.id}
+              initialReactions={post.reactions ?? []}
+            />
+            <span className="inline-flex items-center gap-1.5 text-xs text-ink-faint">
+              <MessageCircle className="h-4 w-4" strokeWidth={1.75} />
+              {comments.length}
+            </span>
+          </div>
+        </aside>
+
+        {/* Right: exhibition card + comments */}
+        <div className="mt-10 space-y-10 lg:mt-0">
+          <ExhibitionCard
+            exhibition={postToExhibition(post)}
+            imageUrl={post.image_url ?? undefined}
           />
-        ) : (
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-paper-sunk text-sm font-medium text-ink-soft">
-            {authorName.charAt(0).toUpperCase()}
-          </span>
-        )}
-        <div className="flex flex-col leading-tight">
-          <span className="text-sm font-medium text-ink group-hover:text-accent">
-            {authorName}
-          </span>
-          <span className="eyebrow text-ink-faint">
-            {formatDate(post.created_at)}
-          </span>
+
+          {/* Comments */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-3">
+              <h2 className="eyebrow text-ink">
+                {t("comments", { count: comments.length })}
+              </h2>
+              <span className="h-px flex-1 bg-border-strong" />
+            </div>
+            <CommentList comments={comments} />
+            <CommentForm postId={post.id} />
+          </section>
         </div>
-      </Link>
-
-      <div className="mt-4">
-        <ExhibitionCard
-          exhibition={postToExhibition(post)}
-          imageUrl={post.image_url ?? undefined}
-        />
       </div>
-
-      <div className="mt-5">
-        <ReactionBar postId={post.id} initialReactions={post.reactions ?? []} />
-      </div>
-
-      {/* Comments */}
-      <section className="mt-12 space-y-6">
-        <div className="flex items-center gap-3">
-          <h2 className="eyebrow text-ink">
-            {t("comments", { count: comments.length })}
-          </h2>
-          <span className="h-px flex-1 bg-border-strong" />
-        </div>
-        <CommentList comments={comments} />
-        <CommentForm postId={post.id} />
-      </section>
       </main>
     </>
   );
