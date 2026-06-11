@@ -61,6 +61,8 @@ export default async function ProfilePage({
           <img
             src={profile.avatar_url}
             alt=""
+            loading="lazy"
+            decoding="async"
             className="h-20 w-20 rounded-full object-cover ring-1 ring-border"
           />
         ) : (

@@ -48,6 +48,8 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
                 <img
                   src={c.author.avatar_url}
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="mt-0.5 h-8 w-8 rounded-full object-cover ring-1 ring-border"
                 />
               ) : (

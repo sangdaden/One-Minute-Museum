@@ -70,6 +70,8 @@ export default async function PostPage({
           <img
             src={post.author.avatar_url}
             alt=""
+            loading="lazy"
+            decoding="async"
             className="h-8 w-8 rounded-full object-cover ring-1 ring-border"
           />
         ) : (

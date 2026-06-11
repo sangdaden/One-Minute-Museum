@@ -76,6 +76,8 @@ export default function ThemedCard({
           <img
             src={imageUrl}
             alt={ex.object_name}
+            loading="lazy"
+            decoding="async"
             className="max-h-72 w-full object-contain"
           />
         </div>

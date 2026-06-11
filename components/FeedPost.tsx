@@ -28,6 +28,8 @@ export default function FeedPost({ post }: { post: Post }) {
           <img
             src={avatar}
             alt=""
+            loading="lazy"
+            decoding="async"
             className="h-8 w-8 rounded-full object-cover ring-1 ring-border"
           />
         ) : (

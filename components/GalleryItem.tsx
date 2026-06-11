@@ -30,6 +30,8 @@ export default function GalleryItem({
         <img
           src={imageUrl}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="mb-4 h-32 w-full rounded-lg object-cover ring-1 ring-border"
         />
       )}

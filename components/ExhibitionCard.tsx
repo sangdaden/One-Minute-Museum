@@ -114,6 +114,8 @@ function BentoCard({
           <img
             src={imageUrl}
             alt={ex.object_name}
+            loading="lazy"
+            decoding="async"
             className="max-h-72 w-full object-contain"
           />
           <span className="eyebrow absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-1 text-paper-card">
