@@ -144,7 +144,7 @@ export default function ThemedCard({
       className="relative overflow-hidden rounded-2xl ring-1 ring-border shadow-[0_10px_30px_-20px_rgba(0,0,0,0.5)]"
       style={{ background: t.bg }}
     >
-      <Decoration kind={t.decoration} />
+      <Decoration kind={t.decoration} noteText={ex.note || ex.share_quote} />
 
       <div className="relative p-4 sm:p-5">
         {t.panel ? (
@@ -181,7 +181,13 @@ export default function ThemedCard({
 }
 
 /** Per-theme corner decoration — always in a safe corner, never over text. */
-function Decoration({ kind }: { kind: DecorationKind }) {
+function Decoration({
+  kind,
+  noteText,
+}: {
+  kind: DecorationKind;
+  noteText?: string;
+}) {
   switch (kind) {
     case "seal":
       return (
@@ -248,19 +254,20 @@ function Decoration({ kind }: { kind: DecorationKind }) {
       return (
         <div
           aria-hidden
-          className="absolute right-4 top-1 z-10 h-[78px] w-[96px] p-2.5 text-[11px] leading-tight"
+          className="absolute right-4 top-1 z-10 w-[124px] p-3 text-[12px] leading-snug"
           style={{
             background: "#ffe27a",
-            color: "#6b5a16",
-            transform: "rotate(6deg)",
+            color: "#5f4f14",
+            transform: "rotate(5deg)",
             boxShadow: "0 8px 16px -8px rgba(0,0,0,0.4)",
+            fontFamily: "var(--font-be-vietnam), system-ui, sans-serif",
           }}
         >
           <span
-            className="absolute left-1/2 top-[-7px] h-4 w-12 -translate-x-1/2"
-            style={{ background: "rgba(170,150,110,0.55)", transform: "rotate(-4deg)" }}
+            className="absolute left-1/2 top-[-8px] h-4 w-14 -translate-x-1/2"
+            style={{ background: "rgba(170,150,110,0.5)", transform: "rotate(-4deg)" }}
           />
-          Ghi chú…
+          <span className="line-clamp-4">{noteText}</span>
         </div>
       );
     case "tet":

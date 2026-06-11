@@ -63,6 +63,8 @@ export interface Exhibition {
   voice?: string;
   /** Vietnamese theme id (presentation only; not part of generated content). */
   theme?: string;
+  /** Optional personal note (shown on the "Giấy note" theme). Stored in content. */
+  note?: string;
 }
 
 /** The exhibition content fields only (no id/meta) — stored as `content` jsonb. */

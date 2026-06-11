@@ -229,6 +229,26 @@ export default function CreatePage() {
                   }}
                 />
               </div>
+
+              {exhibition.theme === "note" && (
+                <div className="flex flex-col gap-2">
+                  <span className="eyebrow text-ink">
+                    Ghi chú cá nhân (hiện trên giấy note)
+                  </span>
+                  <input
+                    type="text"
+                    value={exhibition.note ?? ""}
+                    maxLength={120}
+                    placeholder='Ví dụ: "Remote nhà mình bọc nilon 10 năm chưa tháo!"'
+                    onChange={(e) => {
+                      const updated = { ...exhibition, note: e.target.value };
+                      setExhibition(updated);
+                      updateExhibition(updated);
+                    }}
+                    className="w-full rounded-lg border border-border bg-paper-card px-3.5 py-2.5 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-faint/70 focus:border-accent"
+                  />
+                </div>
+              )}
               <ExhibitionCard
                 exhibition={exhibition}
                 imageUrl={resultImage ?? undefined}
