@@ -107,14 +107,14 @@ function BentoCard({
       {/* Your photo */}
       {imageUrl && (
         <section
-          className="reveal relative col-span-2 min-h-[10rem] overflow-hidden rounded-2xl shadow-[0_8px_24px_-18px_rgba(120,40,30,0.45)] ring-1 ring-border sm:col-span-2"
+          className="reveal relative col-span-2 flex min-h-[10rem] items-center justify-center overflow-hidden rounded-2xl bg-paper-sunk shadow-[0_8px_24px_-18px_rgba(120,40,30,0.45)] ring-1 ring-border sm:col-span-2"
           style={{ animationDelay: "30ms" }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageUrl}
             alt={ex.object_name}
-            className="h-full max-h-72 w-full object-cover"
+            className="max-h-72 w-full object-contain"
           />
           <span className="eyebrow absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-1 text-paper-card">
             {t("yourPhoto")}

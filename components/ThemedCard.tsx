@@ -65,13 +65,20 @@ export default function ThemedCard({
       </header>
 
       {imageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={imageUrl}
-          alt={ex.object_name}
-          className="max-h-72 w-full rounded-xl object-cover"
-          style={{ boxShadow: "0 10px 28px -18px rgba(0,0,0,0.6)" }}
-        />
+        <div
+          className="flex max-h-72 w-full items-center justify-center overflow-hidden rounded-xl"
+          style={{
+            background: `${t.inkSoft}14`,
+            boxShadow: "0 10px 28px -18px rgba(0,0,0,0.6)",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageUrl}
+            alt={ex.object_name}
+            className="max-h-72 w-full object-contain"
+          />
+        </div>
       )}
 
       {/* Hook */}

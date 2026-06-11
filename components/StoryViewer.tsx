@@ -253,9 +253,9 @@ function SlideBody({
   if (slide.kind === "cover") {
     if (imageUrl) {
       return (
-        <div className="relative h-full w-full">
+        <div className="relative flex h-full w-full items-center justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={imageUrl} alt="" className="h-full w-full object-cover" />
+          <img src={imageUrl} alt="" className="h-full w-full object-contain" />
           <div
             aria-hidden
             className="absolute inset-x-0 bottom-0 h-2/3"

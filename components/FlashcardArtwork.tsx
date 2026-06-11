@@ -131,19 +131,31 @@ function CoverBody({
       }}
     >
       {imageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={imageUrl}
-          alt=""
+        <div
           style={{
             width: "100%",
             height: 380,
-            objectFit: "cover",
             borderRadius: 18,
             marginBottom: 36,
-            display: "block",
+            background: `${t.inkSoft}14`,
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageUrl}
+            alt=""
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+              display: "block",
+            }}
+          />
+        </div>
       )}
       <div
         style={{

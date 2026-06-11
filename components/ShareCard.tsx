@@ -219,19 +219,31 @@ function ShareArtwork({
 
         {/* Optional featured photo */}
         {imageUrl && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={imageUrl}
-            alt=""
+          <div
             style={{
               width: "100%",
               height: 240,
-              objectFit: "cover",
-              borderRadius: 16,
               marginTop: 24,
-              display: "block",
+              borderRadius: 16,
+              background: `${t.inkSoft}14`,
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          />
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageUrl}
+              alt=""
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+          </div>
         )}
 
         {/* Hero — object name */}
