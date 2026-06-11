@@ -39,9 +39,10 @@ export default async function FeedPage() {
     <>
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-3xl px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
-      {/* Hero + create CTA */}
-      <div className="flex flex-wrap items-end justify-between gap-5">
+      <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
+      <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+      {/* Hero + create CTA (sticky on large screens) */}
+      <header className="space-y-5 lg:sticky lg:top-24">
         <div className="space-y-2">
           <h1 className="font-serif text-[2.6rem] font-medium leading-none tracking-[-0.02em] text-ink sm:text-[3.4rem]">
             {t("title")}<span className="text-accent">.</span>
@@ -59,9 +60,9 @@ export default async function FeedPage() {
           </span>
           {tNav("createCta")}
         </Link>
-      </div>
+      </header>
 
-      <section className="mt-10">
+      <section className="mt-10 lg:mt-0">
         {!configured ? (
           <Plate>
             {t.rich("notConfigured", {
@@ -91,6 +92,7 @@ export default async function FeedPage() {
           </div>
         )}
       </section>
+      </div>
       </main>
     </>
   );
