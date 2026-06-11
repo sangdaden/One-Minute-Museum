@@ -38,16 +38,18 @@ export default async function FeedPage() {
       : null;
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      {/* Masthead */}
-      <div className="flex items-center justify-between gap-3">
-        <Logo tagline={tBrand("tagline")} className="text-[1.4rem]" />
-        <AccountMenu />
-      </div>
-      <div className="mt-3 h-px bg-ink/80" />
+    <>
+      {/* Top bar — full-width, sticky */}
+      <header className="sticky top-0 z-40 border-b border-border bg-paper/85 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-5 py-3 sm:px-8">
+          <Logo tagline={tBrand("tagline")} className="text-[1.35rem]" />
+          <AccountMenu />
+        </div>
+      </header>
 
-      {/* Header + create CTA */}
-      <header className="mt-9 flex flex-wrap items-end justify-between gap-5 sm:mt-12">
+      <main className="mx-auto w-full max-w-3xl px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
+      {/* Hero + create CTA */}
+      <div className="flex flex-wrap items-end justify-between gap-5">
         <div className="space-y-2">
           <h1 className="font-serif text-[2.6rem] font-medium leading-none tracking-[-0.02em] text-ink sm:text-[3.4rem]">
             {t("title")}<span className="text-accent">.</span>
@@ -65,7 +67,7 @@ export default async function FeedPage() {
           </span>
           {tNav("createCta")}
         </Link>
-      </header>
+      </div>
 
       <section className="mt-10">
         {!configured ? (
@@ -97,7 +99,8 @@ export default async function FeedPage() {
           </div>
         )}
       </section>
-    </main>
+      </main>
+    </>
   );
 }
 
