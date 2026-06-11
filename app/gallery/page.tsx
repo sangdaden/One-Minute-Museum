@@ -35,9 +35,10 @@ export default function GalleryPage() {
     <>
       <SiteHeader />
       <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
-      {/* Header */}
+      <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+      {/* Header (sticky hero on large screens) */}
       <header
-        className="reveal flex flex-wrap items-end justify-between gap-4"
+        className="reveal space-y-5 lg:sticky lg:top-24"
         style={{ animationDelay: "100ms" }}
       >
         <div className="space-y-3">
@@ -50,7 +51,7 @@ export default function GalleryPage() {
         </div>
 
         {loaded && count > 0 && (
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <span className="eyebrow text-ink-faint">
               {String(count).padStart(2, "0")} {tCommon("objects")}
             </span>
@@ -85,7 +86,7 @@ export default function GalleryPage() {
       </header>
 
       {/* Body */}
-      <section className="mt-10">
+      <section className="mt-10 lg:mt-0">
         {!loaded ? null : count === 0 ? (
           <div className="reveal flex flex-col items-center gap-4 border border-dashed border-border-strong bg-paper-card/40 px-6 py-20 text-center">
             <span aria-hidden className="font-serif text-5xl text-gold/50">
@@ -106,7 +107,7 @@ export default function GalleryPage() {
             </Link>
           </div>
         ) : (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {items!.map((ex, i) => (
               <li key={ex.id}>
                 <GalleryItem exhibition={ex} index={i} />
@@ -115,6 +116,7 @@ export default function GalleryPage() {
           </ul>
         )}
       </section>
+      </div>
 
       <footer className="mt-16 flex items-center justify-between border-t border-border pt-5">
         <span className="eyebrow text-ink-faint">One-Minute Museum</span>

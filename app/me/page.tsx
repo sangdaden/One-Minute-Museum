@@ -36,7 +36,8 @@ export default async function MePage() {
     <>
       <SiteHeader />
       <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
-      <header className="space-y-3">
+      <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+      <header className="space-y-3 lg:sticky lg:top-24">
         <h1 className="font-serif text-[2.6rem] font-medium leading-none tracking-[-0.02em] text-ink sm:text-[3.4rem]">
           {t("title")}<span className="text-accent">.</span>
         </h1>
@@ -45,7 +46,7 @@ export default async function MePage() {
         </p>
       </header>
 
-      <section className="mt-10">
+      <section className="mt-10 lg:mt-0">
         {!configured ? (
           <Plate>{t("notConfigured")}</Plate>
         ) : !signedIn ? (
@@ -53,7 +54,7 @@ export default async function MePage() {
         ) : posts.length === 0 ? (
           <Plate>{t("empty")}</Plate>
         ) : (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {posts.map((post, i) => (
               <li key={post.id}>
                 <Link href={`/p/${post.id}`} className="block">
@@ -68,6 +69,7 @@ export default async function MePage() {
           </ul>
         )}
       </section>
+      </div>
       </main>
     </>
   );

@@ -43,8 +43,9 @@ export default async function ProfilePage({
     <>
       <SiteHeader />
       <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
-      {/* Profile header */}
-      <header className="flex items-center gap-5">
+      <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+      {/* Profile header (sticky on large screens) */}
+      <header className="flex items-center gap-5 lg:sticky lg:top-24 lg:flex-col lg:items-start lg:gap-4">
         {profile.avatar_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -72,7 +73,7 @@ export default async function ProfilePage({
       </header>
 
       {/* Posts */}
-      <section className="mt-10">
+      <section className="mt-10 lg:mt-0">
         {posts.length === 0 ? (
           <div className="flex flex-col items-center gap-4 border border-dashed border-border-strong bg-paper-card/40 px-6 py-20 text-center">
             <span aria-hidden className="font-serif text-5xl text-gold/50">
@@ -83,7 +84,7 @@ export default async function ProfilePage({
             </p>
           </div>
         ) : (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {posts.map((post, i) => (
               <li key={post.id}>
                 <Link href={`/p/${post.id}`} className="block">
@@ -98,6 +99,7 @@ export default async function ProfilePage({
           </ul>
         )}
       </section>
+      </div>
       </main>
     </>
   );
