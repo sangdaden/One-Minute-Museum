@@ -261,6 +261,19 @@
     "tagline": "Embrace all of Vietnamese culture",
     "abbr": "OMM"
   },
+  "Ask": {
+    "view": "Ask",
+    "title": "Ask about this object",
+    "hint": "Ask anything, or try a suggestion:",
+    "placeholder": "Ask about this object…",
+    "send": "Send",
+    "thinking": "Thinking…",
+    "error": "Couldn't answer right now. Please try again.",
+    "close": "Close",
+    "suggest1": "Why is it so common?",
+    "suggest2": "What's special about its design?",
+    "suggest3": "How does it relate to Vietnamese culture?"
+  },
   "Quiz": {
     "view": "Quiz",
     "title": "Quiz",

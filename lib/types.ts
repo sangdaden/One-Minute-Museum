@@ -94,6 +94,12 @@ export interface Post {
   comment_count?: number;
 }
 
+/** A single chat turn in the "ask about this object" conversation. */
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
 /** One multiple-choice quiz question generated from an exhibition. */
 export interface QuizQuestion {
   question: string;

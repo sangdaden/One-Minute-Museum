@@ -261,6 +261,19 @@
     "tagline": "Ôm trọn văn hóa Việt",
     "abbr": "OMM"
   },
+  "Ask": {
+    "view": "Hỏi thêm",
+    "title": "Hỏi thêm về hiện vật",
+    "hint": "Hỏi gì đó, hoặc thử một gợi ý:",
+    "placeholder": "Hỏi về hiện vật này…",
+    "send": "Gửi",
+    "thinking": "Đang trả lời…",
+    "error": "Không trả lời được lúc này. Thử lại nhé.",
+    "close": "Đóng",
+    "suggest1": "Vì sao nó phổ biến?",
+    "suggest2": "Có gì đặc biệt về thiết kế?",
+    "suggest3": "Liên hệ gì với văn hóa Việt?"
+  },
   "Quiz": {
     "view": "Đố vui",
     "title": "Đố vui",
