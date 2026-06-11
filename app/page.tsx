@@ -7,6 +7,7 @@ import { FEED_PAGE_SIZE, SUGGESTED_OBJECTS } from "@/lib/constants";
 import { MODES } from "@/lib/types";
 import type { Mode, Post } from "@/lib/types";
 import SiteHeader from "@/components/SiteHeader";
+import StoriesTray from "@/components/StoriesTray";
 import FeedPost from "@/components/FeedPost";
 import FeedLoadMore from "@/components/FeedLoadMore";
 
@@ -149,6 +150,7 @@ export default async function FeedPage({
           </Plate>
         ) : (
           <div className="space-y-5">
+            <StoriesTray posts={posts} />
             {posts.map((post) => (
               <FeedPost key={post.id} post={post} />
             ))}

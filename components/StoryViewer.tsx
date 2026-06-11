@@ -6,24 +6,13 @@ import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
 import { getTheme } from "@/lib/themes";
-import { cleanHashtag } from "@/lib/format";
+import { buildStorySlides, StorySlideBody, type Slide } from "./StorySlides";
 
 interface StoryViewerProps {
   exhibition: Exhibition;
   imageUrl?: string;
   onClose: () => void;
 }
-
-type Slide =
-  | { kind: "cover" }
-  | {
-      kind: "section";
-      label: "hook" | "what" | "story" | "insight" | "why" | "reflection";
-      body: string;
-      emphasis?: boolean;
-    }
-  | { kind: "fact"; index: number; body: string }
-  | { kind: "outro" };
 
 /**
  * Full-screen Stories-style viewer for one exhibition: cover image first, then
@@ -39,29 +28,7 @@ export default function StoryViewer({
   const tStory = useTranslations("Story");
   const theme = getTheme(ex.theme);
 
-  const slides = useMemo<Slide[]>(() => {
-    const s: Slide[] = [{ kind: "cover" }];
-    if (ex.hook) s.push({ kind: "section", label: "hook", body: ex.hook, emphasis: true });
-    if (ex.what_it_is) s.push({ kind: "section", label: "what", body: ex.what_it_is });
-    if (ex.origin_or_context)
-      s.push({ kind: "section", label: "story", body: ex.origin_or_context });
-    ex.three_fun_facts.slice(0, 3).forEach((f, i) => {
-      if (f) s.push({ kind: "fact", index: i, body: f });
-    });
-    if (ex.design_or_cultural_insight)
-      s.push({ kind: "section", label: "insight", body: ex.design_or_cultural_insight });
-    if (ex.why_it_matters)
-      s.push({ kind: "section", label: "why", body: ex.why_it_matters });
-    if (ex.reflection_question)
-      s.push({
-        kind: "section",
-        label: "reflection",
-        body: ex.reflection_question,
-        emphasis: true,
-      });
-    s.push({ kind: "outro" });
-    return s;
-  }, [ex]);
+  const slides = useMemo<Slide[]>(() => buildStorySlides(ex), [ex]);
 
   const [index, setIndex] = useState(0);
   const startX = useRef(0);
@@ -71,8 +38,6 @@ export default function StoryViewer({
   const onImage = current.kind === "cover" && !!imageUrl;
 
   function next() {
-    // Decide outside the updater — calling onClose() (a parent setState) inside
-    // a setIndex updater runs during render and triggers a React warning.
     if (index >= slides.length - 1) {
       onClose();
       return;
@@ -83,7 +48,6 @@ export default function StoryViewer({
     setIndex((i) => Math.max(0, i - 1));
   }
 
-  // Lock body scroll while the viewer is open (run once).
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -92,7 +56,6 @@ export default function StoryViewer({
     };
   }, []);
 
-  // Keyboard navigation — re-bound per render so it sees the current index.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -110,6 +73,14 @@ export default function StoryViewer({
 
   const fg = onImage ? "#ffffff" : theme.ink;
   const accent = onImage ? "#ffffff" : theme.accent;
+  const kicker =
+    current.kind === "section"
+      ? tCard(current.label)
+      : current.kind === "fact"
+        ? tStory("factKicker", { n: String(current.index + 1).padStart(2, "0") })
+        : current.kind === "outro"
+          ? tStory("outro")
+          : "";
 
   return createPortal(
     <div
@@ -133,26 +104,15 @@ export default function StoryViewer({
           if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
         }}
       >
-        {/* Slide content (non-interactive; taps pass to the zones below). */}
         <div className="pointer-events-none absolute inset-0">
-          <SlideBody
+          <StorySlideBody
             slide={current}
             ex={ex}
             imageUrl={imageUrl}
             fg={fg}
             accent={accent}
             inkSoft={theme.inkSoft}
-            kicker={
-              current.kind === "section"
-                ? tCard(current.label)
-                : current.kind === "fact"
-                  ? tStory("factKicker", {
-                      n: String(current.index + 1).padStart(2, "0"),
-                    })
-                  : current.kind === "outro"
-                    ? tStory("outro")
-                    : ""
-            }
+            kicker={kicker}
           />
         </div>
 
@@ -176,7 +136,6 @@ export default function StoryViewer({
           className="absolute inset-y-0 right-0 z-10 w-[65%] cursor-default"
         />
 
-        {/* Top scrim (only over an image cover, for header contrast). */}
         {onImage && (
           <div
             aria-hidden
@@ -231,128 +190,5 @@ export default function StoryViewer({
       </div>
     </div>,
     document.body,
-  );
-}
-
-function SlideBody({
-  slide,
-  ex,
-  imageUrl,
-  fg,
-  accent,
-  inkSoft,
-  kicker,
-}: {
-  slide: Slide;
-  ex: Exhibition;
-  imageUrl?: string;
-  fg: string;
-  accent: string;
-  inkSoft: string;
-  kicker: string;
-}) {
-  if (slide.kind === "cover") {
-    if (imageUrl) {
-      return (
-        <div className="relative flex h-full w-full items-center justify-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={imageUrl} alt="" className="h-full w-full object-contain" />
-          <div
-            aria-hidden
-            className="absolute inset-x-0 bottom-0 h-2/3"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.72), transparent)",
-            }}
-          />
-          <div className="absolute inset-x-0 bottom-0 p-7">
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/80">
-              {ex.object_name}
-            </p>
-            <h2 className="mt-2 font-serif text-[2rem] font-semibold leading-[1.05] text-white sm:text-[2.4rem]">
-              {ex.title}
-            </h2>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="flex h-full w-full flex-col justify-center px-8">
-        <p
-          className="text-[11px] font-medium uppercase tracking-[0.2em]"
-          style={{ color: accent }}
-        >
-          {ex.object_name}
-        </p>
-        <h2
-          className="mt-3 font-serif text-[2.4rem] font-semibold leading-[1.04] sm:text-[3rem]"
-          style={{ color: fg }}
-        >
-          {ex.title}
-        </h2>
-      </div>
-    );
-  }
-
-  if (slide.kind === "outro") {
-    return (
-      <div className="flex h-full w-full flex-col justify-center px-8">
-        <p
-          className="text-[11px] font-medium uppercase tracking-[0.2em]"
-          style={{ color: accent }}
-        >
-          {kicker}
-        </p>
-        <p
-          className="mt-4 font-serif text-[1.7rem] font-medium leading-snug sm:text-[2.1rem]"
-          style={{ color: fg }}
-        >
-          “{ex.share_quote}”
-        </p>
-        <div className="mt-6 flex flex-wrap gap-x-3 gap-y-1">
-          {ex.hashtags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[11px] font-medium uppercase tracking-[0.14em]"
-              style={{ color: inkSoft }}
-            >
-              #{cleanHashtag(tag)}
-            </span>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  const big = slide.kind === "section" && slide.emphasis;
-  const number = slide.kind === "fact";
-
-  return (
-    <div className="flex h-full w-full flex-col justify-center px-8">
-      <p
-        className="text-[11px] font-medium uppercase tracking-[0.2em]"
-        style={{ color: accent }}
-      >
-        {kicker}
-      </p>
-      {number && (
-        <span
-          className="mt-3 font-serif text-5xl font-semibold leading-none"
-          style={{ color: accent }}
-        >
-          {String((slide as { index: number }).index + 1).padStart(2, "0")}
-        </span>
-      )}
-      <p
-        className={`font-serif font-medium leading-snug ${
-          big
-            ? "mt-4 text-[2rem] sm:text-[2.6rem]"
-            : "mt-4 text-[1.6rem] sm:text-[2.05rem]"
-        }`}
-        style={{ color: fg }}
-      >
-        {slide.body}
-      </p>
-    </div>
   );
 }
