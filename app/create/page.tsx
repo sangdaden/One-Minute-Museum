@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Crop } from "lucide-react";
 import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
 import { DEFAULT_MODE, DEFAULT_VOICE } from "@/lib/constants";
@@ -25,6 +25,7 @@ import ErrorState from "@/components/ErrorState";
 export default function CreatePage() {
   const t = useTranslations("Create");
   const tCrop = useTranslations("Cropper");
+  const locale = useLocale();
   const [objectName, setObjectName] = useState("");
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
   const [voice, setVoice] = useState<Voice>(DEFAULT_VOICE);
@@ -69,7 +70,7 @@ export default function CreatePage() {
           object_name: trimmed,
           mode: selectedMode,
           voice: selectedVoice,
-          language: "vi",
+          language: locale === "en" ? "en" : "vi",
           image: image ?? undefined,
         }),
       });

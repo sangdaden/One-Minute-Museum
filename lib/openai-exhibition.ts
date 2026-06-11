@@ -44,6 +44,13 @@ Nhiệm vụ của bạn:
 - Không đưa ra claim nguy hiểm, y tế, pháp lý hoặc khoa học quá chắc chắn nếu không có cơ sở.
 - Output phải là JSON hợp lệ, không markdown, không giải thích ngoài JSON.`;
 
+/** Strong output-language directive so the content follows the UI locale. */
+function langDirective(language: string) {
+  return language === "en"
+    ? "NGÔN NGỮ OUTPUT: English. Viết TOÀN BỘ nội dung (mọi trường: title, hook, what_it_is, facts, …) bằng tiếng Anh tự nhiên, kể cả khi tên vật là tiếng Việt."
+    : "NGÔN NGỮ OUTPUT: Tiếng Việt. Viết toàn bộ nội dung bằng tiếng Việt.";
+}
+
 // User prompt template — docs/prompt_spec.md §2.
 function buildUserPrompt(
   objectName: string,
@@ -54,9 +61,10 @@ function buildUserPrompt(
   return `Hãy tạo một mini exhibition cho vật thể sau.
 
 Vật thể: ${objectName}
-Ngôn ngữ: ${language}
 Mode: ${mode}
 Giọng kể: ${voice}
+
+${langDirective(language)}
 
 Giải thích mode (kể ĐIỀU GÌ):
 - Vietnamese Culture: liên hệ đời sống Việt Nam, ký ức tập thể, cách vật này xuất hiện trong sinh hoạt hằng ngày.
@@ -84,9 +92,10 @@ Ràng buộc:
 function buildImageUserPrompt(language: string, mode: string, voice: string) {
   return `Hãy nhìn ẢNH được cung cấp, nhận diện VẬT CHÍNH trong ảnh, rồi tạo một mini exhibition về vật đó.
 
-Ngôn ngữ: ${language}
 Mode: ${mode}
 Giọng kể: ${voice}
+
+${langDirective(language)}
 
 Giải thích mode (kể ĐIỀU GÌ):
 - Vietnamese Culture: liên hệ đời sống Việt Nam, ký ức tập thể, cách vật này xuất hiện trong sinh hoạt hằng ngày.
@@ -101,7 +110,7 @@ Giải thích giọng kể (chỉ đổi tone, không đổi nội dung mode):
 - Nhà thơ: văn chương, giàu hình ảnh, có nhịp — vẫn rõ nghĩa.
 
 Ràng buộc:
-- object_name: tên ngắn gọn của vật chính nhận diện được (tiếng Việt).
+- object_name: tên ngắn gọn của vật chính nhận diện được (theo NGÔN NGỮ OUTPUT ở trên).
 - title ngắn gọn, có tên vật.
 - hook tối đa 2 câu; mỗi fun fact 1-2 câu, đúng 3 fun fact.
 - reflection_question gợi suy nghĩ; share_quote tối đa 20 từ.
