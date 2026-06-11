@@ -19,7 +19,9 @@ export default async function FeedPage() {
     const supabase = await createClient();
     const { data } = await supabase
       .from("posts")
-      .select("*, profiles(display_name, avatar_url)")
+      .select(
+        "*, profiles(display_name, avatar_url), reactions(type, user_id), comments(count)",
+      )
       .order("created_at", { ascending: false })
       .limit(FEED_PAGE_SIZE);
     posts = (data ?? []).map(rowToPost);

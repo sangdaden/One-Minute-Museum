@@ -1,7 +1,9 @@
+import Link from "next/link";
 import type { Post } from "@/lib/types";
 import { postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
 import ExhibitionCard from "./ExhibitionCard";
+import ReactionBar from "./ReactionBar";
 
 /**
  * One post in the community feed: author header + the full exhibition card.
@@ -36,6 +38,16 @@ export default function FeedPost({ post }: { post: Post }) {
       </div>
 
       <ExhibitionCard exhibition={postToExhibition(post)} />
+
+      <div className="flex flex-wrap items-center justify-between gap-3 px-1">
+        <ReactionBar postId={post.id} initialReactions={post.reactions ?? []} />
+        <Link
+          href={`/p/${post.id}`}
+          className="eyebrow text-ink-soft transition-colors hover:text-accent"
+        >
+          {post.comment_count ?? 0} bình luận →
+        </Link>
+      </div>
     </article>
   );
 }

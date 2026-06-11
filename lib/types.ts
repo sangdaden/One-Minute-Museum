@@ -80,6 +80,30 @@ export interface Post {
   created_at: string;
   content: ExhibitionContent;
   author?: { display_name: string | null; avatar_url: string | null };
+  /** Loaded for feed/detail: who reacted with what. */
+  reactions?: { type: string; user_id: string }[];
+  /** Loaded for feed/detail. */
+  comment_count?: number;
+}
+
+/** The curated reaction set (docs/specs reactions-comments). */
+export const REACTIONS = [
+  { type: "thich", emoji: "❤️", label: "Thích" },
+  { type: "batngo", emoji: "😮", label: "Bất ngờ" },
+  { type: "suyngam", emoji: "🤔", label: "Suy ngẫm" },
+  { type: "vui", emoji: "😄", label: "Vui" },
+] as const;
+
+export type ReactionType = (typeof REACTIONS)[number]["type"];
+
+/** A comment on a post. */
+export interface Comment {
+  id: string;
+  post_id: string;
+  user_id: string;
+  body: string;
+  created_at: string;
+  author?: { display_name: string | null; avatar_url: string | null };
 }
 
 /** Error codes from docs/api_spec.md §8. */

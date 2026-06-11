@@ -20,7 +20,9 @@ export async function GET(request: Request) {
 
   let query = supabase
     .from("posts")
-    .select("*, profiles(display_name, avatar_url)")
+    .select(
+      "*, profiles(display_name, avatar_url), reactions(type, user_id), comments(count)",
+    )
     .order("created_at", { ascending: false })
     .limit(FEED_PAGE_SIZE);
 

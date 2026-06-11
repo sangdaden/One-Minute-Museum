@@ -1,4 +1,4 @@
-import type { Exhibition, ExhibitionContent, Post } from "./types";
+import type { Comment, Exhibition, ExhibitionContent, Post } from "./types";
 
 /**
  * Pure mappers between the `Exhibition` shape and the `posts` table. No Supabase
@@ -39,6 +39,8 @@ interface PostRow {
   created_at: string;
   content: ExhibitionContent;
   profiles?: { display_name: string | null; avatar_url: string | null } | null;
+  reactions?: { type: string; user_id: string }[] | null;
+  comments?: { count: number }[] | null;
 }
 
 /** Map a DB row (optionally with a joined `profiles`) to a `Post`. */
@@ -52,6 +54,34 @@ export function rowToPost(row: PostRow): Post {
     language: row.language,
     created_at: row.created_at,
     content: row.content,
+    author: row.profiles
+      ? {
+          display_name: row.profiles.display_name,
+          avatar_url: row.profiles.avatar_url,
+        }
+      : undefined,
+    reactions: row.reactions ?? [],
+    comment_count: row.comments?.[0]?.count ?? 0,
+  };
+}
+
+interface CommentRow {
+  id: string;
+  post_id: string;
+  user_id: string;
+  body: string;
+  created_at: string;
+  profiles?: { display_name: string | null; avatar_url: string | null } | null;
+}
+
+/** Map a DB comment row (optionally joined with `profiles`) to a `Comment`. */
+export function rowToComment(row: CommentRow): Comment {
+  return {
+    id: row.id,
+    post_id: row.post_id,
+    user_id: row.user_id,
+    body: row.body,
+    created_at: row.created_at,
     author: row.profiles
       ? {
           display_name: row.profiles.display_name,
