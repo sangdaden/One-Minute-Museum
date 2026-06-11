@@ -9,10 +9,9 @@ import {
   clearExhibitions,
 } from "@/lib/gallery";
 import GalleryItem from "@/components/GalleryItem";
-import AccountMenu from "@/components/AccountMenu";
+import SiteHeader from "@/components/SiteHeader";
 
 export default function GalleryPage() {
-  const tNav = useTranslations("Nav");
   const t = useTranslations("Gallery");
   const tCommon = useTranslations("Common");
   // null = not yet loaded from localStorage (client-only).
@@ -33,31 +32,12 @@ export default function GalleryPage() {
   const loaded = items !== null;
 
   return (
-    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      {/* Masthead */}
-      <div className="reveal flex items-center justify-between">
-        <Link
-          href="/"
-          className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
-        >
-          <span
-            aria-hidden
-            className="transition-transform group-hover:-translate-x-0.5"
-          >
-            ←
-          </span>
-          {tNav("home")}
-        </Link>
-        <AccountMenu />
-      </div>
-      <div
-        className="reveal mt-3 h-px bg-ink/80"
-        style={{ animationDelay: "60ms" }}
-      />
-
+    <>
+      <SiteHeader />
+      <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
       {/* Header */}
       <header
-        className="reveal mt-9 flex flex-wrap items-end justify-between gap-4 sm:mt-12"
+        className="reveal flex flex-wrap items-end justify-between gap-4"
         style={{ animationDelay: "100ms" }}
       >
         <div className="space-y-3">
@@ -140,6 +120,7 @@ export default function GalleryPage() {
         <span className="eyebrow text-ink-faint">One-Minute Museum</span>
         <span className="eyebrow text-ink-faint">{t("localNote")}</span>
       </footer>
-    </main>
+      </main>
+    </>
   );
 }

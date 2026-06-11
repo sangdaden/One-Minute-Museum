@@ -7,7 +7,7 @@ import { rowToPost, rowToComment, postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
 import type { Comment } from "@/lib/types";
 import ExhibitionCard from "@/components/ExhibitionCard";
-import AccountMenu from "@/components/AccountMenu";
+import SiteHeader from "@/components/SiteHeader";
 import ReactionBar from "@/components/ReactionBar";
 import CommentList from "@/components/CommentList";
 import CommentForm from "@/components/CommentForm";
@@ -21,7 +21,6 @@ export default async function PostPage({
 }) {
   const { id } = await params;
   if (!isSupabaseConfigured()) notFound();
-  const tNav = await getTranslations("Nav");
   const t = await getTranslations("Post");
   const tCommon = await getTranslations("Common");
 
@@ -47,23 +46,13 @@ export default async function PostPage({
   const authorName = post.author?.display_name || tCommon("anon");
 
   return (
-    <main className="mx-auto w-full max-w-[760px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      {/* Masthead */}
-      <div className="flex items-center justify-between gap-3">
-        <Link
-          href="/"
-          className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
-        >
-          <span aria-hidden>←</span> {tNav("explore")}
-        </Link>
-        <AccountMenu />
-      </div>
-      <div className="mt-3 h-px bg-ink/80" />
-
+    <>
+      <SiteHeader />
+      <main className="mx-auto w-full max-w-[760px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
       {/* Author */}
       <Link
         href={`/u/${post.user_id}`}
-        className="group mt-8 inline-flex items-center gap-2.5"
+        className="group inline-flex items-center gap-2.5"
       >
         {post.author?.avatar_url ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -111,6 +100,7 @@ export default async function PostPage({
         <CommentList comments={comments} />
         <CommentForm postId={post.id} />
       </section>
-    </main>
+      </main>
+    </>
   );
 }

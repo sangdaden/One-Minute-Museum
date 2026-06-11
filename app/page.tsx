@@ -5,8 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { rowToPost } from "@/lib/posts";
 import { FEED_PAGE_SIZE } from "@/lib/constants";
 import type { Post } from "@/lib/types";
-import AccountMenu from "@/components/AccountMenu";
-import Logo from "@/components/Logo";
+import SiteHeader from "@/components/SiteHeader";
 import FeedPost from "@/components/FeedPost";
 import FeedLoadMore from "@/components/FeedLoadMore";
 
@@ -17,7 +16,6 @@ export default async function FeedPage() {
   const configured = isSupabaseConfigured();
   const t = await getTranslations("Feed");
   const tNav = await getTranslations("Nav");
-  const tBrand = await getTranslations("Brand");
   let posts: Post[] = [];
 
   if (configured) {
@@ -39,13 +37,7 @@ export default async function FeedPage() {
 
   return (
     <>
-      {/* Top bar — full-width, sticky */}
-      <header className="sticky top-0 z-40 border-b border-border bg-paper/85 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-5 py-3 sm:px-8">
-          <Logo tagline={tBrand("tagline")} className="text-[1.35rem]" />
-          <AccountMenu />
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="mx-auto w-full max-w-3xl px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
       {/* Hero + create CTA */}

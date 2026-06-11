@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Crop } from "lucide-react";
@@ -19,12 +18,11 @@ import ExhibitionCard from "@/components/ExhibitionCard";
 import EditExhibitionForm from "@/components/EditExhibitionForm";
 import ShareCard from "@/components/ShareCard";
 import PublishButton from "@/components/PublishButton";
-import AccountMenu from "@/components/AccountMenu";
+import SiteHeader from "@/components/SiteHeader";
 import LoadingExhibition from "@/components/LoadingExhibition";
 import ErrorState from "@/components/ErrorState";
 
 export default function CreatePage() {
-  const tNav = useTranslations("Nav");
   const t = useTranslations("Create");
   const tCrop = useTranslations("Cropper");
   const [objectName, setObjectName] = useState("");
@@ -43,7 +41,6 @@ export default function CreatePage() {
   const [editing, setEditing] = useState(false);
   const [cropping, setCropping] = useState(false);
 
-  const topRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
   async function generate(name: string, selectedMode: Mode, selectedVoice: Voice) {
@@ -104,34 +101,15 @@ export default function CreatePage() {
     setResultImage(null);
     setImageSource(null);
     setEditing(false);
-    topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   return (
-    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      {/* Masthead */}
-      <div ref={topRef} className="reveal flex items-center justify-between gap-3">
-        <Link
-          href="/"
-          className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
-        >
-          <span
-            aria-hidden
-            className="transition-transform group-hover:-translate-x-0.5"
-          >
-            ←
-          </span>
-          {tNav("explore")}
-        </Link>
-        <AccountMenu />
-      </div>
-      <div
-        className="reveal mt-3 h-px bg-ink/80"
-        style={{ animationDelay: "60ms" }}
-      />
-
+    <>
+      <SiteHeader />
+      <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
       {/* Top: hero on the left, controls on the right (large screens). */}
-      <div className="mt-9 sm:mt-12 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+      <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
         {/* Hero */}
         <header className="space-y-4 lg:sticky lg:top-10">
         <h1
@@ -348,6 +326,7 @@ export default function CreatePage() {
           }}
         />
       )}
-    </main>
+      </main>
+    </>
   );
 }

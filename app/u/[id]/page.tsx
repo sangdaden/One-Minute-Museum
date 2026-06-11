@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { rowToPost, postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
 import type { Post } from "@/lib/types";
-import AccountMenu from "@/components/AccountMenu";
+import SiteHeader from "@/components/SiteHeader";
 import GalleryItem from "@/components/GalleryItem";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +18,6 @@ export default async function ProfilePage({
 }) {
   const { id } = await params;
   if (!isSupabaseConfigured()) notFound();
-  const tNav = await getTranslations("Nav");
   const t = await getTranslations("Profile");
   const tCommon = await getTranslations("Common");
 
@@ -41,21 +40,11 @@ export default async function ProfilePage({
   const name = profile.display_name || tCommon("anon");
 
   return (
-    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      {/* Masthead */}
-      <div className="flex items-center justify-between gap-3">
-        <Link
-          href="/"
-          className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
-        >
-          <span aria-hidden>←</span> {tNav("explore")}
-        </Link>
-        <AccountMenu />
-      </div>
-      <div className="mt-3 h-px bg-ink/80" />
-
+    <>
+      <SiteHeader />
+      <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
       {/* Profile header */}
-      <header className="mt-9 flex items-center gap-5 sm:mt-12">
+      <header className="flex items-center gap-5">
         {profile.avatar_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -109,6 +98,7 @@ export default async function ProfilePage({
           </ul>
         )}
       </section>
-    </main>
+      </main>
+    </>
   );
 }

@@ -5,14 +5,13 @@ import { createClient } from "@/lib/supabase/server";
 import { rowToPost, postToExhibition } from "@/lib/posts";
 import type { Post } from "@/lib/types";
 import GalleryItem from "@/components/GalleryItem";
-import AccountMenu from "@/components/AccountMenu";
+import SiteHeader from "@/components/SiteHeader";
 
 // Auth-dependent page — always render per-request (read the session fresh).
 export const dynamic = "force-dynamic";
 
 export default async function MePage() {
   const configured = isSupabaseConfigured();
-  const tNav = await getTranslations("Nav");
   const t = await getTranslations("Me");
   let signedIn = false;
   let posts: Post[] = [];
@@ -34,20 +33,10 @@ export default async function MePage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      {/* Masthead */}
-      <div className="flex items-center justify-between gap-3">
-        <Link
-          href="/"
-          className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
-        >
-          <span aria-hidden>←</span> {tNav("home")}
-        </Link>
-        <AccountMenu />
-      </div>
-      <div className="mt-3 h-px bg-ink/80" />
-
-      <header className="mt-9 space-y-3 sm:mt-12">
+    <>
+      <SiteHeader />
+      <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
+      <header className="space-y-3">
         <h1 className="font-serif text-[2.6rem] font-medium leading-none tracking-[-0.02em] text-ink sm:text-[3.4rem]">
           {t("title")}<span className="text-accent">.</span>
         </h1>
@@ -79,7 +68,8 @@ export default async function MePage() {
           </ul>
         )}
       </section>
-    </main>
+      </main>
+    </>
   );
 }
 
