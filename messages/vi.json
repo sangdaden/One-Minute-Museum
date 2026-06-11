@@ -250,5 +250,10 @@
     "done": "Xong",
     "cancel": "Hủy",
     "close": "Đóng"
+  },
+  "Brand": {
+    "name": "Bảo Tàng 1 Phút",
+    "tagline": "Ôm trộm văn hóa Việt",
+    "abbr": "OMM"
   }
 }

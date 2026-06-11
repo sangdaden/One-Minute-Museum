@@ -6,6 +6,7 @@ import { rowToPost } from "@/lib/posts";
 import { FEED_PAGE_SIZE } from "@/lib/constants";
 import type { Post } from "@/lib/types";
 import AccountMenu from "@/components/AccountMenu";
+import Logo from "@/components/Logo";
 import FeedPost from "@/components/FeedPost";
 import FeedLoadMore from "@/components/FeedLoadMore";
 
@@ -16,6 +17,7 @@ export default async function FeedPage() {
   const configured = isSupabaseConfigured();
   const t = await getTranslations("Feed");
   const tNav = await getTranslations("Nav");
+  const tBrand = await getTranslations("Brand");
   let posts: Post[] = [];
 
   if (configured) {
@@ -39,7 +41,7 @@ export default async function FeedPage() {
     <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="flex items-center justify-between gap-3">
-        <span className="eyebrow text-ink-faint">Bảo Tàng 1 Phút</span>
+        <Logo tagline={tBrand("tagline")} className="text-[1.4rem]" />
         <AccountMenu />
       </div>
       <div className="mt-3 h-px bg-ink/80" />

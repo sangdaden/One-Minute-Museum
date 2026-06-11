@@ -250,5 +250,10 @@
     "done": "Done",
     "cancel": "Cancel",
     "close": "Close"
+  },
+  "Brand": {
+    "name": "One-Minute Museum",
+    "tagline": "Steal a hug of Vietnamese culture",
+    "abbr": "OMM"
   }
 }

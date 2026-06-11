@@ -28,9 +28,9 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const APP_TITLE = "Bảo Tàng 1 Phút — One-Minute Museum";
+const APP_TITLE = "OMM — Bảo Tàng 1 Phút";
 const APP_DESC =
-  "Biến những vật bình thường quanh bạn thành một triển lãm mini, đọc trong một phút.";
+  "Ôm trộm văn hóa Việt. Biến những vật bình thường quanh bạn thành một triển lãm mini, đọc trong một phút.";
 
 export const metadata: Metadata = {
   title: APP_TITLE,
