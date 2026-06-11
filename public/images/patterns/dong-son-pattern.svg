@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Đông Sơn-inspired concentric + radial motif (decorative tile). -->
+  <defs>
+    <pattern id="dongson" width="120" height="120" patternUnits="userSpaceOnUse">
+      <rect width="120" height="120" fill="none"/>
+      <g fill="none" stroke="#c89b3c" stroke-width="2" opacity="0.5">
+        <circle cx="60" cy="60" r="10"/>
+        <circle cx="60" cy="60" r="22"/>
+        <circle cx="60" cy="60" r="34"/>
+        <circle cx="60" cy="60" r="46"/>
+        <g stroke-width="1.4">
+          <line x1="60" y1="2" x2="60" y2="14"/>
+          <line x1="60" y1="106" x2="60" y2="118"/>
+          <line x1="2" y1="60" x2="14" y2="60"/>
+          <line x1="106" y1="60" x2="118" y2="60"/>
+          <line x1="18" y1="18" x2="27" y2="27"/>
+          <line x1="93" y1="93" x2="102" y2="102"/>
+          <line x1="102" y1="18" x2="93" y2="27"/>
+          <line x1="18" y1="102" x2="27" y2="93"/>
+        </g>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="120" height="120" fill="url(#dongson)"/>
+</svg>
