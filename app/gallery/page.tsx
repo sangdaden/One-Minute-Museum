@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
 import {
   getExhibitions,
@@ -11,6 +12,7 @@ import GalleryItem from "@/components/GalleryItem";
 import AccountMenu from "@/components/AccountMenu";
 
 export default function GalleryPage() {
+  const t = useTranslations("Nav");
   // null = not yet loaded from localStorage (client-only).
   const [items, setItems] = useState<Exhibition[] | null>(null);
   const [confirming, setConfirming] = useState(false);
@@ -42,7 +44,7 @@ export default function GalleryPage() {
           >
             ←
           </span>
-          Trang chủ
+          {t("home")}
         </Link>
         <AccountMenu />
       </div>

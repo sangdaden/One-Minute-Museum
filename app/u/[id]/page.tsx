@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import { rowToPost, postToExhibition } from "@/lib/posts";
@@ -17,6 +18,7 @@ export default async function ProfilePage({
 }) {
   const { id } = await params;
   if (!isSupabaseConfigured()) notFound();
+  const t = await getTranslations("Nav");
 
   const supabase = await createClient();
   const { data: profile } = await supabase
@@ -44,7 +46,7 @@ export default async function ProfilePage({
           href="/"
           className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
         >
-          <span aria-hidden>←</span> Khám phá
+          <span aria-hidden>←</span> {t("explore")}
         </Link>
         <AccountMenu />
       </div>

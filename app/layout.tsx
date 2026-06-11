@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Be_Vietnam_Pro, JetBrains_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 
 // Display — modern grotesque with character; carries headings & pull quotes.
@@ -48,14 +50,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   return (
     <html
-      lang="vi"
+      lang={locale}
       // Root <html>/<body> attributes can differ between SSR and the client
       // (next/font hashing in dev, or browser extensions injecting attributes).
       // Suppress the warning at this single level only.
@@ -70,7 +73,9 @@ export default function RootLayout({
           }}
         />
         <div className="grain" aria-hidden />
-        <div className="relative z-10">{children}</div>
+        <div className="relative z-10">
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </div>
       </body>
     </html>
   );

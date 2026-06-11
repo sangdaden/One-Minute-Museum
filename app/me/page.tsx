@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import { rowToPost, postToExhibition } from "@/lib/posts";
@@ -11,6 +12,7 @@ export const dynamic = "force-dynamic";
 
 export default async function MePage() {
   const configured = isSupabaseConfigured();
+  const t = await getTranslations("Nav");
   let signedIn = false;
   let posts: Post[] = [];
 
@@ -38,7 +40,7 @@ export default async function MePage() {
           href="/"
           className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
         >
-          <span aria-hidden>←</span> Trang chủ
+          <span aria-hidden>←</span> {t("home")}
         </Link>
         <AccountMenu />
       </div>

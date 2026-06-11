@@ -1,0 +1,23 @@
+{
+  "Menu": {
+    "account": "Tài khoản & cài đặt",
+    "explore": "Khám phá",
+    "create": "Tạo triển lãm",
+    "profile": "Trang cá nhân",
+    "myPosts": "Bài của tôi",
+    "gallery": "Bộ sưu tập",
+    "theme": "Giao diện",
+    "light": "Sáng",
+    "dark": "Tối",
+    "language": "Ngôn ngữ",
+    "signIn": "Đăng nhập với Google",
+    "signOut": "Đăng xuất",
+    "you": "Bạn"
+  },
+  "Nav": {
+    "explore": "Khám phá",
+    "home": "Trang chủ",
+    "gallery": "Bộ sưu tập",
+    "createCta": "Tạo triển lãm"
+  }
+}

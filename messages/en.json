@@ -1,0 +1,23 @@
+{
+  "Menu": {
+    "account": "Account & settings",
+    "explore": "Explore",
+    "create": "Create exhibition",
+    "profile": "Your profile",
+    "myPosts": "Your posts",
+    "gallery": "Collection",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "language": "Language",
+    "signIn": "Sign in with Google",
+    "signOut": "Sign out",
+    "you": "You"
+  },
+  "Nav": {
+    "explore": "Explore",
+    "home": "Home",
+    "gallery": "Collection",
+    "createCta": "Create exhibition"
+  }
+}

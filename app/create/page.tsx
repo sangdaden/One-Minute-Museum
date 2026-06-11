@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
 import { DEFAULT_MODE, DEFAULT_VOICE } from "@/lib/constants";
 import { saveExhibition, updateExhibition } from "@/lib/gallery";
@@ -20,6 +21,7 @@ import LoadingExhibition from "@/components/LoadingExhibition";
 import ErrorState from "@/components/ErrorState";
 
 export default function CreatePage() {
+  const tNav = useTranslations("Nav");
   const [objectName, setObjectName] = useState("");
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
   const [voice, setVoice] = useState<Voice>(DEFAULT_VOICE);
@@ -110,7 +112,7 @@ export default function CreatePage() {
           >
             ←
           </span>
-          Khám phá
+          {tNav("explore")}
         </Link>
         <AccountMenu />
       </div>

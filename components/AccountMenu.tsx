@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import {
   User as UserIcon,
   UserCircle,
@@ -12,6 +14,7 @@ import {
   Newspaper,
   Sun,
   Moon,
+  Languages,
   LogIn,
   LogOut,
 } from "lucide-react";
@@ -26,6 +29,9 @@ import { createClient } from "@/lib/supabase/client";
  * fixed positioning so it always sits above page content (no overlap).
  */
 export default function AccountMenu() {
+  const t = useTranslations("Menu");
+  const locale = useLocale();
+  const router = useRouter();
   const configured = isSupabaseConfigured();
   const [user, setUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
@@ -94,6 +100,13 @@ export default function AccountMenu() {
     setDark(!dark);
   }
 
+  function toggleLocale() {
+    const next = locale === "vi" ? "en" : "vi";
+    document.cookie = `omm-locale=${next}; path=/; max-age=31536000`;
+    setOpen(false);
+    router.refresh();
+  }
+
   async function signIn() {
     await createClient().auth.signInWithOAuth({
       provider: "google",
@@ -111,7 +124,7 @@ export default function AccountMenu() {
     (user?.user_metadata?.full_name as string) ||
     (user?.user_metadata?.name as string) ||
     user?.email ||
-    "Bạn";
+    t("you");
   const avatar = user?.user_metadata?.avatar_url as string | undefined;
 
   return (
@@ -120,7 +133,7 @@ export default function AccountMenu() {
         ref={btnRef}
         type="button"
         onClick={toggleOpen}
-        aria-label="Tài khoản & cài đặt"
+        aria-label={t("account")}
         aria-expanded={open}
         className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full text-ink-soft ring-1 ring-border transition-colors hover:text-accent"
       >
@@ -155,14 +168,14 @@ export default function AccountMenu() {
 
             <div className="py-1">
               <Row href="/" icon={Compass} onNavigate={() => setOpen(false)}>
-                Khám phá
+                {t("explore")}
               </Row>
               <Row
                 href="/create"
                 icon={Sparkles}
                 onNavigate={() => setOpen(false)}
               >
-                Tạo triển lãm
+                {t("create")}
               </Row>
               {user && (
                 <Row
@@ -170,7 +183,7 @@ export default function AccountMenu() {
                   icon={UserCircle}
                   onNavigate={() => setOpen(false)}
                 >
-                  Trang cá nhân
+                  {t("profile")}
                 </Row>
               )}
               {user && (
@@ -179,7 +192,7 @@ export default function AccountMenu() {
                   icon={Newspaper}
                   onNavigate={() => setOpen(false)}
                 >
-                  Bài của tôi
+                  {t("myPosts")}
                 </Row>
               )}
               <Row
@@ -187,7 +200,7 @@ export default function AccountMenu() {
                 icon={LayoutGrid}
                 onNavigate={() => setOpen(false)}
               >
-                Bộ sưu tập
+                {t("gallery")}
               </Row>
             </div>
 
@@ -202,7 +215,16 @@ export default function AccountMenu() {
                 ) : (
                   <Moon className="h-4 w-4" strokeWidth={1.75} />
                 )}
-                Giao diện: {dark ? "Tối" : "Sáng"}
+                {t("theme")}: {dark ? t("dark") : t("light")}
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleLocale}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft transition-colors hover:bg-paper-sunk hover:text-ink"
+              >
+                <Languages className="h-4 w-4" strokeWidth={1.75} />
+                {t("language")}: {locale === "vi" ? "Tiếng Việt" : "English"}
               </button>
 
               {configured &&
@@ -213,7 +235,7 @@ export default function AccountMenu() {
                     className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft transition-colors hover:bg-paper-sunk hover:text-accent"
                   >
                     <LogOut className="h-4 w-4" strokeWidth={1.75} />
-                    Đăng xuất
+                    {t("signOut")}
                   </button>
                 ) : (
                   <button
@@ -222,7 +244,7 @@ export default function AccountMenu() {
                     className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft transition-colors hover:bg-paper-sunk hover:text-accent"
                   >
                     <LogIn className="h-4 w-4" strokeWidth={1.75} />
-                    Đăng nhập với Google
+                    {t("signIn")}
                   </button>
                 ))}
             </div>
