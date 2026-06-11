@@ -265,7 +265,10 @@ function ShareArtwork({
               fontFamily: display,
               fontSize: imageUrl ? 56 : 78,
               fontWeight: 600,
-              lineHeight: 1.02,
+              // Vietnamese stacked diacritics (Ế, Ỏ, Ự…) sit above cap height —
+              // generous line-height + top padding keeps them from clipping.
+              lineHeight: 1.2,
+              paddingTop: 10,
               letterSpacing: "-0.01em",
               textTransform: "uppercase",
               color: t.ink,
@@ -288,7 +291,8 @@ function ShareArtwork({
               fontFamily: display,
               fontWeight: 300,
               fontSize: 40,
-              lineHeight: 1.3,
+              lineHeight: 1.42,
+              paddingTop: 6,
               color: t.ink,
               margin: 0,
               display: "-webkit-box",
@@ -335,7 +339,7 @@ function ShareArtwork({
                 <span
                   style={{
                     fontSize: 25,
-                    lineHeight: 1.34,
+                    lineHeight: 1.42,
                     color: t.ink,
                     display: "-webkit-box",
                     WebkitLineClamp: 2,

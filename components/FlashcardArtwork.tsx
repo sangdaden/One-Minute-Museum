@@ -174,7 +174,9 @@ function CoverBody({
           fontFamily: DISPLAY,
           fontSize: imageUrl ? 64 : 96,
           fontWeight: 600,
-          lineHeight: 1.0,
+          // Room for Vietnamese stacked diacritics (Ế, Ỏ, Ự…).
+          lineHeight: 1.16,
+          paddingTop: 8,
           letterSpacing: "-0.01em",
           textTransform: "uppercase",
           color: t.ink,
@@ -242,7 +244,8 @@ function FactBody({
           fontFamily: DISPLAY,
           fontWeight: 400,
           fontSize: 48,
-          lineHeight: 1.28,
+          lineHeight: 1.38,
+          paddingTop: 6,
           color: t.ink,
           margin: 0,
         }}
@@ -271,7 +274,8 @@ function QuoteBody({ ex, t }: { ex: Exhibition; t: Theme }) {
             fontFamily: DISPLAY,
             fontWeight: 300,
             fontSize: 58,
-            lineHeight: 1.24,
+            lineHeight: 1.36,
+            paddingTop: 6,
             color: t.ink,
             margin: 0,
           }}
