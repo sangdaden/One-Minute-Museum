@@ -63,6 +63,12 @@ export default function RootLayout({
       className={`${display.variable} ${beVietnam.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="relative min-h-full">
+        {/* No-FOUC: set the theme before paint. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('omm-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}`,
+          }}
+        />
         <div className="grain" aria-hidden />
         <div className="relative z-10">{children}</div>
       </body>

@@ -23,6 +23,24 @@
   --border-strong: #e3d0c9;
 }
 
+/* Dark mode — warm brown-black; lacquer accent + brass kept (brightened). */
+[data-theme="dark"] {
+  --paper: #1a1411;
+  --paper-card: #221b16;
+  --paper-sunk: #14100c;
+
+  --ink: #f1e8dd;
+  --ink-soft: #b9aa9b;
+  --ink-faint: #8a7c6e;
+
+  --accent: #c0402f;
+  --accent-deep: #7a2418;
+  --gold: #c6a557;
+
+  --border: #3a2e26;
+  --border-strong: #4c3c31;
+}
+
 @theme inline {
   --color-paper: var(--paper);
   --color-paper-card: var(--paper-card);
@@ -66,6 +84,11 @@ body {
   opacity: 0.04;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .grain {
+  mix-blend-mode: overlay;
+  opacity: 0.06;
 }
 
 ::selection {

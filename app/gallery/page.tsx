@@ -8,6 +8,7 @@ import {
   clearExhibitions,
 } from "@/lib/gallery";
 import GalleryItem from "@/components/GalleryItem";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function GalleryPage() {
   // null = not yet loaded from localStorage (client-only).
@@ -43,7 +44,10 @@ export default function GalleryPage() {
           </span>
           Trang chủ
         </Link>
-        <span className="eyebrow text-ink-faint">Bộ sưu tập</span>
+        <div className="flex items-center gap-3">
+          <span className="eyebrow text-ink-faint">Bộ sưu tập</span>
+          <ThemeToggle />
+        </div>
       </div>
       <div
         className="reveal mt-3 h-px bg-ink/80"

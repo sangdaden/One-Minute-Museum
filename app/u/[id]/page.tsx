@@ -6,6 +6,7 @@ import { rowToPost, postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
 import type { Post } from "@/lib/types";
 import AuthButton from "@/components/AuthButton";
+import ThemeToggle from "@/components/ThemeToggle";
 import GalleryItem from "@/components/GalleryItem";
 
 export const dynamic = "force-dynamic";
@@ -46,7 +47,10 @@ export default async function ProfilePage({
         >
           <span aria-hidden>←</span> Khám phá
         </Link>
-        <AuthButton />
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <AuthButton />
+        </div>
       </div>
       <div className="mt-3 h-px bg-ink/80" />
 

@@ -16,6 +16,7 @@ import EditExhibitionForm from "@/components/EditExhibitionForm";
 import ShareCard from "@/components/ShareCard";
 import PublishButton from "@/components/PublishButton";
 import AuthButton from "@/components/AuthButton";
+import ThemeToggle from "@/components/ThemeToggle";
 import LoadingExhibition from "@/components/LoadingExhibition";
 import ErrorState from "@/components/ErrorState";
 
@@ -119,6 +120,7 @@ export default function CreatePage() {
           >
             Bộ sưu tập
           </Link>
+          <ThemeToggle />
           <AuthButton />
         </div>
       </div>

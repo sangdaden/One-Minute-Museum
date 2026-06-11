@@ -5,6 +5,7 @@ import { rowToPost, postToExhibition } from "@/lib/posts";
 import type { Post } from "@/lib/types";
 import GalleryItem from "@/components/GalleryItem";
 import AuthButton from "@/components/AuthButton";
+import ThemeToggle from "@/components/ThemeToggle";
 
 // Auth-dependent page — always render per-request (read the session fresh).
 export const dynamic = "force-dynamic";
@@ -40,7 +41,10 @@ export default async function MePage() {
         >
           <span aria-hidden>←</span> Trang chủ
         </Link>
-        <AuthButton />
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <AuthButton />
+        </div>
       </div>
       <div className="mt-3 h-px bg-ink/80" />
 

@@ -5,6 +5,7 @@ import { rowToPost } from "@/lib/posts";
 import { FEED_PAGE_SIZE } from "@/lib/constants";
 import type { Post } from "@/lib/types";
 import AuthButton from "@/components/AuthButton";
+import ThemeToggle from "@/components/ThemeToggle";
 import FeedPost from "@/components/FeedPost";
 import FeedLoadMore from "@/components/FeedLoadMore";
 
@@ -44,6 +45,7 @@ export default async function FeedPage() {
           >
             Bộ sưu tập
           </Link>
+          <ThemeToggle />
           <AuthButton />
         </div>
       </div>
