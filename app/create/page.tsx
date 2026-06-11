@@ -12,6 +12,7 @@ import ModeSelector from "@/components/ModeSelector";
 import VoiceSelector from "@/components/VoiceSelector";
 import ThemePicker from "@/components/ThemePicker";
 import SuggestedObjects from "@/components/SuggestedObjects";
+import ImageSuggestions from "@/components/ImageSuggestions";
 import ExhibitionCard from "@/components/ExhibitionCard";
 import EditExhibitionForm from "@/components/EditExhibitionForm";
 import ShareCard from "@/components/ShareCard";
@@ -33,6 +34,9 @@ export default function CreatePage() {
   // The image actually used for the shown result (so changing the picker later
   // doesn't retroactively alter the displayed card).
   const [resultImage, setResultImage] = useState<string | null>(null);
+  // Where the result image came from: an uploaded photo, an AI illustration, or
+  // nothing yet. Drives whether the AI-illustration picker is offered.
+  const [imageSource, setImageSource] = useState<"upload" | "ai" | null>(null);
   const [editing, setEditing] = useState(false);
 
   const topRef = useRef<HTMLDivElement>(null);
@@ -71,6 +75,7 @@ export default function CreatePage() {
       const data = (await res.json()) as Exhibition;
       setExhibition(data);
       setResultImage(image); // photo shown with this result (not persisted)
+      setImageSource(image ? "upload" : null);
       setEditing(false);
       // Persist to the local gallery (dedupes by id, image excluded).
       saveExhibition(data);
@@ -93,6 +98,7 @@ export default function CreatePage() {
     setExhibition(null);
     setImage(null);
     setResultImage(null);
+    setImageSource(null);
     setEditing(false);
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -249,6 +255,23 @@ export default function CreatePage() {
                   />
                 </div>
               )}
+
+              {/* AI illustrations — only when no uploaded photo is attached. */}
+              {imageSource !== "upload" && (
+                <ImageSuggestions
+                  objectName={exhibition.object_name}
+                  chosen={imageSource === "ai" ? resultImage : null}
+                  onPick={(uri) => {
+                    setResultImage(uri);
+                    setImageSource("ai");
+                  }}
+                  onClear={() => {
+                    setResultImage(null);
+                    setImageSource(null);
+                  }}
+                />
+              )}
+
               <ExhibitionCard
                 exhibition={exhibition}
                 imageUrl={resultImage ?? undefined}

@@ -207,5 +207,17 @@
     "error": "Không tạo được ảnh",
     "cta": "Tạo ảnh chia sẻ",
     "pngSquare": "PNG · vuông"
+  },
+  "Illustrate": {
+    "header": "Ảnh minh hoạ",
+    "hint": "Chưa có ảnh? Tạo vài ảnh mẫu bằng AI rồi chọn một ảnh cho bài.",
+    "cta": "Tạo ảnh minh hoạ bằng AI",
+    "loading": "Đang vẽ ảnh…",
+    "pick": "Chạm để chọn ảnh cho bài",
+    "regenerate": "Tạo bộ khác",
+    "change": "Đổi ảnh khác",
+    "remove": "Bỏ ảnh",
+    "aiBadge": "Ảnh tạo bằng AI",
+    "error": "Không tạo được ảnh lúc này. Thử lại nhé."
   }
 }

@@ -207,5 +207,17 @@
     "error": "Couldn't create image",
     "cta": "Create share image",
     "pngSquare": "PNG · square"
+  },
+  "Illustrate": {
+    "header": "Illustration",
+    "hint": "No photo? Generate a few AI samples and pick one for your post.",
+    "cta": "Generate AI illustration",
+    "loading": "Drawing images…",
+    "pick": "Tap to pick an image for your post",
+    "regenerate": "Generate another set",
+    "change": "Pick a different image",
+    "remove": "Remove image",
+    "aiBadge": "AI-generated image",
+    "error": "Couldn't generate images right now. Please try again."
   }
 }
