@@ -15,6 +15,9 @@ interface ImageSuggestionsProps {
 
 type Status = "idle" | "loading" | "ready" | "error";
 
+/** One generated candidate: image data URI + the style id that produced it. */
+type Candidate = { url: string; style: string };
+
 const COUNT = 3;
 
 /**
@@ -29,8 +32,9 @@ export default function ImageSuggestions({
   onClear,
 }: ImageSuggestionsProps) {
   const t = useTranslations("Illustrate");
+  const tStyles = useTranslations("Styles");
   const [status, setStatus] = useState<Status>("idle");
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<Candidate[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   async function generate() {
@@ -46,7 +50,7 @@ export default function ImageSuggestions({
         const data = (await res.json()) as ApiError;
         throw new Error(data.error?.message);
       }
-      const data = (await res.json()) as { images: string[] };
+      const data = (await res.json()) as { images: Candidate[] };
       setImages(data.images ?? []);
       setStatus("ready");
     } catch (err) {
@@ -139,19 +143,26 @@ export default function ImageSuggestions({
         <div className="flex flex-col gap-3">
           <p className="text-sm text-ink-soft">{t("pick")}</p>
           <div className="grid grid-cols-3 gap-3">
-            {images.map((src, i) => (
+            {images.map((c, i) => (
               <button
                 key={i}
                 type="button"
-                onClick={() => onPick(src)}
-                className="group relative aspect-square overflow-hidden rounded-xl ring-1 ring-border transition-all hover:-translate-y-0.5 hover:ring-2 hover:ring-accent"
+                onClick={() => onPick(c.url)}
+                className="group flex flex-col gap-1.5 text-center"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
+                <span className="relative aspect-square overflow-hidden rounded-xl ring-1 ring-border transition-all group-hover:-translate-y-0.5 group-hover:ring-2 group-hover:ring-accent">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={c.url}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+                <span className="text-[11px] leading-tight text-ink-faint transition-colors group-hover:text-accent">
+                  {tStyles(c.style)}
+                </span>
               </button>
             ))}
           </div>

@@ -255,5 +255,14 @@
     "name": "Bảo Tàng 1 Phút",
     "tagline": "Ôm trọn văn hóa Việt",
     "abbr": "OMM"
+  },
+  "Styles": {
+    "handdrawn": "Vẽ tay",
+    "realistic": "Tả thực",
+    "cartoon": "Hoạt hình & biếm họa",
+    "abstract": "Trừu tượng",
+    "classical": "Cổ điển",
+    "minimal": "Tối giản",
+    "spatial": "Đồ họa 3D"
   }
 }

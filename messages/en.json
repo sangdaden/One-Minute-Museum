@@ -255,5 +255,14 @@
     "name": "One-Minute Museum",
     "tagline": "Embrace all of Vietnamese culture",
     "abbr": "OMM"
+  },
+  "Styles": {
+    "handdrawn": "Hand-drawn",
+    "realistic": "Realistic",
+    "cartoon": "Cartoon & caricature",
+    "abstract": "Abstract",
+    "classical": "Classical art",
+    "minimal": "Minimalist",
+    "spatial": "3D graphics"
   }
 }
