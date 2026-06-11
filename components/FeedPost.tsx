@@ -16,7 +16,10 @@ export default function FeedPost({ post }: { post: Post }) {
 
   return (
     <article className="space-y-3">
-      <div className="flex items-center gap-2.5">
+      <Link
+        href={`/u/${post.user_id}`}
+        className="group inline-flex items-center gap-2.5"
+      >
         {avatar ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -30,12 +33,14 @@ export default function FeedPost({ post }: { post: Post }) {
           </span>
         )}
         <div className="flex flex-col leading-tight">
-          <span className="text-sm font-medium text-ink">{name}</span>
+          <span className="text-sm font-medium text-ink group-hover:text-accent">
+            {name}
+          </span>
           <span className="eyebrow text-ink-faint">
             {formatDate(post.created_at)}
           </span>
         </div>
-      </div>
+      </Link>
 
       <ExhibitionCard exhibition={postToExhibition(post)} />
 

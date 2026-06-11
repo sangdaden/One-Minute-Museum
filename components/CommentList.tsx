@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { Comment } from "@/lib/types";
 import { formatDate } from "@/lib/format";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -38,21 +39,28 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
         const name = c.author?.display_name || "Người dùng ẩn danh";
         return (
           <li key={c.id} className="flex gap-3">
-            {c.author?.avatar_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={c.author.avatar_url}
-                alt=""
-                className="mt-0.5 h-8 w-8 shrink-0 rounded-full object-cover ring-1 ring-border"
-              />
-            ) : (
-              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-paper-sunk text-sm font-medium text-ink-soft">
-                {name.charAt(0).toUpperCase()}
-              </span>
-            )}
+            <Link href={`/u/${c.user_id}`} className="shrink-0">
+              {c.author?.avatar_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={c.author.avatar_url}
+                  alt=""
+                  className="mt-0.5 h-8 w-8 rounded-full object-cover ring-1 ring-border"
+                />
+              ) : (
+                <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-paper-sunk text-sm font-medium text-ink-soft">
+                  {name.charAt(0).toUpperCase()}
+                </span>
+              )}
+            </Link>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-ink">{name}</span>
+                <Link
+                  href={`/u/${c.user_id}`}
+                  className="text-sm font-medium text-ink transition-colors hover:text-accent"
+                >
+                  {name}
+                </Link>
                 <span className="eyebrow text-ink-faint">
                   {formatDate(c.created_at)}
                 </span>

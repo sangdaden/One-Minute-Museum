@@ -66,7 +66,9 @@ export default async function MePage() {
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((post, i) => (
               <li key={post.id}>
-                <GalleryItem exhibition={postToExhibition(post)} index={i} />
+                <Link href={`/p/${post.id}`} className="block">
+                  <GalleryItem exhibition={postToExhibition(post)} index={i} />
+                </Link>
               </li>
             ))}
           </ul>

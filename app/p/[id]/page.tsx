@@ -57,7 +57,10 @@ export default async function PostPage({
       <div className="mt-3 h-px bg-ink/80" />
 
       {/* Author */}
-      <div className="mt-8 flex items-center gap-2.5">
+      <Link
+        href={`/u/${post.user_id}`}
+        className="group mt-8 inline-flex items-center gap-2.5"
+      >
         {post.author?.avatar_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -71,12 +74,14 @@ export default async function PostPage({
           </span>
         )}
         <div className="flex flex-col leading-tight">
-          <span className="text-sm font-medium text-ink">{authorName}</span>
+          <span className="text-sm font-medium text-ink group-hover:text-accent">
+            {authorName}
+          </span>
           <span className="eyebrow text-ink-faint">
             {formatDate(post.created_at)}
           </span>
         </div>
-      </div>
+      </Link>
 
       <div className="mt-4">
         <ExhibitionCard exhibition={postToExhibition(post)} />
