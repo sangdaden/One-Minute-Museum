@@ -211,7 +211,9 @@
     "done": "Image downloaded ✓",
     "error": "Couldn't create image",
     "cta": "Create share image",
-    "pngSquare": "PNG · square"
+    "pngSquare": "PNG · square",
+    "zoom": "View larger",
+    "close": "Close"
   },
   "Illustrate": {
     "header": "Illustration",

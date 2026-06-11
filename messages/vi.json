@@ -211,7 +211,9 @@
     "done": "Đã tải ảnh ✓",
     "error": "Không tạo được ảnh",
     "cta": "Tạo ảnh chia sẻ",
-    "pngSquare": "PNG · vuông"
+    "pngSquare": "PNG · vuông",
+    "zoom": "Xem lớn",
+    "close": "Đóng"
   },
   "Illustrate": {
     "header": "Ảnh minh hoạ",
