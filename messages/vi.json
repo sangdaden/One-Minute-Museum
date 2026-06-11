@@ -266,6 +266,13 @@
     "tagline": "Ôm trọn văn hóa Việt",
     "abbr": "OMM"
   },
+  "Listen": {
+    "view": "Nghe",
+    "loading": "Đang tạo âm thanh…",
+    "pause": "Tạm dừng",
+    "resume": "Tiếp tục",
+    "error": "Không tạo được âm thanh. Thử lại nhé."
+  },
   "Ask": {
     "view": "Hỏi thêm",
     "title": "Hỏi thêm về hiện vật",

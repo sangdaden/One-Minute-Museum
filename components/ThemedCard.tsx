@@ -7,6 +7,7 @@ import CopyButton from "./CopyButton";
 import FlashcardsButton from "./FlashcardsButton";
 import QuizButton from "./QuizButton";
 import AskButton from "./AskButton";
+import ListenButton from "./ListenButton";
 
 interface ThemedCardProps {
   exhibition: Exhibition;
@@ -191,6 +192,11 @@ export default function ThemedCard({
           style={{ border: `1px solid ${t.inkSoft}66`, color: t.ink }}
         />
         <AskButton
+          exhibition={ex}
+          className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
+          style={{ border: `1px solid ${t.inkSoft}66`, color: t.ink }}
+        />
+        <ListenButton
           exhibition={ex}
           className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
           style={{ border: `1px solid ${t.inkSoft}66`, color: t.ink }}

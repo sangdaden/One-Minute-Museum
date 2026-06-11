@@ -266,6 +266,13 @@
     "tagline": "Embrace all of Vietnamese culture",
     "abbr": "OMM"
   },
+  "Listen": {
+    "view": "Listen",
+    "loading": "Generating audio…",
+    "pause": "Pause",
+    "resume": "Resume",
+    "error": "Couldn't generate audio. Please try again."
+  },
   "Ask": {
     "view": "Ask",
     "title": "Ask about this object",
