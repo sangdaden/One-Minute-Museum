@@ -34,7 +34,7 @@ export default async function FeedPage() {
       : null;
 
   return (
-    <main className="mx-auto w-full max-w-[1040px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="flex items-center justify-between gap-3">
         <span className="eyebrow text-ink-faint">Bảo Tàng 1 Phút</span>

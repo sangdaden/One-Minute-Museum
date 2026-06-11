@@ -98,7 +98,7 @@ export default function CreatePage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-[1040px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div ref={topRef} className="reveal flex items-center justify-between gap-3">
         <Link
@@ -129,8 +129,10 @@ export default function CreatePage() {
         style={{ animationDelay: "60ms" }}
       />
 
-      {/* Hero */}
-      <header className="mt-9 space-y-4 sm:mt-12">
+      {/* Top: hero on the left, controls on the right (large screens). */}
+      <div className="mt-9 sm:mt-12 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+        {/* Hero */}
+        <header className="space-y-4 lg:sticky lg:top-10">
         <h1
           className="reveal font-serif text-[2.9rem] font-medium leading-[0.98] tracking-[-0.02em] text-ink sm:text-[4.2rem]"
           style={{ animationDelay: "100ms" }}
@@ -151,13 +153,15 @@ export default function CreatePage() {
         >
           One-Minute Museum for everyday objects.
         </p>
-      </header>
+        </header>
 
-      {/* Góc nhìn + giọng kể TRƯỚC — vì chạm một gợi ý là tạo ngay. */}
-      <section
-        className="reveal mt-10 flex flex-col gap-4"
-        style={{ animationDelay: "220ms" }}
-      >
+        {/* Controls column */}
+        <div className="mt-10 flex flex-col gap-10 lg:mt-0">
+          {/* Góc nhìn + giọng kể TRƯỚC — vì chạm một gợi ý là tạo ngay. */}
+          <section
+            className="reveal flex flex-col gap-4"
+            style={{ animationDelay: "220ms" }}
+          >
         <div className="flex items-center gap-3">
           <span className="eyebrow text-ink">Chọn góc nhìn</span>
           <span className="h-px flex-1 bg-border-strong" />
@@ -171,11 +175,11 @@ export default function CreatePage() {
         <VoiceSelector value={voice} onChange={setVoice} disabled={isLoading} />
       </section>
 
-      {/* Hiện vật — nhập tên/ảnh, hoặc chạm gợi ý (chạm là tạo ngay). */}
-      <section
-        className="reveal mt-10 flex flex-col gap-4"
-        style={{ animationDelay: "300ms" }}
-      >
+          {/* Hiện vật — nhập tên/ảnh, hoặc chạm gợi ý (chạm là tạo ngay). */}
+          <section
+            className="reveal flex flex-col gap-4"
+            style={{ animationDelay: "300ms" }}
+          >
         <div className="flex items-center gap-3">
           <span className="eyebrow text-ink">Chọn hiện vật</span>
           <span className="h-px flex-1 bg-border-strong" />
@@ -196,11 +200,13 @@ export default function CreatePage() {
           />
           <ImageUpload value={image} onChange={setImage} disabled={isLoading} />
         </div>
-        <SuggestedObjects
-          onPick={handlePickSuggested}
-          disabled={isLoading || !!image}
-        />
-      </section>
+          <SuggestedObjects
+            onPick={handlePickSuggested}
+            disabled={isLoading || !!image}
+          />
+          </section>
+        </div>
+      </div>
 
       {/* Result */}
       <section ref={resultRef} className="mt-14 scroll-mt-6">
