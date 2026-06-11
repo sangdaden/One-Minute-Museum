@@ -313,11 +313,24 @@ function ShareArtwork({
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
           }}
         >
-          <OmmMark size={42} color={t.accent} nonColor="#b0894a" />
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <OmmMark size={42} color={t.accent} nonColor="#b0894a" />
+            <span
+              style={{
+                fontFamily: mono,
+                fontSize: 14,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: t.inkSoft,
+              }}
+            >
+              {L.brand}
+            </span>
+          </div>
           <span
             style={{
               fontFamily: mono,
@@ -531,11 +544,24 @@ function PosterArtwork({
     <div
       style={{
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "space-between",
       }}
     >
-      <OmmMark size={42} color={cream} nonColor="#e6c98a" />
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <OmmMark size={42} color={cream} nonColor="#e6c98a" />
+        <span
+          style={{
+            fontFamily: mono,
+            fontSize: 14,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: light,
+          }}
+        >
+          {L.brand}
+        </span>
+      </div>
       <span
         style={{
           fontFamily: mono,
