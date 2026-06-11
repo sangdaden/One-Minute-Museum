@@ -4,6 +4,7 @@ import type { Theme, DecorationKind } from "@/lib/themes";
 import { formatExhibitionForSocial } from "@/lib/copy-format";
 import { formatDate, accession } from "@/lib/format";
 import CopyButton from "./CopyButton";
+import StoryButton from "./StoryButton";
 
 interface ThemedCardProps {
   exhibition: Exhibition;
@@ -167,6 +168,12 @@ export default function ThemedCard({
         style={{ borderTop: `1px solid ${t.inkSoft}33` }}
       >
         <CopyButton text={formatExhibitionForSocial(ex)} />
+        <StoryButton
+          exhibition={ex}
+          imageUrl={imageUrl}
+          className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
+          style={{ border: `1px solid ${t.inkSoft}66`, color: t.ink }}
+        />
         {onRegenerate && (
           <button
             type="button"

@@ -219,5 +219,14 @@
     "remove": "Bỏ ảnh",
     "aiBadge": "Ảnh tạo bằng AI",
     "error": "Không tạo được ảnh lúc này. Thử lại nhé."
+  },
+  "Story": {
+    "view": "Xem story",
+    "close": "Đóng",
+    "next": "Tiếp theo",
+    "prev": "Quay lại",
+    "factKicker": "Fun fact {n}",
+    "outro": "Chia sẻ",
+    "hint": "Chạm để lướt tiếp"
   }
 }

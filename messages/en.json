@@ -219,5 +219,14 @@
     "remove": "Remove image",
     "aiBadge": "AI-generated image",
     "error": "Couldn't generate images right now. Please try again."
+  },
+  "Story": {
+    "view": "View as story",
+    "close": "Close",
+    "next": "Next",
+    "prev": "Back",
+    "factKicker": "Fun fact {n}",
+    "outro": "Share",
+    "hint": "Tap to continue"
   }
 }
