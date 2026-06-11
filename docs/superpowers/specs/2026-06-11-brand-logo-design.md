@@ -8,7 +8,7 @@
 The abbreviation **OMM** (One-Minute Museum) reads aloud like **"Ôm"** (to hug).
 The logo leans into that pun; the slogan is the read-aloud:
 
-> **Ôm trộm văn hóa Việt.** — *steal a hug of Vietnamese culture.*
+> **Ôm trọn văn hóa Việt.** — *embrace all of Vietnamese culture.*
 
 ## 2. Decisions
 
@@ -16,7 +16,7 @@ The logo leans into that pun; the slogan is the read-aloud:
   tight tracking. A small **nón lá** (conical-hat / circumflex) sits over the
   first **O**, so it reads **Ôm**. Letters in oxblood (`--color-accent`), the nón
   in gold (`--color-gold`). Theme-token colours so it adapts to light/dark.
-- **Slogan:** "Ôm trộm văn hóa Việt." (EN gloss: "Steal a hug of Vietnamese
+- **Slogan:** "Ôm trọn văn hóa Việt." (EN gloss: "Embrace all of Vietnamese
   culture.")
 
 ## 3. Components / files

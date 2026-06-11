@@ -30,7 +30,7 @@ const jetbrains = JetBrains_Mono({
 
 const APP_TITLE = "OMM — Bảo Tàng 1 Phút";
 const APP_DESC =
-  "Ôm trộm văn hóa Việt. Biến những vật bình thường quanh bạn thành một triển lãm mini, đọc trong một phút.";
+  "Ôm trọn văn hóa Việt. Biến những vật bình thường quanh bạn thành một triển lãm mini, đọc trong một phút.";
 
 export const metadata: Metadata = {
   title: APP_TITLE,
