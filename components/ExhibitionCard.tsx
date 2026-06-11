@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
 import { formatExhibitionForSocial } from "@/lib/copy-format";
-import { formatDate, accession } from "@/lib/format";
+import { formatDate, accession, cleanHashtag } from "@/lib/format";
 import { getTheme } from "@/lib/themes";
 import CopyButton from "./CopyButton";
 import StoryButton from "./StoryButton";
@@ -205,7 +205,7 @@ function BentoCard({
         <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1">
           {ex.hashtags.map((tag) => (
             <span key={tag} className="eyebrow text-ink-faint">
-              #{tag}
+              #{cleanHashtag(tag)}
             </span>
           ))}
         </div>

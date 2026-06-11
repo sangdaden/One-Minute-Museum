@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
 import { getTheme } from "@/lib/themes";
+import { cleanHashtag } from "@/lib/format";
 
 interface StoryViewerProps {
   exhibition: Exhibition;
@@ -315,7 +316,7 @@ function SlideBody({
               className="text-[11px] font-medium uppercase tracking-[0.14em]"
               style={{ color: inkSoft }}
             >
-              #{tag}
+              #{cleanHashtag(tag)}
             </span>
           ))}
         </div>

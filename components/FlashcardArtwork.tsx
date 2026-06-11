@@ -1,5 +1,6 @@
 import type { Exhibition } from "@/lib/types";
 import type { Theme } from "@/lib/themes";
+import { cleanHashtag } from "@/lib/format";
 
 export const FLASHCARD_SIZE = 1080;
 
@@ -305,7 +306,7 @@ function QuoteBody({ ex, t }: { ex: Exhibition; t: Theme }) {
               color: t.inkSoft,
             }}
           >
-            #{tag.replace(/^#+/, "")}
+            #{cleanHashtag(tag)}
           </span>
         ))}
       </div>

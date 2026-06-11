@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Download } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
-import { slugifyObjectName } from "@/lib/format";
+import { slugifyObjectName, cleanHashtag } from "@/lib/format";
 import { getTheme, type Theme } from "@/lib/themes";
 
 interface ShareCardProps {
@@ -392,7 +392,7 @@ function ShareArtwork({
                 color: t.inkSoft,
               }}
             >
-              #{tag.replace(/^#+/, "")}
+              #{cleanHashtag(tag)}
             </span>
           ))}
         </div>
@@ -600,7 +600,7 @@ function PosterArtwork({
                   color: light,
                 }}
               >
-                #{tag.replace(/^#+/, "")}
+                #{cleanHashtag(tag)}
               </span>
             ))}
           </div>

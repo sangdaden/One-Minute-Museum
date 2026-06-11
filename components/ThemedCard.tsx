@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
 import type { Theme, DecorationKind } from "@/lib/themes";
 import { formatExhibitionForSocial } from "@/lib/copy-format";
-import { formatDate, accession } from "@/lib/format";
+import { formatDate, accession, cleanHashtag } from "@/lib/format";
 import CopyButton from "./CopyButton";
 import StoryButton from "./StoryButton";
 import FlashcardsButton from "./FlashcardsButton";
@@ -144,7 +144,7 @@ export default function ThemedCard({
         <div className="flex flex-wrap justify-center gap-x-3 gap-y-1">
           {ex.hashtags.map((tag) => (
             <span key={tag} className="eyebrow" style={{ color: t.inkSoft }}>
-              #{tag}
+              #{cleanHashtag(tag)}
             </span>
           ))}
         </div>

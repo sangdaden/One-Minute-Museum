@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { APIError, RateLimitError, AuthenticationError } from "openai";
 import type { ApiErrorCode, Exhibition, GenerateRequest } from "./types";
 import { DEFAULT_LANGUAGE, DEFAULT_VOICE } from "./constants";
+import { cleanHashtag } from "./format";
 
 /**
  * Real LLM-backed exhibition generator.
@@ -197,10 +198,11 @@ function validateContent(data: unknown): ExhibitionContent {
     throw new GenerationError("INVALID_JSON", invalidJsonMessage, 502);
   }
 
-  // The model sometimes returns tags already prefixed with "#". Store them bare
-  // so the UI/copy layer can add a single "#" without producing "##".
+  // The model sometimes returns tags prefixed with "#" or stray punctuation
+  // (e.g. "#%bocnilon"). Store them bare (letters/digits only) so the UI/copy
+  // layer can add a single "#".
   const hashtags = o.hashtags
-    .map((tag) => tag.replace(/^#+/, "").trim())
+    .map((tag) => cleanHashtag(tag))
     .filter((tag) => tag.length > 0);
   if (hashtags.length === 0) {
     throw new GenerationError("INVALID_JSON", invalidJsonMessage, 502);

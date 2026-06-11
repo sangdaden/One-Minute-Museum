@@ -14,6 +14,15 @@ export function accession(id: string): string {
 }
 
 /**
+ * Normalize a hashtag to just letters/digits/underscore — drops a leading "#",
+ * stray "%", spaces, and other punctuation the model sometimes emits
+ * (e.g. "#%bocnilon" -> "bocnilon"). Render with a single "#" in front.
+ */
+export function cleanHashtag(tag: string): string {
+  return tag.replace(/[^\p{L}\p{N}_]/gu, "");
+}
+
+/**
  * ASCII slug for filenames, e.g. "Dép tổ ong" -> "dep-to-ong".
  * Strips Vietnamese diacritics so downloads are safe across OSes.
  */

@@ -1,4 +1,5 @@
 import type { Exhibition } from "./types";
+import { cleanHashtag } from "./format";
 
 /**
  * Format an exhibition as social-ready plain text for Facebook / LinkedIn.
@@ -26,7 +27,7 @@ export function formatExhibitionForSocial(ex: Exhibition): string {
 
   // Each array entry becomes a single "#Tag"; tolerate stray leading "#".
   const hashtags = (ex.hashtags ?? [])
-    .map((tag) => tag.replace(/^#+/, "").trim())
+    .map((tag) => cleanHashtag(tag))
     .filter((tag) => tag.length > 0)
     .map((tag) => `#${tag}`)
     .join(" ");

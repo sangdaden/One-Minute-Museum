@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
+import { cleanHashtag } from "@/lib/format";
 
 interface EditExhibitionFormProps {
   exhibition: Exhibition;
@@ -58,7 +59,7 @@ export default function EditExhibitionForm({
 
     const tags = hashtags
       .split(",")
-      .map((t) => t.replace(/^#+/, "").trim())
+      .map((t) => cleanHashtag(t))
       .filter((t) => t.length > 0);
 
     onSave({
