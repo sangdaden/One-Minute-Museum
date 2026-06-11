@@ -221,10 +221,14 @@ function ShareArtwork({
         {imageUrl && (
           <div
             style={{
-              width: "100%",
-              height: 240,
+              // Square frame, centred — the featured image is 1:1, so it fills
+              // (no wide empty bands); a non-square photo letterboxes lightly.
+              width: 320,
+              height: 320,
               marginTop: 24,
-              borderRadius: 16,
+              marginLeft: "auto",
+              marginRight: "auto",
+              borderRadius: 18,
               background: `${t.inkSoft}14`,
               overflow: "hidden",
               display: "flex",
@@ -237,8 +241,8 @@ function ShareArtwork({
               src={imageUrl}
               alt=""
               style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
+                width: "100%",
+                height: "100%",
                 objectFit: "contain",
                 display: "block",
               }}

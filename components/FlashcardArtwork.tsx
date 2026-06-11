@@ -133,10 +133,14 @@ function CoverBody({
       {imageUrl && (
         <div
           style={{
-            width: "100%",
-            height: 380,
-            borderRadius: 18,
+            // Square frame, centred — fills for the 1:1 featured image.
+            width: 520,
+            height: 520,
+            maxWidth: "100%",
+            borderRadius: 20,
             marginBottom: 36,
+            marginLeft: "auto",
+            marginRight: "auto",
             background: `${t.inkSoft}14`,
             overflow: "hidden",
             display: "flex",
@@ -149,8 +153,8 @@ function CoverBody({
             src={imageUrl}
             alt=""
             style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
+              width: "100%",
+              height: "100%",
               objectFit: "contain",
               display: "block",
             }}

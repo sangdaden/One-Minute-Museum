@@ -66,7 +66,7 @@ export default function ThemedCard({
 
       {imageUrl && (
         <div
-          className="flex max-h-72 w-full items-center justify-center overflow-hidden rounded-xl"
+          className="mx-auto flex aspect-square w-full max-w-xs items-center justify-center overflow-hidden rounded-xl"
           style={{
             background: `${t.inkSoft}14`,
             boxShadow: "0 10px 28px -18px rgba(0,0,0,0.6)",
@@ -78,7 +78,7 @@ export default function ThemedCard({
             alt={ex.object_name}
             loading="lazy"
             decoding="async"
-            className="max-h-72 w-full object-contain"
+            className="h-full w-full object-contain"
           />
         </div>
       )}
