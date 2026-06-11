@@ -6,24 +6,27 @@
   Archival warm paper, lacquer-red accent, brass hairlines, mono accession type.
 */
 :root {
-  /* Sơn mài accent on a fresh blush off-white with white floating cards. */
-  --paper: #fcf5f2;
-  --paper-card: #ffffff;
-  --paper-sunk: #f6ede9;
+  /* Warm archival paper, oxblood primary, brass gold, teal interactive accent. */
+  --paper: #f7f1e3;
+  --paper-card: #fff9ef;
+  --paper-sunk: #efe6d4;
 
-  --ink: #211712;
-  --ink-soft: #6b5a54;
-  --ink-faint: #9c8b85;
+  --ink: #2f2621;
+  --ink-soft: #7a6a5f;
+  --ink-faint: #9f8e7e;
 
-  --accent: #9e3322; /* lacquer / sơn mài oxblood */
-  --accent-deep: #6f2417;
-  --gold: #b0894a; /* muted brass */
+  --accent: #a8322a; /* lacquer / sơn mài oxblood (primary) */
+  --accent-deep: #7e241d;
+  --gold: #c89b3c; /* brass (secondary) */
 
-  --border: #f0e2dd;
-  --border-strong: #e3d0c9;
+  --teal: #2f7c74; /* interactive accent */
+  --teal-deep: #245f58;
+
+  --border: #e3d2b8;
+  --border-strong: #d6c19d;
 }
 
-/* Dark mode — warm brown-black; lacquer accent + brass kept (brightened). */
+/* Dark mode — warm brown-black; accents brightened. */
 [data-theme="dark"] {
   --paper: #1a1411;
   --paper-card: #221b16;
@@ -33,9 +36,12 @@
   --ink-soft: #b9aa9b;
   --ink-faint: #8a7c6e;
 
-  --accent: #c0402f;
-  --accent-deep: #7a2418;
-  --gold: #c6a557;
+  --accent: #c84a3c;
+  --accent-deep: #8a2a20;
+  --gold: #d8b45f;
+
+  --teal: #4fa294;
+  --teal-deep: #2f7c74;
 
   --border: #3a2e26;
   --border-strong: #4c3c31;
@@ -51,6 +57,8 @@
   --color-accent: var(--accent);
   --color-accent-deep: var(--accent-deep);
   --color-gold: var(--gold);
+  --color-teal: var(--teal);
+  --color-teal-deep: var(--teal-deep);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
 
@@ -92,7 +100,7 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  background: color-mix(in srgb, var(--teal) 24%, transparent);
   color: var(--ink);
 }
 

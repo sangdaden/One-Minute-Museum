@@ -80,7 +80,7 @@ export default function FlashcardArtwork({
             justifyContent: "space-between",
           }}
         >
-          <OmmMark size={42} color={t.accent} nonColor="#b0894a" />
+          <OmmMark size={42} color={t.accent} nonColor="#c89b3c" />
           <span
             style={{
               fontFamily: MONO,

@@ -318,7 +318,7 @@ function ShareArtwork({
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <OmmMark size={42} color={t.accent} nonColor="#b0894a" />
+            <OmmMark size={42} color={t.accent} nonColor="#c89b3c" />
             <span
               style={{
                 fontFamily: mono,
@@ -549,7 +549,7 @@ function PosterArtwork({
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <OmmMark size={42} color={cream} nonColor="#e6c98a" />
+        <OmmMark size={42} color={cream} nonColor="#e2c27e" />
         <span
           style={{
             fontFamily: mono,

@@ -84,8 +84,8 @@ export default function ReactionBar({
             className={[
               "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors",
               active
-                ? "border-accent bg-accent/10 text-accent"
-                : "border-border-strong text-ink-soft hover:border-accent/50 hover:text-ink",
+                ? "border-teal bg-teal/10 text-teal"
+                : "border-border-strong text-ink-soft hover:border-teal/50 hover:text-ink",
             ].join(" ")}
           >
             <span aria-hidden>{r.emoji}</span>

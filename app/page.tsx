@@ -183,8 +183,8 @@ function Chip({
       className={[
         "inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm transition-colors",
         active
-          ? "border-accent bg-accent/5 text-accent ring-1 ring-accent/30"
-          : "border-border-strong text-ink-soft hover:border-accent/50 hover:text-ink",
+          ? "border-teal bg-teal/5 text-teal ring-1 ring-teal/30"
+          : "border-border-strong text-ink-soft hover:border-teal/50 hover:text-ink",
       ].join(" ")}
     >
       {children}
