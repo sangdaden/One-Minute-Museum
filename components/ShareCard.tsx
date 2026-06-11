@@ -5,7 +5,12 @@ import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Download, X } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
-import { slugifyObjectName, cleanHashtag } from "@/lib/format";
+import {
+  slugifyObjectName,
+  cleanHashtag,
+  stripWrappingQuotes,
+  cardLabels,
+} from "@/lib/format";
 import { getTheme, type Theme } from "@/lib/themes";
 
 interface ShareCardProps {
@@ -246,6 +251,7 @@ function ShareArtwork({
 }) {
   const mono = "var(--font-jetbrains), monospace";
   const display = "var(--font-display), ui-sans-serif, system-ui, sans-serif";
+  const L = cardLabels(ex);
 
   // With a photo: full-bleed poster (image as background, text overlaid).
   if (imageUrl) {
@@ -319,7 +325,7 @@ function ShareArtwork({
               color: t.accent,
             }}
           >
-            Bảo Tàng 1 Phút
+            {L.brand}
           </span>
           <span
             style={{
@@ -330,7 +336,7 @@ function ShareArtwork({
               color: t.inkSoft,
             }}
           >
-            {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
+            {L.toldBy}
           </span>
         </div>
 
@@ -379,7 +385,7 @@ function ShareArtwork({
               marginBottom: 18,
             }}
           >
-            Hiện vật
+            {L.object}
           </div>
           <div
             style={{
@@ -422,7 +428,7 @@ function ShareArtwork({
               overflow: "hidden",
             }}
           >
-            “{ex.share_quote}”
+            “{stripWrappingQuotes(ex.share_quote)}”
           </p>
         </div>
 
@@ -438,7 +444,7 @@ function ShareArtwork({
               marginBottom: 18,
             }}
           >
-            Ba điều thú vị
+            {L.facts}
           </div>
           <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {ex.three_fun_facts.slice(0, 3).map((fact, i) => (
@@ -528,6 +534,7 @@ function PosterArtwork({
 }) {
   const cream = "#f3e7cf";
   const light = "rgba(255,255,255,0.82)";
+  const L = cardLabels(ex);
 
   const Brand = () => (
     <div
@@ -546,7 +553,7 @@ function PosterArtwork({
           color: cream,
         }}
       >
-        Bảo Tàng 1 Phút
+        {L.brand}
       </span>
       <span
         style={{
@@ -557,7 +564,7 @@ function PosterArtwork({
           color: light,
         }}
       >
-        {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
+        {L.toldBy}
       </span>
     </div>
   );
@@ -574,7 +581,7 @@ function PosterArtwork({
           marginBottom: 12,
         }}
       >
-        Hiện vật
+        {L.object}
       </div>
       <div
         style={{
@@ -612,7 +619,7 @@ function PosterArtwork({
             overflow: "hidden",
           }}
         >
-          “{ex.share_quote}”
+          “{stripWrappingQuotes(ex.share_quote)}”
         </p>
       </div>
     </div>
@@ -630,7 +637,7 @@ function PosterArtwork({
           marginBottom: 12,
         }}
       >
-        Ba điều thú vị
+        {L.facts}
       </div>
       <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {ex.three_fun_facts.slice(0, 3).map((fact, i) => (

@@ -1,5 +1,5 @@
 import type { Exhibition } from "@/lib/types";
-import { cleanHashtag } from "@/lib/format";
+import { cleanHashtag, stripWrappingQuotes } from "@/lib/format";
 
 /**
  * Shared slide model + renderer for the multi-post StoriesPlayer.
@@ -122,7 +122,7 @@ export function StorySlideBody({
           className="mt-4 font-serif text-[1.7rem] font-medium leading-snug sm:text-[2.1rem]"
           style={{ color: fg }}
         >
-          “{ex.share_quote}”
+          “{stripWrappingQuotes(ex.share_quote)}”
         </p>
         <div className="mt-6 flex flex-wrap gap-x-3 gap-y-1">
           {ex.hashtags.map((tag) => (

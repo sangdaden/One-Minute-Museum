@@ -1,6 +1,6 @@
 import type { Exhibition } from "@/lib/types";
 import type { Theme } from "@/lib/themes";
-import { cleanHashtag } from "@/lib/format";
+import { cleanHashtag, cardLabels, stripWrappingQuotes } from "@/lib/format";
 
 export const FLASHCARD_SIZE = 1080;
 
@@ -12,7 +12,6 @@ export type FlashCard =
 const MONO = "var(--font-jetbrains), monospace";
 const DISPLAY = "var(--font-display), ui-sans-serif, system-ui, sans-serif";
 const BODY = "var(--font-be-vietnam), system-ui, sans-serif";
-const BRAND = "Bảo Tàng 1 Phút";
 
 /**
  * One fixed 1080×1080 flashcard. All sizing in px so html-to-image exports are
@@ -32,6 +31,7 @@ export default function FlashcardArtwork({
   theme: Theme;
   card: FlashCard;
 }) {
+  const L = cardLabels(ex);
   return (
     <div
       ref={ref}
@@ -88,7 +88,7 @@ export default function FlashcardArtwork({
               color: t.accent,
             }}
           >
-            {BRAND}
+            {L.brand}
           </span>
           <span
             style={{
@@ -99,14 +99,14 @@ export default function FlashcardArtwork({
               color: t.inkSoft,
             }}
           >
-            {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
+            {L.toldBy}
           </span>
         </div>
 
         {card.kind === "cover" && (
           <CoverBody ex={ex} imageUrl={imageUrl} t={t} />
         )}
-        {card.kind === "fact" && <FactBody card={card} t={t} />}
+        {card.kind === "fact" && <FactBody ex={ex} card={card} t={t} />}
         {card.kind === "quote" && <QuoteBody ex={ex} t={t} />}
       </div>
     </div>
@@ -122,6 +122,7 @@ function CoverBody({
   imageUrl?: string;
   t: Theme;
 }) {
+  const L = cardLabels(ex);
   return (
     <div
       style={{
@@ -172,7 +173,7 @@ function CoverBody({
           marginBottom: 18,
         }}
       >
-        Hiện vật
+        {L.object}
       </div>
       <div
         style={{
@@ -206,12 +207,15 @@ function CoverBody({
 }
 
 function FactBody({
+  ex,
   card,
   t,
 }: {
+  ex: Exhibition;
   card: { index: number; text: string };
   t: Theme;
 }) {
+  const L = cardLabels(ex);
   return (
     <div
       style={{
@@ -242,7 +246,7 @@ function FactBody({
           margin: "24px 0 22px",
         }}
       >
-        Fun fact
+        {L.fact}
       </div>
       <p
         style={{
@@ -285,7 +289,7 @@ function QuoteBody({ ex, t }: { ex: Exhibition; t: Theme }) {
             margin: 0,
           }}
         >
-          “{ex.share_quote}”
+          “{stripWrappingQuotes(ex.share_quote)}”
         </p>
       </div>
       <div
