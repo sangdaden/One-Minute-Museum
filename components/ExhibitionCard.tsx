@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
 import { formatExhibitionForSocial } from "@/lib/copy-format";
 import { formatDate, accession } from "@/lib/format";
@@ -69,6 +70,7 @@ function BentoCard({
   onRegenerate,
 }: ExhibitionCardProps) {
   const ex = exhibition;
+  const t = useTranslations("Card");
 
   return (
     <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-6 sm:gap-3">
@@ -94,7 +96,7 @@ function BentoCard({
           {ex.voice && (
             <>
               {" "}
-              <span className="text-gold">·</span> Kể bởi {ex.voice}
+              <span className="text-gold">·</span> {t("toldBy")} {ex.voice}
             </>
           )}
         </p>
@@ -113,7 +115,7 @@ function BentoCard({
             className="h-full max-h-72 w-full object-cover"
           />
           <span className="eyebrow absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-1 text-paper-card">
-            Ảnh của bạn
+            {t("yourPhoto")}
           </span>
         </section>
       )}
@@ -123,7 +125,7 @@ function BentoCard({
         className="reveal col-span-2 rounded-2xl bg-accent p-5 sm:col-span-6 sm:p-7"
         style={{ animationDelay: "60ms" }}
       >
-        <h3 className="eyebrow mb-2 text-paper-card/70">Mở đầu</h3>
+        <h3 className="eyebrow mb-2 text-paper-card/70">{t("hook")}</h3>
         <p className="font-serif text-[1.3rem] font-medium leading-snug text-paper-card sm:text-[1.7rem]">
           {ex.hook}
         </p>
@@ -132,14 +134,14 @@ function BentoCard({
       {/* What it is + Story */}
       <Tile
         variant="ink"
-        label="Đây là gì?"
+        label={t("what")}
         span="col-span-2 sm:col-span-3"
         delay={110}
         text={ex.what_it_is}
       />
       <Tile
         variant="brass"
-        label="Câu chuyện phía sau"
+        label={t("story")}
         span="col-span-2 sm:col-span-3"
         delay={150}
         text={ex.origin_or_context}
@@ -164,14 +166,14 @@ function BentoCard({
       {/* Insight + Why */}
       <Tile
         variant="sunk"
-        label="Góc nhìn thiết kế / văn hóa"
+        label={t("insight")}
         span="col-span-2 sm:col-span-4"
         delay={320}
         text={ex.design_or_cultural_insight}
       />
       <Tile
         variant="accentDeep"
-        label="Vì sao đáng chú ý?"
+        label={t("why")}
         span="col-span-2 sm:col-span-2"
         delay={360}
         text={ex.why_it_matters}
@@ -182,7 +184,7 @@ function BentoCard({
         className="reveal col-span-2 rounded-2xl border border-dashed border-gold/60 bg-accent/[0.06] p-5 text-center sm:col-span-6"
         style={{ animationDelay: "400ms" }}
       >
-        <h3 className="eyebrow mb-2 text-gold">Câu hỏi suy ngẫm</h3>
+        <h3 className="eyebrow mb-2 text-gold">{t("reflection")}</h3>
         <p className="font-serif text-[1.2rem] font-medium leading-snug text-ink">
           {ex.reflection_question}
         </p>
@@ -211,7 +213,7 @@ function BentoCard({
               onClick={onRegenerate}
               className="rounded-full border border-border-strong px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-ink/40 hover:text-ink"
             >
-              Tạo lại
+              {t("regenerate")}
             </button>
           )}
         </div>

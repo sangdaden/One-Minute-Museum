@@ -129,5 +129,83 @@
     "thocam": "Thổ cẩm",
     "note": "Giấy note",
     "tet": "Tết"
+  },
+  "Common": {
+    "anon": "Người dùng ẩn danh",
+    "objects": "hiện vật"
+  },
+  "Feed": {
+    "title": "Khám phá",
+    "subtitle": "Những triển lãm một phút từ cộng đồng.",
+    "notConfigured": "Tính năng cộng đồng chưa được bật. <link>Tạo một triển lãm</link> để bắt đầu.",
+    "empty": "Chưa có bài nào trong cộng đồng. <link>Tạo triển lãm đầu tiên</link> rồi bấm “Đăng lên cộng đồng”.",
+    "comments": "bình luận"
+  },
+  "Me": {
+    "title": "Bài của tôi",
+    "subtitle": "Những triển lãm bạn đã đăng lên cộng đồng.",
+    "notConfigured": "Tính năng cộng đồng chưa được cấu hình trên máy chủ.",
+    "signInPrompt": "Đăng nhập (góc trên phải) để xem bài bạn đã đăng.",
+    "empty": "Bạn chưa đăng bài nào. Tạo một triển lãm rồi bấm “Đăng lên cộng đồng”."
+  },
+  "Gallery": {
+    "title": "Bộ sưu tập",
+    "subtitle": "Những hiện vật bạn đã đưa vào bảo tàng của riêng mình.",
+    "clearConfirm": "Xóa tất cả?",
+    "cancel": "Hủy",
+    "clearAll": "Xóa bộ sưu tập",
+    "empty": "Bảo tàng của bạn chưa có hiện vật nào.",
+    "emptyHint": "Thử bắt đầu với “dép tổ ong” hoặc “ghế nhựa đỏ”.",
+    "emptyCta": "Tạo triển lãm đầu tiên",
+    "localNote": "Lưu cục bộ trên máy bạn"
+  },
+  "Profile": {
+    "joined": "Tham gia",
+    "empty": "Người này chưa đăng hiện vật nào."
+  },
+  "Post": {
+    "comments": "Bình luận ({count})"
+  },
+  "Card": {
+    "toldBy": "Kể bởi",
+    "yourPhoto": "Ảnh của bạn",
+    "hook": "Mở đầu",
+    "what": "Đây là gì?",
+    "story": "Câu chuyện phía sau",
+    "facts": "Ba điều thú vị",
+    "insight": "Góc nhìn thiết kế / văn hóa",
+    "why": "Vì sao đáng chú ý?",
+    "reflection": "Câu hỏi suy ngẫm",
+    "regenerate": "Tạo lại"
+  },
+  "Comment": {
+    "placeholder": "Viết bình luận…",
+    "sending": "Đang gửi…",
+    "submit": "Gửi bình luận",
+    "empty": "Chưa có bình luận. Hãy là người đầu tiên.",
+    "delete": "Xóa"
+  },
+  "Reactions": {
+    "thich": "Thích",
+    "batngo": "Bất ngờ",
+    "suyngam": "Suy ngẫm",
+    "vui": "Vui"
+  },
+  "LoadMore": {
+    "loading": "Đang tải…",
+    "loadMore": "Tải thêm"
+  },
+  "Copy": {
+    "copy": "Copy nội dung",
+    "copied": "Đã copy",
+    "error": "Không copy được"
+  },
+  "Share": {
+    "header": "Ảnh chia sẻ · 1080×1080",
+    "creating": "Đang tạo ảnh…",
+    "done": "Đã tải ảnh ✓",
+    "error": "Không tạo được ảnh",
+    "cta": "Tạo ảnh chia sẻ",
+    "pngSquare": "PNG · vuông"
   }
 }

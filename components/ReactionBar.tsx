@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { REACTIONS } from "@/lib/types";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/client";
@@ -15,6 +16,7 @@ export default function ReactionBar({
   postId,
   initialReactions,
 }: ReactionBarProps) {
+  const t = useTranslations("Reactions");
   const [reactions, setReactions] = useState(initialReactions);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -77,7 +79,7 @@ export default function ReactionBar({
             key={r.type}
             type="button"
             onClick={() => react(r.type)}
-            title={r.label}
+            title={t(r.type)}
             aria-pressed={active}
             className={[
               "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors",

@@ -18,7 +18,9 @@ export default async function ProfilePage({
 }) {
   const { id } = await params;
   if (!isSupabaseConfigured()) notFound();
-  const t = await getTranslations("Nav");
+  const tNav = await getTranslations("Nav");
+  const t = await getTranslations("Profile");
+  const tCommon = await getTranslations("Common");
 
   const supabase = await createClient();
   const { data: profile } = await supabase
@@ -36,7 +38,7 @@ export default async function ProfilePage({
     .limit(60);
   const posts: Post[] = (postRows ?? []).map(rowToPost);
 
-  const name = profile.display_name || "Người dùng ẩn danh";
+  const name = profile.display_name || tCommon("anon");
 
   return (
     <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
@@ -46,7 +48,7 @@ export default async function ProfilePage({
           href="/"
           className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
         >
-          <span aria-hidden>←</span> {t("explore")}
+          <span aria-hidden>←</span> {tNav("explore")}
         </Link>
         <AccountMenu />
       </div>
@@ -71,9 +73,9 @@ export default async function ProfilePage({
             {name}
           </h1>
           <p className="eyebrow text-ink-faint">
-            Tham gia {formatDate(profile.created_at)}{" "}
+            {t("joined")} {formatDate(profile.created_at)}{" "}
             <span className="text-gold">·</span>{" "}
-            {count ?? posts.length} hiện vật
+            {count ?? posts.length} {tCommon("objects")}
           </p>
         </div>
       </header>
@@ -86,7 +88,7 @@ export default async function ProfilePage({
               ❦
             </span>
             <p className="font-serif text-lg italic leading-snug text-ink-soft">
-              Người này chưa đăng hiện vật nào.
+              {t("empty")}
             </p>
           </div>
         ) : (

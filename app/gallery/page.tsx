@@ -12,7 +12,9 @@ import GalleryItem from "@/components/GalleryItem";
 import AccountMenu from "@/components/AccountMenu";
 
 export default function GalleryPage() {
-  const t = useTranslations("Nav");
+  const tNav = useTranslations("Nav");
+  const t = useTranslations("Gallery");
+  const tCommon = useTranslations("Common");
   // null = not yet loaded from localStorage (client-only).
   const [items, setItems] = useState<Exhibition[] | null>(null);
   const [confirming, setConfirming] = useState(false);
@@ -44,7 +46,7 @@ export default function GalleryPage() {
           >
             ←
           </span>
-          {t("home")}
+          {tNav("home")}
         </Link>
         <AccountMenu />
       </div>
@@ -60,17 +62,17 @@ export default function GalleryPage() {
       >
         <div className="space-y-3">
           <h1 className="font-serif text-[2.6rem] font-medium leading-none tracking-[-0.02em] text-ink sm:text-[3.4rem]">
-            Bộ sưu tập<span className="text-accent">.</span>
+            {t("title")}<span className="text-accent">.</span>
           </h1>
           <p className="text-base leading-relaxed text-ink-soft">
-            Những hiện vật bạn đã đưa vào bảo tàng của riêng mình.
+            {t("subtitle")}
           </p>
         </div>
 
         {loaded && count > 0 && (
           <div className="flex items-center gap-3">
             <span className="eyebrow text-ink-faint">
-              {String(count).padStart(2, "0")} hiện vật
+              {String(count).padStart(2, "0")} {tCommon("objects")}
             </span>
             {confirming ? (
               <span className="flex items-center gap-2">
@@ -79,14 +81,14 @@ export default function GalleryPage() {
                   onClick={handleClear}
                   className="rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-paper-card transition-colors hover:bg-accent-deep"
                 >
-                  Xóa tất cả?
+                  {t("clearConfirm")}
                 </button>
                 <button
                   type="button"
                   onClick={() => setConfirming(false)}
                   className="rounded-full border border-border-strong px-4 py-1.5 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
                 >
-                  Hủy
+                  {t("cancel")}
                 </button>
               </span>
             ) : (
@@ -95,7 +97,7 @@ export default function GalleryPage() {
                 onClick={() => setConfirming(true)}
                 className="rounded-full border border-border-strong px-4 py-1.5 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent"
               >
-                Xóa bộ sưu tập
+                {t("clearAll")}
               </button>
             )}
           </div>
@@ -110,16 +112,16 @@ export default function GalleryPage() {
               ❦
             </span>
             <p className="font-serif text-xl leading-snug text-ink">
-              Bảo tàng của bạn chưa có hiện vật nào.
+              {t("empty")}
             </p>
             <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
-              Thử bắt đầu với “dép tổ ong” hoặc “ghế nhựa đỏ”.
+              {t("emptyHint")}
             </p>
             <Link
               href="/"
               className="mt-2 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-paper-card transition-colors hover:bg-accent-deep"
             >
-              Tạo triển lãm đầu tiên
+              {t("emptyCta")}
               <span aria-hidden>→</span>
             </Link>
           </div>
@@ -136,7 +138,7 @@ export default function GalleryPage() {
 
       <footer className="mt-16 flex items-center justify-between border-t border-border pt-5">
         <span className="eyebrow text-ink-faint">One-Minute Museum</span>
-        <span className="eyebrow text-ink-faint">Lưu cục bộ trên máy bạn</span>
+        <span className="eyebrow text-ink-faint">{t("localNote")}</span>
       </footer>
     </main>
   );

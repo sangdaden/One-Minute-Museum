@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Post } from "@/lib/types";
 import FeedPost from "./FeedPost";
 
@@ -11,6 +12,7 @@ interface FeedLoadMoreProps {
 
 /** Appends more feed posts via /api/feed (keyset pagination). */
 export default function FeedLoadMore({ initialNextBefore }: FeedLoadMoreProps) {
+  const t = useTranslations("LoadMore");
   const [posts, setPosts] = useState<Post[]>([]);
   const [before, setBefore] = useState<string | null>(initialNextBefore);
   const [loading, setLoading] = useState(false);
@@ -47,7 +49,7 @@ export default function FeedLoadMore({ initialNextBefore }: FeedLoadMoreProps) {
             disabled={loading}
             className="rounded-full border border-border-strong px-6 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent disabled:opacity-60"
           >
-            {loading ? "Đang tải…" : "Tải thêm"}
+            {loading ? t("loading") : t("loadMore")}
           </button>
         </div>
       )}

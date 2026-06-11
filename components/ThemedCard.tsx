@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
 import type { Theme, DecorationKind } from "@/lib/themes";
 import { formatExhibitionForSocial } from "@/lib/copy-format";
@@ -18,6 +19,7 @@ export default function ThemedCard({
   onRegenerate,
   theme: t,
 }: ThemedCardProps) {
+  const tr = useTranslations("Card");
   const label = (text: string) => (
     <div
       className="eyebrow mb-1.5"
@@ -56,7 +58,7 @@ export default function ThemedCard({
         </h2>
         <p className="eyebrow" style={{ color: t.inkSoft }}>
           {ex.mode}
-          {ex.voice ? ` · Kể bởi ${ex.voice}` : ""}
+          {ex.voice ? ` · ${tr("toldBy")} ${ex.voice}` : ""}
         </p>
       </header>
 
@@ -83,11 +85,11 @@ export default function ThemedCard({
         </p>
       </blockquote>
 
-      <Section heading="Đây là gì?" body={ex.what_it_is} />
-      <Section heading="Câu chuyện phía sau" body={ex.origin_or_context} />
+      <Section heading={tr("what")} body={ex.what_it_is} />
+      <Section heading={tr("story")} body={ex.origin_or_context} />
 
       <section>
-        {label("Ba điều thú vị")}
+        {label(tr("facts"))}
         <ol className="grid gap-x-6 gap-y-4 sm:grid-cols-3">
           {ex.three_fun_facts.slice(0, 3).map((fact, i) => (
             <li key={i} className="space-y-1.5">
@@ -106,16 +108,16 @@ export default function ThemedCard({
       </section>
 
       <Section
-        heading="Góc nhìn thiết kế / văn hóa"
+        heading={tr("insight")}
         body={ex.design_or_cultural_insight}
       />
-      <Section heading="Vì sao đáng chú ý?" body={ex.why_it_matters} />
+      <Section heading={tr("why")} body={ex.why_it_matters} />
 
       <section
         className="rounded-xl border border-dashed px-4 py-4 text-center"
         style={{ borderColor: t.accent }}
       >
-        {label("Câu hỏi suy ngẫm")}
+        {label(tr("reflection"))}
         <p
           className="font-serif text-[1.15rem] font-medium leading-snug"
           style={{ color: t.ink }}
@@ -172,7 +174,7 @@ export default function ThemedCard({
             className="rounded-full px-4 py-2 text-sm font-medium"
             style={{ border: `1px solid ${t.inkSoft}66`, color: t.ink }}
           >
-            Tạo lại
+            {tr("regenerate")}
           </button>
         )}
       </div>

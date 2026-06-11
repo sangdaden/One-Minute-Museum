@@ -21,7 +21,9 @@ export default async function PostPage({
 }) {
   const { id } = await params;
   if (!isSupabaseConfigured()) notFound();
-  const t = await getTranslations("Nav");
+  const tNav = await getTranslations("Nav");
+  const t = await getTranslations("Post");
+  const tCommon = await getTranslations("Common");
 
   const supabase = await createClient();
   const { data: postRow } = await supabase
@@ -42,7 +44,7 @@ export default async function PostPage({
     .order("created_at", { ascending: true });
   const comments: Comment[] = (commentRows ?? []).map(rowToComment);
 
-  const authorName = post.author?.display_name || "Người dùng ẩn danh";
+  const authorName = post.author?.display_name || tCommon("anon");
 
   return (
     <main className="mx-auto w-full max-w-[760px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
@@ -52,7 +54,7 @@ export default async function PostPage({
           href="/"
           className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
         >
-          <span aria-hidden>←</span> {t("explore")}
+          <span aria-hidden>←</span> {tNav("explore")}
         </Link>
         <AccountMenu />
       </div>
@@ -100,7 +102,7 @@ export default async function PostPage({
       <section className="mt-12 space-y-6">
         <div className="flex items-center gap-3">
           <h2 className="eyebrow text-ink">
-            Bình luận ({comments.length})
+            {t("comments", { count: comments.length })}
           </h2>
           <span className="h-px flex-1 bg-border-strong" />
         </div>

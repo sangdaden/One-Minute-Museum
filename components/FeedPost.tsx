@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { Post } from "@/lib/types";
 import { postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
@@ -11,7 +12,9 @@ import ReactionBar from "./ReactionBar";
  * client-side (load-more).
  */
 export default function FeedPost({ post }: { post: Post }) {
-  const name = post.author?.display_name || "Người dùng ẩn danh";
+  const t = useTranslations("Feed");
+  const tCommon = useTranslations("Common");
+  const name = post.author?.display_name || tCommon("anon");
   const avatar = post.author?.avatar_url;
 
   return (
@@ -53,7 +56,7 @@ export default function FeedPost({ post }: { post: Post }) {
           href={`/p/${post.id}`}
           className="eyebrow text-ink-soft transition-colors hover:text-accent"
         >
-          {post.comment_count ?? 0} bình luận →
+          {post.comment_count ?? 0} {t("comments")} →
         </Link>
       </div>
     </article>

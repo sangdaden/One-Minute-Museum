@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/client";
 
 /** Write a comment (login required; prompts Google sign-in otherwise). */
 export default function CommentForm({ postId }: { postId: string }) {
+  const t = useTranslations("Comment");
   const router = useRouter();
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
@@ -49,7 +51,7 @@ export default function CommentForm({ postId }: { postId: string }) {
         onChange={(e) => setBody(e.target.value)}
         maxLength={2000}
         rows={3}
-        placeholder="Viết bình luận…"
+        placeholder={t("placeholder")}
         className="w-full rounded-xl border border-border bg-paper-card px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-faint/70 focus:border-accent"
       />
       <button
@@ -57,7 +59,7 @@ export default function CommentForm({ postId }: { postId: string }) {
         disabled={busy || body.trim().length === 0}
         className="self-end rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-paper-card transition-colors hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-40"
       >
-        {busy ? "Đang gửi…" : "Gửi bình luận"}
+        {busy ? t("sending") : t("submit")}
       </button>
     </form>
   );

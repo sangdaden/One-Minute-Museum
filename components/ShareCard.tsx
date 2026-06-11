@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Download } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
 import { slugifyObjectName } from "@/lib/format";
@@ -22,6 +23,7 @@ type Status = "idle" | "working" | "done" | "error";
  * on the server (avoids SSR issues).
  */
 export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
+  const t = useTranslations("Share");
   const ex = exhibition;
   const theme = getTheme(ex.theme);
 
@@ -75,17 +77,17 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
 
   const buttonLabel =
     status === "working"
-      ? "Đang tạo ảnh…"
+      ? t("creating")
       : status === "done"
-        ? "Đã tải ảnh ✓"
+        ? t("done")
         : status === "error"
-          ? "Không tạo được ảnh"
-          : "Tạo ảnh chia sẻ";
+          ? t("error")
+          : t("cta");
 
   return (
     <section className="reveal flex flex-col gap-4">
       <div className="flex items-center gap-3">
-        <span className="eyebrow text-ink">Ảnh chia sẻ · 1080×1080</span>
+        <span className="eyebrow text-ink">{t("header")}</span>
         <span className="h-px flex-1 bg-border-strong" />
       </div>
 
@@ -119,7 +121,7 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
           <Download aria-hidden className="h-4 w-4" strokeWidth={2} />
           {buttonLabel}
         </button>
-        <span className="eyebrow text-ink-faint">PNG · vuông</span>
+        <span className="eyebrow text-ink-faint">{t("pngSquare")}</span>
       </div>
     </section>
   );

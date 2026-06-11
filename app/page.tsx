@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import { rowToPost } from "@/lib/posts";
@@ -13,6 +14,8 @@ export const dynamic = "force-dynamic";
 
 export default async function FeedPage() {
   const configured = isSupabaseConfigured();
+  const t = await getTranslations("Feed");
+  const tNav = await getTranslations("Nav");
   let posts: Post[] = [];
 
   if (configured) {
@@ -45,10 +48,10 @@ export default async function FeedPage() {
       <header className="mt-9 flex flex-wrap items-end justify-between gap-5 sm:mt-12">
         <div className="space-y-2">
           <h1 className="font-serif text-[2.6rem] font-medium leading-none tracking-[-0.02em] text-ink sm:text-[3.4rem]">
-            Khám phá<span className="text-accent">.</span>
+            {t("title")}<span className="text-accent">.</span>
           </h1>
           <p className="text-base leading-relaxed text-ink-soft">
-            Những triển lãm một phút từ cộng đồng.
+            {t("subtitle")}
           </p>
         </div>
         <Link
@@ -58,26 +61,30 @@ export default async function FeedPage() {
           <span aria-hidden className="text-base leading-none">
             ＋
           </span>
-          Tạo triển lãm
+          {tNav("createCta")}
         </Link>
       </header>
 
       <section className="mt-10">
         {!configured ? (
           <Plate>
-            Tính năng cộng đồng chưa được bật.{" "}
-            <Link href="/create" className="text-accent underline">
-              Tạo một triển lãm
-            </Link>{" "}
-            để bắt đầu.
+            {t.rich("notConfigured", {
+              link: (chunks) => (
+                <Link href="/create" className="text-accent underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
           </Plate>
         ) : posts.length === 0 ? (
           <Plate>
-            Chưa có bài nào trong cộng đồng.{" "}
-            <Link href="/create" className="text-accent underline">
-              Tạo triển lãm đầu tiên
-            </Link>{" "}
-            rồi bấm “Đăng lên cộng đồng”.
+            {t.rich("empty", {
+              link: (chunks) => (
+                <Link href="/create" className="text-accent underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
           </Plate>
         ) : (
           <div className="space-y-12">

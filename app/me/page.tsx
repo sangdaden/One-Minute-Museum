@@ -12,7 +12,8 @@ export const dynamic = "force-dynamic";
 
 export default async function MePage() {
   const configured = isSupabaseConfigured();
-  const t = await getTranslations("Nav");
+  const tNav = await getTranslations("Nav");
+  const t = await getTranslations("Me");
   let signedIn = false;
   let posts: Post[] = [];
 
@@ -40,7 +41,7 @@ export default async function MePage() {
           href="/"
           className="eyebrow group inline-flex items-center gap-1.5 text-ink-soft transition-colors hover:text-accent"
         >
-          <span aria-hidden>←</span> {t("home")}
+          <span aria-hidden>←</span> {tNav("home")}
         </Link>
         <AccountMenu />
       </div>
@@ -48,22 +49,20 @@ export default async function MePage() {
 
       <header className="mt-9 space-y-3 sm:mt-12">
         <h1 className="font-serif text-[2.6rem] font-medium leading-none tracking-[-0.02em] text-ink sm:text-[3.4rem]">
-          Bài của tôi<span className="text-accent">.</span>
+          {t("title")}<span className="text-accent">.</span>
         </h1>
         <p className="text-base leading-relaxed text-ink-soft">
-          Những triển lãm bạn đã đăng lên cộng đồng.
+          {t("subtitle")}
         </p>
       </header>
 
       <section className="mt-10">
         {!configured ? (
-          <Plate>Tính năng cộng đồng chưa được cấu hình trên máy chủ.</Plate>
+          <Plate>{t("notConfigured")}</Plate>
         ) : !signedIn ? (
-          <Plate>Đăng nhập (góc trên phải) để xem bài bạn đã đăng.</Plate>
+          <Plate>{t("signInPrompt")}</Plate>
         ) : posts.length === 0 ? (
-          <Plate>
-            Bạn chưa đăng bài nào. Tạo một triển lãm rồi bấm “Đăng lên cộng đồng”.
-          </Plate>
+          <Plate>{t("empty")}</Plate>
         ) : (
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((post, i) => (

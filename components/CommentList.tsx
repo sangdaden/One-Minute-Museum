@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import type { Comment } from "@/lib/types";
 import { formatDate } from "@/lib/format";
@@ -10,6 +11,8 @@ import { createClient } from "@/lib/supabase/client";
 
 /** Flat comment list (oldest→newest); shows a delete action on your own. */
 export default function CommentList({ comments }: { comments: Comment[] }) {
+  const t = useTranslations("Comment");
+  const tCommon = useTranslations("Common");
   const router = useRouter();
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -28,7 +31,7 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
   if (comments.length === 0) {
     return (
       <p className="text-sm leading-relaxed text-ink-soft">
-        Chưa có bình luận. Hãy là người đầu tiên.
+        {t("empty")}
       </p>
     );
   }
@@ -36,7 +39,7 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
   return (
     <ul className="space-y-5">
       {comments.map((c) => {
-        const name = c.author?.display_name || "Người dùng ẩn danh";
+        const name = c.author?.display_name || tCommon("anon");
         return (
           <li key={c.id} className="flex gap-3">
             <Link href={`/u/${c.user_id}`} className="shrink-0">
@@ -70,7 +73,7 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
                     onClick={() => remove(c.id)}
                     className="ml-auto text-xs text-ink-faint transition-colors hover:text-accent"
                   >
-                    Xóa
+                    {t("delete")}
                   </button>
                 )}
               </div>

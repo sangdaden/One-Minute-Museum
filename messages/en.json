@@ -129,5 +129,83 @@
     "thocam": "Brocade",
     "note": "Sticky note",
     "tet": "Tết"
+  },
+  "Common": {
+    "anon": "Anonymous user",
+    "objects": "objects"
+  },
+  "Feed": {
+    "title": "Explore",
+    "subtitle": "One-minute exhibitions from the community.",
+    "notConfigured": "Community features aren't enabled yet. <link>Create an exhibition</link> to get started.",
+    "empty": "No posts in the community yet. <link>Create the first exhibition</link>, then hit “Publish to the community”.",
+    "comments": "comments"
+  },
+  "Me": {
+    "title": "Your posts",
+    "subtitle": "The exhibitions you've published to the community.",
+    "notConfigured": "Community features aren't configured on the server.",
+    "signInPrompt": "Sign in (top right) to see the posts you've published.",
+    "empty": "You haven't published anything yet. Create an exhibition, then hit “Publish to the community”."
+  },
+  "Gallery": {
+    "title": "Collection",
+    "subtitle": "The objects you've added to your own museum.",
+    "clearConfirm": "Clear all?",
+    "cancel": "Cancel",
+    "clearAll": "Clear collection",
+    "empty": "Your museum has no objects yet.",
+    "emptyHint": "Try starting with “foam sandals” or “red plastic chair”.",
+    "emptyCta": "Create your first exhibition",
+    "localNote": "Saved locally on your device"
+  },
+  "Profile": {
+    "joined": "Joined",
+    "empty": "This person hasn't published any objects yet."
+  },
+  "Post": {
+    "comments": "Comments ({count})"
+  },
+  "Card": {
+    "toldBy": "Told by",
+    "yourPhoto": "Your photo",
+    "hook": "Hook",
+    "what": "What is it?",
+    "story": "The story behind it",
+    "facts": "Three fun facts",
+    "insight": "Design / cultural insight",
+    "why": "Why it matters",
+    "reflection": "Reflection question",
+    "regenerate": "Regenerate"
+  },
+  "Comment": {
+    "placeholder": "Write a comment…",
+    "sending": "Sending…",
+    "submit": "Post comment",
+    "empty": "No comments yet. Be the first.",
+    "delete": "Delete"
+  },
+  "Reactions": {
+    "thich": "Like",
+    "batngo": "Surprised",
+    "suyngam": "Pensive",
+    "vui": "Fun"
+  },
+  "LoadMore": {
+    "loading": "Loading…",
+    "loadMore": "Load more"
+  },
+  "Copy": {
+    "copy": "Copy text",
+    "copied": "Copied",
+    "error": "Copy failed"
+  },
+  "Share": {
+    "header": "Share image · 1080×1080",
+    "creating": "Creating image…",
+    "done": "Image downloaded ✓",
+    "error": "Couldn't create image",
+    "cta": "Create share image",
+    "pngSquare": "PNG · square"
   }
 }

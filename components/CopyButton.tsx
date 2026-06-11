@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Copy, Check, X } from "lucide-react";
 
 interface CopyButtonProps {
@@ -37,6 +38,7 @@ async function copyToClipboard(text: string): Promise<boolean> {
 
 /** Copy the social-formatted text; reflects idle / copied / error states. */
 export default function CopyButton({ text }: CopyButtonProps) {
+  const tr = useTranslations("Copy");
   const [status, setStatus] = useState<CopyStatus>("idle");
 
   async function handleCopy() {
@@ -47,10 +49,10 @@ export default function CopyButton({ text }: CopyButtonProps) {
 
   const label =
     status === "copied"
-      ? "Đã copy"
+      ? tr("copied")
       : status === "error"
-        ? "Không copy được"
-        : "Copy nội dung";
+        ? tr("error")
+        : tr("copy");
 
   const Icon = status === "copied" ? Check : status === "error" ? X : Copy;
 
