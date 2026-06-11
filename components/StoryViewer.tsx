@@ -70,34 +70,42 @@ export default function StoryViewer({
   const onImage = current.kind === "cover" && !!imageUrl;
 
   function next() {
-    setIndex((i) => {
-      if (i >= slides.length - 1) {
-        onClose();
-        return i;
-      }
-      return i + 1;
-    });
+    // Decide outside the updater — calling onClose() (a parent setState) inside
+    // a setIndex updater runs during render and triggers a React warning.
+    if (index >= slides.length - 1) {
+      onClose();
+      return;
+    }
+    setIndex((i) => Math.min(slides.length - 1, i + 1));
   }
   function prev() {
     setIndex((i) => Math.max(0, i - 1));
   }
 
-  // Keyboard + scroll lock while open.
+  // Lock body scroll while the viewer is open (run once).
   useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-      else if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") next();
-      else if (e.key === "ArrowLeft") prev();
-    }
-    document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slides.length]);
+  }, []);
+
+  // Keyboard navigation — re-bound per render so it sees the current index.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+      } else if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") {
+        if (index >= slides.length - 1) onClose();
+        else setIndex((i) => Math.min(slides.length - 1, i + 1));
+      } else if (e.key === "ArrowLeft") {
+        setIndex((i) => Math.max(0, i - 1));
+      }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [index, slides.length, onClose]);
 
   const fg = onImage ? "#ffffff" : theme.ink;
   const accent = onImage ? "#ffffff" : theme.accent;
