@@ -241,5 +241,14 @@
     "close": "Đóng",
     "next": "Thẻ sau",
     "prev": "Thẻ trước"
+  },
+  "Cropper": {
+    "adjust": "Căn chỉnh ảnh",
+    "title": "Căn chỉnh ảnh",
+    "hint": "Kéo để di chuyển · dùng thanh trượt để phóng to",
+    "zoom": "Phóng to",
+    "done": "Xong",
+    "cancel": "Hủy",
+    "close": "Đóng"
   }
 }

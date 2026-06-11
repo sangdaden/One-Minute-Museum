@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Crop } from "lucide-react";
 import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
 import { DEFAULT_MODE, DEFAULT_VOICE } from "@/lib/constants";
 import { saveExhibition, updateExhibition } from "@/lib/gallery";
@@ -13,6 +14,7 @@ import VoiceSelector from "@/components/VoiceSelector";
 import ThemePicker from "@/components/ThemePicker";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ImageSuggestions from "@/components/ImageSuggestions";
+import ImageCropper from "@/components/ImageCropper";
 import ExhibitionCard from "@/components/ExhibitionCard";
 import EditExhibitionForm from "@/components/EditExhibitionForm";
 import ShareCard from "@/components/ShareCard";
@@ -24,6 +26,7 @@ import ErrorState from "@/components/ErrorState";
 export default function CreatePage() {
   const tNav = useTranslations("Nav");
   const t = useTranslations("Create");
+  const tCrop = useTranslations("Cropper");
   const [objectName, setObjectName] = useState("");
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
   const [voice, setVoice] = useState<Voice>(DEFAULT_VOICE);
@@ -38,6 +41,7 @@ export default function CreatePage() {
   // nothing yet. Drives whether the AI-illustration picker is offered.
   const [imageSource, setImageSource] = useState<"upload" | "ai" | null>(null);
   const [editing, setEditing] = useState(false);
+  const [cropping, setCropping] = useState(false);
 
   const topRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -272,6 +276,20 @@ export default function CreatePage() {
                 />
               )}
 
+              {/* Reframe the featured image into the app's 1:1 frame. */}
+              {resultImage && (
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setCropping(true)}
+                    className="inline-flex items-center gap-2 rounded-full border border-border-strong px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                  >
+                    <Crop className="h-4 w-4" strokeWidth={1.75} />
+                    {tCrop("adjust")}
+                  </button>
+                </div>
+              )}
+
               <ExhibitionCard
                 exhibition={exhibition}
                 imageUrl={resultImage ?? undefined}
@@ -318,6 +336,18 @@ export default function CreatePage() {
         <span className="eyebrow text-ink-faint">One-Minute Museum</span>
         <span className="eyebrow text-ink-faint">© 2026</span>
       </footer>
+
+      {cropping && resultImage && (
+        <ImageCropper
+          src={resultImage}
+          onCancel={() => setCropping(false)}
+          onDone={(uri) => {
+            setResultImage(uri);
+            if (imageSource === "upload") setImage(uri);
+            setCropping(false);
+          }}
+        />
+      )}
     </main>
   );
 }

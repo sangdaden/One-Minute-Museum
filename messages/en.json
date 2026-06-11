@@ -241,5 +241,14 @@
     "close": "Close",
     "next": "Next card",
     "prev": "Previous card"
+  },
+  "Cropper": {
+    "adjust": "Adjust image",
+    "title": "Adjust image",
+    "hint": "Drag to move · use the slider to zoom",
+    "zoom": "Zoom",
+    "done": "Done",
+    "cancel": "Cancel",
+    "close": "Close"
   }
 }
