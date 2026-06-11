@@ -1,6 +1,7 @@
 import type { Exhibition } from "@/lib/types";
 import type { Theme } from "@/lib/themes";
 import { cleanHashtag, cardLabels, stripWrappingQuotes } from "@/lib/format";
+import OmmMark from "./OmmMark";
 
 export const FLASHCARD_SIZE = 1080;
 
@@ -79,17 +80,7 @@ export default function FlashcardArtwork({
             justifyContent: "space-between",
           }}
         >
-          <span
-            style={{
-              fontFamily: MONO,
-              fontSize: 21,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: t.accent,
-            }}
-          >
-            {L.brand}
-          </span>
+          <OmmMark size={42} color={t.accent} nonColor="#b0894a" />
           <span
             style={{
               fontFamily: MONO,

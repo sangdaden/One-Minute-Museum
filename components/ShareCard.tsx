@@ -12,6 +12,7 @@ import {
   cardLabels,
 } from "@/lib/format";
 import { getTheme, type Theme } from "@/lib/themes";
+import OmmMark from "./OmmMark";
 
 interface ShareCardProps {
   exhibition: Exhibition;
@@ -316,17 +317,7 @@ function ShareArtwork({
             justifyContent: "space-between",
           }}
         >
-          <span
-            style={{
-              fontFamily: mono,
-              fontSize: 21,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: t.accent,
-            }}
-          >
-            {L.brand}
-          </span>
+          <OmmMark size={42} color={t.accent} nonColor="#b0894a" />
           <span
             style={{
               fontFamily: mono,
@@ -544,17 +535,7 @@ function PosterArtwork({
         justifyContent: "space-between",
       }}
     >
-      <span
-        style={{
-          fontFamily: mono,
-          fontSize: 21,
-          letterSpacing: "0.32em",
-          textTransform: "uppercase",
-          color: cream,
-        }}
-      >
-        {L.brand}
-      </span>
+      <OmmMark size={42} color={cream} nonColor="#e6c98a" />
       <span
         style={{
           fontFamily: mono,
