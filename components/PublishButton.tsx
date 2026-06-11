@@ -60,12 +60,13 @@ export default function PublishButton({
 
     // Only reference image_url when there's an image, so text-only publishing
     // still works on databases that haven't run the 0003 migration yet.
-    const base = exhibitionToPostInsert(exhibition, user.id);
-    const { error } = await supabase
-      .from("posts")
-      .insert(
-        publishedImageUrl ? { ...base, image_url: publishedImageUrl } : base,
-      );
+    const payload: Record<string, unknown> = exhibitionToPostInsert(
+      exhibition,
+      user.id,
+    );
+    if (publishedImageUrl) payload.image_url = publishedImageUrl;
+
+    const { error } = await supabase.from("posts").insert(payload);
 
     setStatus(error ? "error" : "done");
   }
