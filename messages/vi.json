@@ -140,7 +140,11 @@
     "notConfigured": "Tính năng cộng đồng chưa được bật. <link>Tạo một triển lãm</link> để bắt đầu.",
     "empty": "Chưa có bài nào trong cộng đồng. <link>Tạo triển lãm đầu tiên</link> rồi bấm “Đăng lên cộng đồng”.",
     "comments": "bình luận",
-    "viewDetail": "Xem chi tiết"
+    "viewDetail": "Xem chi tiết",
+    "lens": "Lọc theo góc nhìn",
+    "allLenses": "Tất cả",
+    "quickStart": "Gợi ý tạo nhanh",
+    "statsExhibitions": "{count} triển lãm từ cộng đồng"
   },
   "Me": {
     "title": "Bài của tôi",

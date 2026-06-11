@@ -3,8 +3,9 @@ import { getTranslations } from "next-intl/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import { rowToPost } from "@/lib/posts";
-import { FEED_PAGE_SIZE } from "@/lib/constants";
-import type { Post } from "@/lib/types";
+import { FEED_PAGE_SIZE, SUGGESTED_OBJECTS } from "@/lib/constants";
+import { MODES } from "@/lib/types";
+import type { Mode, Post } from "@/lib/types";
 import SiteHeader from "@/components/SiteHeader";
 import FeedPost from "@/components/FeedPost";
 import FeedLoadMore from "@/components/FeedLoadMore";
@@ -12,22 +13,40 @@ import FeedLoadMore from "@/components/FeedLoadMore";
 // Public community feed — render fresh each request.
 export const dynamic = "force-dynamic";
 
-export default async function FeedPage() {
+export default async function FeedPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string }>;
+}) {
   const configured = isSupabaseConfigured();
   const t = await getTranslations("Feed");
   const tNav = await getTranslations("Nav");
+  const tModes = await getTranslations("Modes");
+
+  const { mode: modeParam } = await searchParams;
+  const mode = MODES.includes(modeParam as Mode) ? (modeParam as Mode) : null;
+
   let posts: Post[] = [];
+  let totalCount = 0;
 
   if (configured) {
     const supabase = await createClient();
-    const { data } = await supabase
+
+    let query = supabase
       .from("posts")
       .select(
         "*, profiles(display_name, avatar_url), reactions(type, user_id), comments(count)",
       )
       .order("created_at", { ascending: false })
       .limit(FEED_PAGE_SIZE);
+    if (mode) query = query.eq("mode", mode);
+    const { data } = await query;
     posts = (data ?? []).map(rowToPost);
+
+    const { count } = await supabase
+      .from("posts")
+      .select("*", { count: "exact", head: true });
+    totalCount = count ?? 0;
   }
 
   const nextBefore =
@@ -60,6 +79,51 @@ export default async function FeedPage() {
           </span>
           {tNav("createCta")}
         </Link>
+
+        {/* Lens filter */}
+        <div className="space-y-2.5 border-t border-border pt-5">
+          <span className="eyebrow text-ink-faint">{t("lens")}</span>
+          <div className="flex flex-wrap gap-2">
+            <Chip href="/" active={!mode}>
+              {t("allLenses")}
+            </Chip>
+            {MODES.map((m) => (
+              <Chip
+                key={m}
+                href={`/?mode=${encodeURIComponent(m)}`}
+                active={mode === m}
+              >
+                {tModes(`${m}.label`)}
+              </Chip>
+            ))}
+          </div>
+        </div>
+
+        {/* Quick start */}
+        <div className="space-y-2.5">
+          <span className="eyebrow text-ink-faint">{t("quickStart")}</span>
+          <div className="flex flex-wrap gap-2">
+            {SUGGESTED_OBJECTS.slice(0, 8).map((name) => (
+              <Link
+                key={name}
+                href={`/create?object=${encodeURIComponent(name)}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border-strong bg-paper-card/60 px-3.5 py-1.5 text-sm text-ink-soft transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+              >
+                <span aria-hidden className="text-[8px] text-gold">
+                  ◆
+                </span>
+                {name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Community stats */}
+        {configured && totalCount > 0 && (
+          <p className="eyebrow text-ink-faint">
+            {t("statsExhibitions", { count: totalCount })}
+          </p>
+        )}
       </header>
 
       <section className="mt-10 lg:mt-0">
@@ -88,13 +152,41 @@ export default async function FeedPage() {
             {posts.map((post) => (
               <FeedPost key={post.id} post={post} />
             ))}
-            <FeedLoadMore initialNextBefore={nextBefore} />
+            <FeedLoadMore
+              initialNextBefore={nextBefore}
+              mode={mode ?? undefined}
+            />
           </div>
         )}
       </section>
       </div>
       </main>
     </>
+  );
+}
+
+/** A lens-filter pill; highlighted when active. */
+function Chip({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={[
+        "inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm transition-colors",
+        active
+          ? "border-accent bg-accent/5 text-accent ring-1 ring-accent/30"
+          : "border-border-strong text-ink-soft hover:border-accent/50 hover:text-ink",
+      ].join(" ")}
+    >
+      {children}
+    </Link>
   );
 }
 

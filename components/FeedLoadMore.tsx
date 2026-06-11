@@ -9,6 +9,8 @@ import FeedPost from "./FeedPost";
 interface FeedLoadMoreProps {
   /** Cursor (created_at of the last server-rendered post), or null if no more. */
   initialNextBefore: string | null;
+  /** Active lens filter (canonical mode value), or undefined for all. */
+  mode?: string;
 }
 
 /**
@@ -16,7 +18,10 @@ interface FeedLoadMoreProps {
  * automatically as the bottom approaches (IntersectionObserver), and keeps a
  * manual "Tải thêm" button as a fallback on error / no-observer.
  */
-export default function FeedLoadMore({ initialNextBefore }: FeedLoadMoreProps) {
+export default function FeedLoadMore({
+  initialNextBefore,
+  mode,
+}: FeedLoadMoreProps) {
   const t = useTranslations("LoadMore");
   const [posts, setPosts] = useState<Post[]>([]);
   const [before, setBefore] = useState<string | null>(initialNextBefore);
@@ -31,7 +36,10 @@ export default function FeedLoadMore({ initialNextBefore }: FeedLoadMoreProps) {
     setLoading(true);
     setError(false);
     try {
-      const res = await fetch(`/api/feed?before=${encodeURIComponent(before)}`);
+      const url =
+        `/api/feed?before=${encodeURIComponent(before)}` +
+        (mode ? `&mode=${encodeURIComponent(mode)}` : "");
+      const res = await fetch(url);
       if (!res.ok) throw new Error("feed request failed");
       const data = (await res.json()) as {
         posts: Post[];

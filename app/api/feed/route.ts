@@ -3,6 +3,8 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import { rowToPost } from "@/lib/posts";
 import { FEED_PAGE_SIZE } from "@/lib/constants";
+import { MODES } from "@/lib/types";
+import type { Mode } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +17,10 @@ export async function GET(request: Request) {
     return NextResponse.json({ posts: [], nextBefore: null });
   }
 
-  const before = new URL(request.url).searchParams.get("before");
+  const params = new URL(request.url).searchParams;
+  const before = params.get("before");
+  const modeParam = params.get("mode");
+  const mode = MODES.includes(modeParam as Mode) ? (modeParam as Mode) : null;
   const supabase = await createClient();
 
   let query = supabase
@@ -27,6 +32,7 @@ export async function GET(request: Request) {
     .limit(FEED_PAGE_SIZE);
 
   if (before) query = query.lt("created_at", before);
+  if (mode) query = query.eq("mode", mode);
 
   const { data, error } = await query;
   if (error) {

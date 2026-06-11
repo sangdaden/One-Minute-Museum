@@ -140,7 +140,11 @@
     "notConfigured": "Community features aren't enabled yet. <link>Create an exhibition</link> to get started.",
     "empty": "No posts in the community yet. <link>Create the first exhibition</link>, then hit “Publish to the community”.",
     "comments": "comments",
-    "viewDetail": "View details"
+    "viewDetail": "View details",
+    "lens": "Filter by lens",
+    "allLenses": "All",
+    "quickStart": "Quick start",
+    "statsExhibitions": "{count} community exhibitions"
   },
   "Me": {
     "title": "Your posts",

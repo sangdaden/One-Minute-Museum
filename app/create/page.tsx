@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Crop } from "lucide-react";
 import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
@@ -42,6 +42,12 @@ export default function CreatePage() {
   const [cropping, setCropping] = useState(false);
 
   const resultRef = useRef<HTMLDivElement>(null);
+
+  // Prefill the object from a quick-start link (e.g. /create?object=Áo mưa).
+  useEffect(() => {
+    const obj = new URLSearchParams(window.location.search).get("object");
+    if (obj) setObjectName(obj);
+  }, []);
 
   async function generate(name: string, selectedMode: Mode, selectedVoice: Voice) {
     const trimmed = name.trim();
