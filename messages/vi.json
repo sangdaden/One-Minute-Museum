@@ -261,6 +261,23 @@
     "tagline": "Ôm trọn văn hóa Việt",
     "abbr": "OMM"
   },
+  "Quiz": {
+    "view": "Đố vui",
+    "title": "Đố vui",
+    "loading": "Đang soạn câu đố…",
+    "error": "Không tạo được câu đố. Thử lại nhé.",
+    "next": "Tiếp",
+    "seeResult": "Xem kết quả",
+    "correct": "Chính xác!",
+    "wrong": "Chưa đúng",
+    "result": "Kết quả",
+    "score": "Bạn đúng {correct}/{total}",
+    "praisePerfect": "Tuyệt vời! Bạn rành hiện vật này rồi.",
+    "praiseGood": "Khá lắm! Suýt trọn điểm.",
+    "praiseTry": "Đọc lại triển lãm rồi thử lại nhé.",
+    "replay": "Chơi lại",
+    "close": "Đóng"
+  },
   "Styles": {
     "handdrawn": "Vẽ tay",
     "realistic": "Tả thực",

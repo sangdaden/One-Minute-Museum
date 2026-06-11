@@ -6,6 +6,7 @@ import { getTheme } from "@/lib/themes";
 import CopyButton from "./CopyButton";
 import StoryButton from "./StoryButton";
 import FlashcardsButton from "./FlashcardsButton";
+import QuizButton from "./QuizButton";
 import ThemedCard from "./ThemedCard";
 
 export interface ExhibitionCardProps {
@@ -213,6 +214,7 @@ function BentoCard({
           <CopyButton text={formatExhibitionForSocial(ex)} />
           <StoryButton exhibition={ex} imageUrl={imageUrl} />
           <FlashcardsButton exhibition={ex} imageUrl={imageUrl} />
+          <QuizButton exhibition={ex} />
           {onRegenerate && (
             <button
               type="button"

@@ -261,6 +261,23 @@
     "tagline": "Embrace all of Vietnamese culture",
     "abbr": "OMM"
   },
+  "Quiz": {
+    "view": "Quiz",
+    "title": "Quiz",
+    "loading": "Writing questions…",
+    "error": "Couldn't create the quiz. Please try again.",
+    "next": "Next",
+    "seeResult": "See result",
+    "correct": "Correct!",
+    "wrong": "Not quite",
+    "result": "Result",
+    "score": "You got {correct}/{total}",
+    "praisePerfect": "Brilliant! You know this object well.",
+    "praiseGood": "Nice! Almost perfect.",
+    "praiseTry": "Re-read the exhibition and try again.",
+    "replay": "Play again",
+    "close": "Close"
+  },
   "Styles": {
     "handdrawn": "Hand-drawn",
     "realistic": "Realistic",

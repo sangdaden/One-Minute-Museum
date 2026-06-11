@@ -94,6 +94,15 @@ export interface Post {
   comment_count?: number;
 }
 
+/** One multiple-choice quiz question generated from an exhibition. */
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  /** Index into `options` of the correct answer. */
+  answer_index: number;
+  explanation: string;
+}
+
 /** The curated reaction set (docs/specs reactions-comments). */
 export const REACTIONS = [
   { type: "thich", emoji: "❤️", label: "Thích" },
