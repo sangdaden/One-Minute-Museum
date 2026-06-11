@@ -23,29 +23,11 @@ export const IMAGE_DATA_URI_RE = /^data:image\/(png|jpe?g|webp);base64,/;
 /** Number of feed posts per page (initial + each "Tải thêm"). */
 export const FEED_PAGE_SIZE = 20;
 
-/** Short copy shown on each mode card. (Icons live in ModeSelector.) */
-export const MODE_META: Record<Mode, { description: string }> = {
-  "Vietnamese Culture": {
-    description: "Ký ức tập thể, đời sống Việt Nam hằng ngày.",
-  },
-  Museum: {
-    description: "Trang trọng, giàu hình ảnh như bảng mô tả bảo tàng.",
-  },
-  "Fun Fact": {
-    description: "Vui, ngắn, dễ share, có chút hài hước nhẹ.",
-  },
-  Design: {
-    description: "Vật liệu, hình dáng, trade-off thiết kế.",
-  },
-};
-
-/** One-line persona per voice. (Icons live in VoiceSelector.) */
-export const VOICE_META: Record<Voice, { description: string }> = {
-  "Nhà nghiên cứu": { description: "Điềm đạm, chuẩn mực, có chiều sâu." },
-  "Bà kể chuyện": { description: "Ấm áp, hoài niệm, “hồi đó…”." },
-  "Chú bán hàng": { description: "Đời, dí dỏm, gần gũi vỉa hè." },
-  "Nhà thơ": { description: "Văn chương, giàu hình ảnh." },
-};
+/**
+ * Mode/voice display labels + descriptions now live in the i18n message
+ * catalogs (messages/*.json, namespaces `Modes`/`Voices`), keyed by the
+ * canonical mode/voice value.
+ */
 
 /**
  * Hardcoded suggested objects (docs/coding_agent_instructions.md §8).

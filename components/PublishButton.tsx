@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Globe } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -21,6 +22,7 @@ export default function PublishButton({
   exhibition,
   imageUrl,
 }: PublishButtonProps) {
+  const t = useTranslations("Publish");
   const [status, setStatus] = useState<Status>("idle");
 
   if (!isSupabaseConfigured()) return null;
@@ -76,12 +78,12 @@ export default function PublishButton({
 
   const label =
     status === "working"
-      ? "Đang đăng…"
+      ? t("publishing")
       : status === "done"
-        ? "Đã đăng lên cộng đồng ✓"
+        ? t("published")
         : status === "error"
-          ? "Đăng lỗi — thử lại"
-          : "Đăng lên cộng đồng";
+          ? t("publishError")
+          : t("publish");
 
   return (
     <div className="flex items-center gap-3">
@@ -95,7 +97,7 @@ export default function PublishButton({
         {label}
       </button>
       {status === "need-login" && (
-        <span className="eyebrow text-ink-faint">Đăng nhập rồi đăng lại nhé</span>
+        <span className="eyebrow text-ink-faint">{t("needLogin")}</span>
       )}
     </div>
   );

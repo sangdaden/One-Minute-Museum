@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
 
 interface EditExhibitionFormProps {
@@ -33,6 +34,7 @@ export default function EditExhibitionForm({
   onSave,
   onCancel,
 }: EditExhibitionFormProps) {
+  const t = useTranslations("Edit");
   const [title, setTitle] = useState(ex.title);
   const [hook, setHook] = useState(ex.hook);
   const [whatItIs, setWhatItIs] = useState(ex.what_it_is);
@@ -81,14 +83,14 @@ export default function EditExhibitionForm({
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="font-serif text-2xl font-medium text-ink">
-          Sửa nội dung
+          {t("title")}
         </h2>
         <span className="eyebrow text-ink-faint">
           {ex.object_name} · {ex.mode}
         </span>
       </div>
 
-      <Field label="Tiêu đề">
+      <Field label={t("fldTitle")}>
         <input
           className={inputClass}
           value={title}
@@ -96,7 +98,7 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Mở đầu (hook)">
+      <Field label={t("fldHook")}>
         <textarea
           className={inputClass}
           rows={2}
@@ -105,7 +107,7 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Đây là gì?">
+      <Field label={t("fldWhat")}>
         <textarea
           className={inputClass}
           rows={2}
@@ -114,7 +116,7 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Câu chuyện phía sau">
+      <Field label={t("fldStory")}>
         <textarea
           className={inputClass}
           rows={3}
@@ -123,14 +125,14 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Ba điều thú vị">
+      <Field label={t("fldFacts")}>
         <div className="space-y-2">
           {facts.map((f, i) => (
             <textarea
               key={i}
               className={inputClass}
               rows={2}
-              placeholder={`Điều thú vị ${i + 1}`}
+              placeholder={t("factPlaceholder", { n: i + 1 })}
               value={f}
               onChange={(e) =>
                 setFacts((prev) =>
@@ -142,7 +144,7 @@ export default function EditExhibitionForm({
         </div>
       </Field>
 
-      <Field label="Góc nhìn thiết kế / văn hóa">
+      <Field label={t("fldInsight")}>
         <textarea
           className={inputClass}
           rows={3}
@@ -151,7 +153,7 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Vì sao đáng chú ý?">
+      <Field label={t("fldWhy")}>
         <textarea
           className={inputClass}
           rows={2}
@@ -160,7 +162,7 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Câu hỏi suy ngẫm">
+      <Field label={t("fldReflection")}>
         <textarea
           className={inputClass}
           rows={2}
@@ -169,7 +171,7 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Câu trích chia sẻ">
+      <Field label={t("fldQuote")}>
         <input
           className={inputClass}
           value={shareQuote}
@@ -177,7 +179,7 @@ export default function EditExhibitionForm({
         />
       </Field>
 
-      <Field label="Hashtags (phân tách bằng dấu phẩy)">
+      <Field label={t("fldHashtags")}>
         <input
           className={inputClass}
           value={hashtags}
@@ -192,14 +194,14 @@ export default function EditExhibitionForm({
           onClick={onCancel}
           className="rounded-full border border-border-strong px-5 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-ink/40 hover:text-ink"
         >
-          Hủy
+          {t("cancel")}
         </button>
         <button
           type="submit"
           disabled={!canSave}
           className="rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-paper-card transition-colors hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Lưu
+          {t("save")}
         </button>
       </div>
     </form>

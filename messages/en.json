@@ -19,5 +19,115 @@
     "home": "Home",
     "gallery": "Collection",
     "createCta": "Create exhibition"
+  },
+  "Create": {
+    "heroLine1": "One-Minute",
+    "heroLine2": "Museum",
+    "tagline": "Turn the ordinary objects around you into a mini exhibition.",
+    "sectionMode": "Choose a lens",
+    "sectionVoice": "Choose a voice",
+    "sectionObject": "Choose an object",
+    "sectionStyle": "Choose a style",
+    "placeholderHasImage": "Photo attached — name auto-detected",
+    "placeholderObject": "e.g. foam sandals, red plastic chair, iced milk coffee",
+    "noteLabel": "Personal note (shows on the sticky note)",
+    "notePlaceholder": "e.g. \"Our remote has been wrapped in plastic for 10 years!\"",
+    "editContent": "Edit content",
+    "lobbyEyebrow": "Lobby",
+    "lobbyTitle": "Pick an ordinary object and turn it into a little exhibition.",
+    "lobbyBody": "Type an object above, or tap a suggestion from the collection.",
+    "generateError": "Couldn't create the exhibition right now. Please try again.",
+    "suggestionsHeader": "Vietnam Everyday Collection"
+  },
+  "Object": {
+    "label": "Your object",
+    "ariaLabel": "Object name",
+    "submit": "Create exhibition"
+  },
+  "Image": {
+    "alt": "Object photo",
+    "added": "Photo added",
+    "remove": "Remove photo",
+    "processing": "Processing photo…",
+    "add": "Add photo",
+    "notStored": "Photos are only used to generate — never stored.",
+    "error": "Couldn't process that image. Try another one."
+  },
+  "Loading": {
+    "building": "Building the exhibition…",
+    "buildingSr": "Generating exhibition content"
+  },
+  "Error": {
+    "eyebrow": "The gallery is briefly closed",
+    "retry": "Try again",
+    "changeObject": "Try another object"
+  },
+  "Edit": {
+    "title": "Edit content",
+    "fldTitle": "Title",
+    "fldHook": "Hook",
+    "fldWhat": "What is it?",
+    "fldStory": "The story behind it",
+    "fldFacts": "Three fun facts",
+    "factPlaceholder": "Fun fact {n}",
+    "fldInsight": "Design / cultural insight",
+    "fldWhy": "Why it matters",
+    "fldReflection": "Reflection question",
+    "fldQuote": "Share quote",
+    "fldHashtags": "Hashtags (comma-separated)",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "Publish": {
+    "publishing": "Publishing…",
+    "published": "Published to the community ✓",
+    "publishError": "Publish failed — try again",
+    "publish": "Publish to the community",
+    "needLogin": "Sign in, then publish again"
+  },
+  "Modes": {
+    "Vietnamese Culture": {
+      "label": "Vietnamese Culture",
+      "description": "Collective memory and everyday Vietnamese life."
+    },
+    "Museum": {
+      "label": "Museum",
+      "description": "Formal and vivid, like a museum wall label."
+    },
+    "Fun Fact": {
+      "label": "Fun Fact",
+      "description": "Fun, short, shareable, lightly humorous."
+    },
+    "Design": {
+      "label": "Design",
+      "description": "Materials, form, and design trade-offs."
+    }
+  },
+  "Voices": {
+    "Nhà nghiên cứu": {
+      "label": "Researcher",
+      "description": "Calm, precise, and deep."
+    },
+    "Bà kể chuyện": {
+      "label": "Storyteller",
+      "description": "Warm and nostalgic — “back in the day…”."
+    },
+    "Chú bán hàng": {
+      "label": "Street vendor",
+      "description": "Earthy, witty, sidewalk-friendly."
+    },
+    "Nhà thơ": {
+      "label": "Poet",
+      "description": "Literary and full of imagery."
+    }
+  },
+  "Themes": {
+    "macdinh": "Default",
+    "sonmai": "Lacquer",
+    "menlam": "Blue ceramic",
+    "dongho": "Đông Hồ",
+    "thocam": "Brocade",
+    "note": "Sticky note",
+    "tet": "Tết"
   }
 }

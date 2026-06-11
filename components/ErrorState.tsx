@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 interface ErrorStateProps {
   message?: string;
   onRetry: () => void;
@@ -10,6 +12,8 @@ export default function ErrorState({
   onRetry,
   onChangeObject,
 }: ErrorStateProps) {
+  const t = useTranslations("Error");
+  const tc = useTranslations("Create");
   return (
     <div
       role="alert"
@@ -24,9 +28,9 @@ export default function ErrorState({
         >
           !
         </span>
-        <p className="eyebrow text-ink-faint">Phòng triển lãm tạm đóng</p>
+        <p className="eyebrow text-ink-faint">{t("eyebrow")}</p>
         <p className="font-serif text-xl leading-snug text-ink">
-          {message ?? "Không tạo được triển lãm lúc này. Thử lại nhé."}
+          {message ?? tc("generateError")}
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-1">
           <button
@@ -34,14 +38,14 @@ export default function ErrorState({
             onClick={onRetry}
             className="rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-paper-card transition-colors hover:bg-accent-deep"
           >
-            Thử lại
+            {t("retry")}
           </button>
           <button
             type="button"
             onClick={onChangeObject}
             className="rounded-full border border-border-strong px-6 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-ink/40 hover:text-ink"
           >
-            Đổi vật khác
+            {t("changeObject")}
           </button>
         </div>
       </div>

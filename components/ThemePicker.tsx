@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { THEMES } from "@/lib/themes";
 
 interface ThemePickerProps {
@@ -14,22 +15,24 @@ export default function ThemePicker({
   onChange,
   disabled,
 }: ThemePickerProps) {
+  const t = useTranslations("Themes");
+  const tc = useTranslations("Create");
   return (
     <div
       role="radiogroup"
-      aria-label="Chọn phong cách"
+      aria-label={tc("sectionStyle")}
       className="flex flex-wrap gap-2"
     >
-      {THEMES.map((t) => {
-        const selected = t.id === value;
+      {THEMES.map((theme) => {
+        const selected = theme.id === value;
         return (
           <button
-            key={t.id}
+            key={theme.id}
             type="button"
             role="radio"
             aria-checked={selected}
             disabled={disabled}
-            onClick={() => onChange(t.id)}
+            onClick={() => onChange(theme.id)}
             className={[
               "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-all disabled:cursor-not-allowed disabled:opacity-50",
               selected
@@ -40,9 +43,9 @@ export default function ThemePicker({
             <span
               aria-hidden
               className="h-4 w-4 rounded-full ring-1 ring-black/10"
-              style={{ background: t.swatch }}
+              style={{ background: theme.swatch }}
             />
-            {t.label}
+            {t(theme.id)}
           </button>
         );
       })}

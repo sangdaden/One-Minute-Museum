@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Search, ArrowRight } from "lucide-react";
 import { OBJECT_NAME_MAX } from "@/lib/constants";
 
@@ -23,8 +24,10 @@ export default function ObjectInput({
   disabled,
   allowEmpty,
   nameDisabled,
-  placeholder = "Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá",
+  placeholder,
 }: ObjectInputProps) {
+  const t = useTranslations("Object");
+  const tc = useTranslations("Create");
   return (
     <form
       onSubmit={(e) => {
@@ -33,7 +36,7 @@ export default function ObjectInput({
       }}
       className="group flex w-full flex-col gap-2"
     >
-      <label className="eyebrow text-ink-faint">Hiện vật của bạn</label>
+      <label className="eyebrow text-ink-faint">{t("label")}</label>
       <div className="flex flex-col gap-2.5 sm:flex-row sm:items-stretch">
         <div className="relative flex-1">
           <Search
@@ -46,8 +49,8 @@ export default function ObjectInput({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             maxLength={OBJECT_NAME_MAX}
-            placeholder={placeholder}
-            aria-label="Tên vật thể"
+            placeholder={placeholder ?? tc("placeholderObject")}
+            aria-label={t("ariaLabel")}
             disabled={disabled || nameDisabled}
             className="w-full rounded-none border-b-2 border-border-strong bg-transparent py-3.5 pl-10 pr-4 font-serif text-xl text-ink outline-none transition-colors placeholder:font-sans placeholder:text-base placeholder:text-ink-faint/70 focus:border-accent disabled:opacity-60"
           />
@@ -57,7 +60,7 @@ export default function ObjectInput({
           disabled={disabled || (value.trim().length === 0 && !allowEmpty)}
           className="group/btn inline-flex items-center justify-center gap-2 self-start rounded-full bg-accent px-7 py-3 text-sm font-medium tracking-wide text-paper-card shadow-[0_1px_0_var(--color-accent-deep)] transition-all hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-35 sm:self-stretch"
         >
-          Tạo triển lãm
+          {t("submit")}
           <ArrowRight
             aria-hidden
             strokeWidth={2}

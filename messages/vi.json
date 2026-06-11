@@ -19,5 +19,115 @@
     "home": "Trang chủ",
     "gallery": "Bộ sưu tập",
     "createCta": "Tạo triển lãm"
+  },
+  "Create": {
+    "heroLine1": "Bảo Tàng",
+    "heroLine2": "Một Phút",
+    "tagline": "Biến những vật bình thường quanh bạn thành một triển lãm mini.",
+    "sectionMode": "Chọn góc nhìn",
+    "sectionVoice": "Chọn giọng kể",
+    "sectionObject": "Chọn hiện vật",
+    "sectionStyle": "Chọn phong cách",
+    "placeholderHasImage": "Đã có ảnh — tên sẽ tự nhận diện",
+    "placeholderObject": "Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá",
+    "noteLabel": "Ghi chú cá nhân (hiện trên giấy note)",
+    "notePlaceholder": "Ví dụ: \"Remote nhà mình bọc nilon 10 năm chưa tháo!\"",
+    "editContent": "Sửa nội dung",
+    "lobbyEyebrow": "Sảnh chờ",
+    "lobbyTitle": "Chọn một vật bình thường và biến nó thành một triển lãm nhỏ.",
+    "lobbyBody": "Nhập một vật ở trên, hoặc chạm vào một gợi ý trong bộ sưu tập.",
+    "generateError": "Không tạo được triển lãm lúc này. Thử lại nhé.",
+    "suggestionsHeader": "Đồ vật đời thường Việt"
+  },
+  "Object": {
+    "label": "Hiện vật của bạn",
+    "ariaLabel": "Tên vật thể",
+    "submit": "Tạo triển lãm"
+  },
+  "Image": {
+    "alt": "Ảnh vật thể",
+    "added": "Ảnh đã thêm",
+    "remove": "Xóa ảnh",
+    "processing": "Đang xử lý ảnh…",
+    "add": "Thêm ảnh",
+    "notStored": "Ảnh chỉ dùng để tạo, không được lưu.",
+    "error": "Không xử lý được ảnh. Thử ảnh khác nhé."
+  },
+  "Loading": {
+    "building": "Đang dựng triển lãm…",
+    "buildingSr": "Đang tạo nội dung triển lãm"
+  },
+  "Error": {
+    "eyebrow": "Phòng triển lãm tạm đóng",
+    "retry": "Thử lại",
+    "changeObject": "Đổi vật khác"
+  },
+  "Edit": {
+    "title": "Sửa nội dung",
+    "fldTitle": "Tiêu đề",
+    "fldHook": "Mở đầu (hook)",
+    "fldWhat": "Đây là gì?",
+    "fldStory": "Câu chuyện phía sau",
+    "fldFacts": "Ba điều thú vị",
+    "factPlaceholder": "Điều thú vị {n}",
+    "fldInsight": "Góc nhìn thiết kế / văn hóa",
+    "fldWhy": "Vì sao đáng chú ý?",
+    "fldReflection": "Câu hỏi suy ngẫm",
+    "fldQuote": "Câu trích chia sẻ",
+    "fldHashtags": "Hashtags (phân tách bằng dấu phẩy)",
+    "cancel": "Hủy",
+    "save": "Lưu"
+  },
+  "Publish": {
+    "publishing": "Đang đăng…",
+    "published": "Đã đăng lên cộng đồng ✓",
+    "publishError": "Đăng lỗi — thử lại",
+    "publish": "Đăng lên cộng đồng",
+    "needLogin": "Đăng nhập rồi đăng lại nhé"
+  },
+  "Modes": {
+    "Vietnamese Culture": {
+      "label": "Văn hóa Việt",
+      "description": "Ký ức tập thể, đời sống Việt Nam hằng ngày."
+    },
+    "Museum": {
+      "label": "Bảo tàng",
+      "description": "Trang trọng, giàu hình ảnh như bảng mô tả bảo tàng."
+    },
+    "Fun Fact": {
+      "label": "Sự thật thú vị",
+      "description": "Vui, ngắn, dễ share, có chút hài hước nhẹ."
+    },
+    "Design": {
+      "label": "Thiết kế",
+      "description": "Vật liệu, hình dáng, trade-off thiết kế."
+    }
+  },
+  "Voices": {
+    "Nhà nghiên cứu": {
+      "label": "Nhà nghiên cứu",
+      "description": "Điềm đạm, chuẩn mực, có chiều sâu."
+    },
+    "Bà kể chuyện": {
+      "label": "Bà kể chuyện",
+      "description": "Ấm áp, hoài niệm, “hồi đó…”."
+    },
+    "Chú bán hàng": {
+      "label": "Chú bán hàng",
+      "description": "Đời, dí dỏm, gần gũi vỉa hè."
+    },
+    "Nhà thơ": {
+      "label": "Nhà thơ",
+      "description": "Văn chương, giàu hình ảnh."
+    }
+  },
+  "Themes": {
+    "macdinh": "Mặc định",
+    "sonmai": "Sơn mài",
+    "menlam": "Men lam",
+    "dongho": "Đông Hồ",
+    "thocam": "Thổ cẩm",
+    "note": "Giấy note",
+    "tet": "Tết"
   }
 }

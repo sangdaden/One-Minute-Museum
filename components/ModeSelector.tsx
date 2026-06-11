@@ -1,10 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Home, Landmark, Sparkles, Ruler } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { MODES } from "@/lib/types";
 import type { Mode } from "@/lib/types";
-import { MODE_META } from "@/lib/constants";
 
 const MODE_ICONS: Record<Mode, LucideIcon> = {
   "Vietnamese Culture": Home,
@@ -25,14 +25,15 @@ export default function ModeSelector({
   onChange,
   disabled,
 }: ModeSelectorProps) {
+  const t = useTranslations("Modes");
+  const tc = useTranslations("Create");
   return (
     <div
       role="radiogroup"
-      aria-label="Chọn góc nhìn"
+      aria-label={tc("sectionMode")}
       className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border lg:grid-cols-4"
     >
       {MODES.map((mode, i) => {
-        const meta = MODE_META[mode];
         const Icon = MODE_ICONS[mode];
         const selected = mode === value;
         return (
@@ -80,10 +81,10 @@ export default function ModeSelector({
             </div>
             <div className="space-y-1">
               <span className="block font-serif text-[15px] font-semibold leading-snug text-ink">
-                {mode}
+                {t(`${mode}.label`)}
               </span>
               <span className="block text-xs leading-relaxed text-ink-soft">
-                {meta.description}
+                {t(`${mode}.description`)}
               </span>
             </div>
           </button>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { SUGGESTED_OBJECTS } from "@/lib/constants";
 
 interface SuggestedObjectsProps {
@@ -12,11 +13,12 @@ export default function SuggestedObjects({
   onPick,
   disabled,
 }: SuggestedObjectsProps) {
+  const t = useTranslations("Create");
   return (
     <div className="flex flex-col gap-3.5">
       <div className="flex items-center gap-3">
         <span className="eyebrow text-ink-faint">
-          Vietnam Everyday Collection
+          {t("suggestionsHeader")}
         </span>
         <span className="h-px flex-1 bg-border-strong" />
         <span className="eyebrow text-ink-faint">

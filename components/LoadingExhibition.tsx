@@ -1,5 +1,8 @@
+import { useTranslations } from "next-intl";
+
 /** Bento skeleton shown while an exhibition is generating (docs/ui_spec.md §5). */
 export default function LoadingExhibition() {
+  const t = useTranslations("Loading");
   // span + height per tile, matching the ExhibitionCard bento shape.
   const tiles = [
     "col-span-2 sm:col-span-6 h-24", // title
@@ -18,7 +21,7 @@ export default function LoadingExhibition() {
     <div role="status" aria-live="polite" className="space-y-3">
       <div className="flex items-center gap-2">
         <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-        <span className="eyebrow text-accent">Đang dựng triển lãm…</span>
+        <span className="eyebrow text-accent">{t("building")}</span>
       </div>
 
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-6 sm:gap-3">
@@ -27,7 +30,7 @@ export default function LoadingExhibition() {
         ))}
       </div>
 
-      <span className="sr-only">Đang tạo nội dung triển lãm</span>
+      <span className="sr-only">{t("buildingSr")}</span>
     </div>
   );
 }

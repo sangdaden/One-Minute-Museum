@@ -1,10 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { GraduationCap, Armchair, Store, Feather } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { VOICES } from "@/lib/types";
 import type { Voice } from "@/lib/types";
-import { VOICE_META } from "@/lib/constants";
 
 const VOICE_ICONS: Record<Voice, LucideIcon> = {
   "Nhà nghiên cứu": GraduationCap,
@@ -28,14 +28,15 @@ export default function VoiceSelector({
   onChange,
   disabled,
 }: VoiceSelectorProps) {
+  const t = useTranslations("Voices");
+  const tc = useTranslations("Create");
   return (
     <div
       role="radiogroup"
-      aria-label="Chọn giọng kể"
+      aria-label={tc("sectionVoice")}
       className="flex flex-wrap gap-2"
     >
       {VOICES.map((voice) => {
-        const meta = VOICE_META[voice];
         const Icon = VOICE_ICONS[voice];
         const selected = voice === value;
         return (
@@ -46,7 +47,7 @@ export default function VoiceSelector({
             aria-checked={selected}
             disabled={disabled}
             onClick={() => onChange(voice)}
-            title={meta.description}
+            title={t(`${voice}.description`)}
             className={[
               "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-all disabled:cursor-not-allowed disabled:opacity-50",
               selected
@@ -62,7 +63,7 @@ export default function VoiceSelector({
                 selected ? "text-accent" : "text-gold",
               ].join(" ")}
             />
-            {voice}
+            {t(`${voice}.label`)}
           </button>
         );
       })}

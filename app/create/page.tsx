@@ -22,6 +22,7 @@ import ErrorState from "@/components/ErrorState";
 
 export default function CreatePage() {
   const tNav = useTranslations("Nav");
+  const t = useTranslations("Create");
   const [objectName, setObjectName] = useState("");
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
   const [voice, setVoice] = useState<Voice>(DEFAULT_VOICE);
@@ -75,9 +76,7 @@ export default function CreatePage() {
       saveExhibition(data);
     } catch (err) {
       setError(
-        err instanceof Error && err.message
-          ? err.message
-          : "Không tạo được triển lãm lúc này. Thử lại nhé.",
+        err instanceof Error && err.message ? err.message : t("generateError"),
       );
     } finally {
       setIsLoading(false);
@@ -129,15 +128,15 @@ export default function CreatePage() {
           className="reveal font-serif text-[2.9rem] font-medium leading-[0.98] tracking-[-0.02em] text-ink sm:text-[4.2rem]"
           style={{ animationDelay: "100ms" }}
         >
-          Bảo Tàng
+          {t("heroLine1")}
           <br />
-          <span className="text-accent">Một Phút</span>
+          <span className="text-accent">{t("heroLine2")}</span>
         </h1>
         <p
           className="reveal max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl"
           style={{ animationDelay: "160ms" }}
         >
-          Biến những vật bình thường quanh bạn thành một triển lãm mini.
+          {t("tagline")}
         </p>
         <p
           className="reveal eyebrow text-ink-faint"
@@ -155,13 +154,13 @@ export default function CreatePage() {
             style={{ animationDelay: "220ms" }}
           >
         <div className="flex items-center gap-3">
-          <span className="eyebrow text-ink">Chọn góc nhìn</span>
+          <span className="eyebrow text-ink">{t("sectionMode")}</span>
           <span className="h-px flex-1 bg-border-strong" />
         </div>
         <ModeSelector value={mode} onChange={setMode} disabled={isLoading} />
 
         <div className="mt-2 flex items-center gap-3">
-          <span className="eyebrow text-ink">Chọn giọng kể</span>
+          <span className="eyebrow text-ink">{t("sectionVoice")}</span>
           <span className="h-px flex-1 bg-border-strong" />
         </div>
         <VoiceSelector value={voice} onChange={setVoice} disabled={isLoading} />
@@ -173,7 +172,7 @@ export default function CreatePage() {
             style={{ animationDelay: "300ms" }}
           >
         <div className="flex items-center gap-3">
-          <span className="eyebrow text-ink">Chọn hiện vật</span>
+          <span className="eyebrow text-ink">{t("sectionObject")}</span>
           <span className="h-px flex-1 bg-border-strong" />
         </div>
         <div className="flex flex-col gap-3">
@@ -185,9 +184,7 @@ export default function CreatePage() {
             allowEmpty={!!image}
             nameDisabled={!!image}
             placeholder={
-              image
-                ? "Đã có ảnh — tên sẽ tự nhận diện"
-                : "Ví dụ: dép tổ ong, ghế nhựa đỏ, ly cà phê sữa đá"
+              image ? t("placeholderHasImage") : t("placeholderObject")
             }
           />
           <ImageUpload value={image} onChange={setImage} disabled={isLoading} />
@@ -224,7 +221,7 @@ export default function CreatePage() {
           ) : (
             <div className="space-y-8">
               <div className="flex flex-col gap-2">
-                <span className="eyebrow text-ink">Chọn phong cách</span>
+                <span className="eyebrow text-ink">{t("sectionStyle")}</span>
                 <ThemePicker
                   value={exhibition.theme ?? "macdinh"}
                   onChange={(themeId) => {
@@ -237,14 +234,12 @@ export default function CreatePage() {
 
               {exhibition.theme === "note" && (
                 <div className="flex flex-col gap-2">
-                  <span className="eyebrow text-ink">
-                    Ghi chú cá nhân (hiện trên giấy note)
-                  </span>
+                  <span className="eyebrow text-ink">{t("noteLabel")}</span>
                   <input
                     type="text"
                     value={exhibition.note ?? ""}
                     maxLength={120}
-                    placeholder='Ví dụ: "Remote nhà mình bọc nilon 10 năm chưa tháo!"'
+                    placeholder={t("notePlaceholder")}
                     onChange={(e) => {
                       const updated = { ...exhibition, note: e.target.value };
                       setExhibition(updated);
@@ -267,7 +262,7 @@ export default function CreatePage() {
                   onClick={() => setEditing(true)}
                   className="rounded-full border border-border-strong px-5 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent"
                 >
-                  Sửa nội dung
+                  {t("editContent")}
                 </button>
                 <PublishButton
                   exhibition={exhibition}
@@ -282,15 +277,15 @@ export default function CreatePage() {
           )
         ) : (
           <div className="reveal flex flex-col items-center gap-4 border border-dashed border-border-strong bg-paper-card/40 px-6 py-20 text-center">
-            <span className="eyebrow text-ink-faint">Sảnh chờ</span>
+            <span className="eyebrow text-ink-faint">{t("lobbyEyebrow")}</span>
             <span aria-hidden className="font-serif text-5xl text-gold/50">
               ❦
             </span>
             <p className="max-w-md font-serif text-xl leading-snug text-ink">
-              Chọn một vật bình thường và biến nó thành một triển lãm nhỏ.
+              {t("lobbyTitle")}
             </p>
             <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
-              Nhập một vật ở trên, hoặc chạm vào một gợi ý trong bộ sưu tập.
+              {t("lobbyBody")}
             </p>
           </div>
         )}
