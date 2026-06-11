@@ -139,7 +139,8 @@
     "subtitle": "Những triển lãm một phút từ cộng đồng.",
     "notConfigured": "Tính năng cộng đồng chưa được bật. <link>Tạo một triển lãm</link> để bắt đầu.",
     "empty": "Chưa có bài nào trong cộng đồng. <link>Tạo triển lãm đầu tiên</link> rồi bấm “Đăng lên cộng đồng”.",
-    "comments": "bình luận"
+    "comments": "bình luận",
+    "viewDetail": "Xem chi tiết"
   },
   "Me": {
     "title": "Bài của tôi",

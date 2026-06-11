@@ -139,7 +139,8 @@
     "subtitle": "One-minute exhibitions from the community.",
     "notConfigured": "Community features aren't enabled yet. <link>Create an exhibition</link> to get started.",
     "empty": "No posts in the community yet. <link>Create the first exhibition</link>, then hit “Publish to the community”.",
-    "comments": "comments"
+    "comments": "comments",
+    "viewDetail": "View details"
   },
   "Me": {
     "title": "Your posts",

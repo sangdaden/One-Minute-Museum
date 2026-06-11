@@ -38,7 +38,7 @@ export default async function FeedPage() {
       : null;
 
   return (
-    <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
+    <main className="mx-auto w-full max-w-3xl px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
       {/* Masthead */}
       <div className="flex items-center justify-between gap-3">
         <Logo tagline={tBrand("tagline")} className="text-[1.4rem]" />
@@ -89,7 +89,7 @@ export default async function FeedPage() {
             })}
           </Plate>
         ) : (
-          <div className="space-y-12">
+          <div className="space-y-5">
             {posts.map((post) => (
               <FeedPost key={post.id} post={post} />
             ))}
