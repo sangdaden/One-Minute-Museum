@@ -1,13 +1,22 @@
 import type { Exhibition } from "@/lib/types";
 import { formatExhibitionForSocial } from "@/lib/copy-format";
 import { formatDate, accession } from "@/lib/format";
+import { getTheme } from "@/lib/themes";
 import CopyButton from "./CopyButton";
+import ThemedCard from "./ThemedCard";
 
-interface ExhibitionCardProps {
+export interface ExhibitionCardProps {
   exhibition: Exhibition;
   /** Optional in-session photo the exhibition was generated from. */
   imageUrl?: string;
   onRegenerate?: () => void;
+}
+
+/** Dispatch: default theme → bento layout; any Vietnamese theme → ThemedCard. */
+export default function ExhibitionCard(props: ExhibitionCardProps) {
+  const theme = getTheme(props.exhibition.theme);
+  if (theme.decoration === "none") return <BentoCard {...props} />;
+  return <ThemedCard {...props} theme={theme} />;
 }
 
 type Variant = "ink" | "brass" | "accentDeep" | "sunk";
@@ -54,7 +63,7 @@ function Tile({
 }
 
 /** Modern bento layout for an exhibition (docs/superpowers/specs/2026-06-10-bento). */
-export default function ExhibitionCard({
+function BentoCard({
   exhibition,
   imageUrl,
   onRegenerate,

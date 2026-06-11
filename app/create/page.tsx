@@ -9,6 +9,7 @@ import ObjectInput from "@/components/ObjectInput";
 import ImageUpload from "@/components/ImageUpload";
 import ModeSelector from "@/components/ModeSelector";
 import VoiceSelector from "@/components/VoiceSelector";
+import ThemePicker from "@/components/ThemePicker";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ExhibitionCard from "@/components/ExhibitionCard";
 import EditExhibitionForm from "@/components/EditExhibitionForm";
@@ -217,6 +218,17 @@ export default function CreatePage() {
             />
           ) : (
             <div className="space-y-8">
+              <div className="flex flex-col gap-2">
+                <span className="eyebrow text-ink">Chọn phong cách</span>
+                <ThemePicker
+                  value={exhibition.theme ?? "macdinh"}
+                  onChange={(themeId) => {
+                    const updated = { ...exhibition, theme: themeId };
+                    setExhibition(updated);
+                    updateExhibition(updated);
+                  }}
+                />
+              </div>
               <ExhibitionCard
                 exhibition={exhibition}
                 imageUrl={resultImage ?? undefined}

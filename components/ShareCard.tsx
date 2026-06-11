@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Download } from "lucide-react";
 import type { Exhibition } from "@/lib/types";
 import { slugifyObjectName } from "@/lib/format";
+import { getTheme, type Theme } from "@/lib/themes";
 
 interface ShareCardProps {
   exhibition: Exhibition;
@@ -22,6 +23,7 @@ type Status = "idle" | "working" | "done" | "error";
  */
 export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
   const ex = exhibition;
+  const theme = getTheme(ex.theme);
 
   const cardRef = useRef<HTMLDivElement>(null); // the real 1080px node (exported)
   const frameRef = useRef<HTMLDivElement>(null); // responsive preview frame
@@ -55,7 +57,7 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
         canvasHeight: SIZE,
         pixelRatio: 1,
         cacheBust: true,
-        backgroundColor: "#fcf5f2",
+        backgroundColor: theme.bgSolid,
       });
 
       const link = document.createElement("a");
@@ -95,7 +97,12 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
         <div
           style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
         >
-          <ShareArtwork ref={cardRef} exhibition={ex} imageUrl={imageUrl} />
+          <ShareArtwork
+            ref={cardRef}
+            exhibition={ex}
+            imageUrl={imageUrl}
+            theme={theme}
+          />
         </div>
       </div>
 
@@ -119,38 +126,56 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
 }
 
 /**
- * The fixed 1080×1080 artwork. All sizing in px so the export is deterministic
- * regardless of root font-size. Editorial museum layout (docs/ui_spec.md §9).
+ * The fixed 1080×1080 artwork. All sizing in px so the export is deterministic.
+ * Colours come from the chosen theme.
  */
 function ShareArtwork({
   ref,
   exhibition: ex,
   imageUrl,
+  theme: t,
 }: {
   ref: React.Ref<HTMLDivElement>;
   exhibition: Exhibition;
   imageUrl?: string;
+  theme: Theme;
 }) {
+  const mono = "var(--font-jetbrains), monospace";
+  const display = "var(--font-display), ui-sans-serif, system-ui, sans-serif";
+
   return (
     <div
       ref={ref}
       style={{
+        position: "relative",
         width: SIZE,
         height: SIZE,
-        background: "#fcf5f2",
-        color: "#211712",
+        background: t.bg,
+        color: t.ink,
         fontFamily: "var(--font-be-vietnam), system-ui, sans-serif",
         padding: 64,
         boxSizing: "border-box",
         overflow: "hidden",
       }}
     >
-      {/* Inner catalogue frame */}
+      {/* Top accent bar — themed, safe (no overlap). */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 12,
+          background: t.accent,
+        }}
+      />
+
+      {/* Inner frame */}
       <div
         style={{
           height: "100%",
           width: "100%",
-          border: "1px solid #e3d0c9",
+          border: `1px solid ${t.inkSoft}40`,
           padding: "56px 60px",
           boxSizing: "border-box",
           display: "flex",
@@ -168,22 +193,22 @@ function ShareArtwork({
         >
           <span
             style={{
-              fontFamily: "var(--font-jetbrains), monospace",
+              fontFamily: mono,
               fontSize: 21,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
-              color: "#9e3322",
+              color: t.accent,
             }}
           >
             Bảo Tàng 1 Phút
           </span>
           <span
             style={{
-              fontFamily: "var(--font-jetbrains), monospace",
+              fontFamily: mono,
               fontSize: 18,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#9c8b85",
+              color: t.inkSoft,
             }}
           >
             {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
@@ -211,11 +236,11 @@ function ShareArtwork({
         <div style={{ marginTop: imageUrl ? 22 : 28 }}>
           <div
             style={{
-              fontFamily: "var(--font-jetbrains), monospace",
+              fontFamily: mono,
               fontSize: 17,
               letterSpacing: "0.24em",
               textTransform: "uppercase",
-              color: "#9c8b85",
+              color: t.inkSoft,
               marginBottom: 18,
             }}
           >
@@ -223,12 +248,13 @@ function ShareArtwork({
           </div>
           <div
             style={{
-              fontFamily: "var(--font-display), ui-sans-serif, system-ui, sans-serif",
+              fontFamily: display,
               fontSize: imageUrl ? 56 : 78,
               fontWeight: 600,
               lineHeight: 1.02,
               letterSpacing: "-0.01em",
               textTransform: "uppercase",
+              color: t.ink,
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
@@ -241,19 +267,15 @@ function ShareArtwork({
 
         {/* Quote */}
         <div
-          style={{
-            borderLeft: "3px solid #b0894a",
-            paddingLeft: 26,
-            margin: "8px 0",
-          }}
+          style={{ borderLeft: `3px solid ${t.accent}`, paddingLeft: 26, margin: "8px 0" }}
         >
           <p
             style={{
-              fontFamily: "var(--font-display), ui-sans-serif, system-ui, sans-serif",
+              fontFamily: display,
               fontWeight: 300,
               fontSize: 40,
               lineHeight: 1.3,
-              color: "#3a2a24",
+              color: t.ink,
               margin: 0,
               display: "-webkit-box",
               WebkitLineClamp: 3,
@@ -269,11 +291,11 @@ function ShareArtwork({
         <div>
           <div
             style={{
-              fontFamily: "var(--font-jetbrains), monospace",
+              fontFamily: mono,
               fontSize: 17,
               letterSpacing: "0.24em",
               textTransform: "uppercase",
-              color: "#9e3322",
+              color: t.accent,
               marginBottom: 18,
             }}
           >
@@ -283,18 +305,13 @@ function ShareArtwork({
             {ex.three_fun_facts.slice(0, 3).map((fact, i) => (
               <li
                 key={i}
-                style={{
-                  display: "flex",
-                  gap: 16,
-                  marginBottom: 14,
-                  alignItems: "baseline",
-                }}
+                style={{ display: "flex", gap: 16, marginBottom: 14, alignItems: "baseline" }}
               >
                 <span
                   style={{
-                    fontFamily: "var(--font-display), ui-sans-serif, system-ui, sans-serif",
+                    fontFamily: display,
                     fontSize: 24,
-                    color: "#b0894a",
+                    color: t.accent,
                     flex: "0 0 auto",
                     lineHeight: 1.3,
                   }}
@@ -305,7 +322,7 @@ function ShareArtwork({
                   style={{
                     fontSize: 25,
                     lineHeight: 1.34,
-                    color: "#4a3a34",
+                    color: t.ink,
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
@@ -322,7 +339,7 @@ function ShareArtwork({
         {/* Footer — hashtags */}
         <div
           style={{
-            borderTop: "1px solid #e3d0c9",
+            borderTop: `1px solid ${t.inkSoft}40`,
             paddingTop: 22,
             display: "flex",
             flexWrap: "wrap",
@@ -333,10 +350,10 @@ function ShareArtwork({
             <span
               key={tag}
               style={{
-                fontFamily: "var(--font-jetbrains), monospace",
+                fontFamily: mono,
                 fontSize: 20,
                 letterSpacing: "0.12em",
-                color: "#6b5a54",
+                color: t.inkSoft,
               }}
             >
               #{tag.replace(/^#+/, "")}

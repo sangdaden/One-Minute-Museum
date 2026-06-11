@@ -61,12 +61,14 @@ export interface Exhibition {
    * voice feature won't have this field, so consumers must tolerate undefined.
    */
   voice?: string;
+  /** Vietnamese theme id (presentation only; not part of generated content). */
+  theme?: string;
 }
 
 /** The exhibition content fields only (no id/meta) — stored as `content` jsonb. */
 export type ExhibitionContent = Omit<
   Exhibition,
-  "id" | "object_name" | "mode" | "voice" | "language" | "created_at"
+  "id" | "object_name" | "mode" | "voice" | "language" | "created_at" | "theme"
 >;
 
 /** A published exhibition (row in `posts`), optionally with its author. */
@@ -79,6 +81,8 @@ export interface Post {
   language: string;
   created_at: string;
   content: ExhibitionContent;
+  /** Vietnamese theme id chosen for this post. */
+  theme?: string | null;
   /** Public URL of the object photo (Supabase Storage), if published with one. */
   image_url?: string | null;
   author?: { display_name: string | null; avatar_url: string | null };

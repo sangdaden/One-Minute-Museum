@@ -38,6 +38,7 @@ interface PostRow {
   language: string;
   created_at: string;
   content: ExhibitionContent;
+  theme?: string | null;
   image_url?: string | null;
   profiles?: { display_name: string | null; avatar_url: string | null } | null;
   reactions?: { type: string; user_id: string }[] | null;
@@ -55,6 +56,7 @@ export function rowToPost(row: PostRow): Post {
     language: row.language,
     created_at: row.created_at,
     content: row.content,
+    theme: row.theme ?? null,
     image_url: row.image_url ?? null,
     author: row.profiles
       ? {
@@ -102,6 +104,7 @@ export function postToExhibition(post: Post): Exhibition {
     voice: post.voice ?? undefined,
     language: post.language,
     created_at: post.created_at,
+    theme: post.theme ?? undefined,
     ...post.content,
   };
 }

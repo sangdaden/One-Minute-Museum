@@ -65,6 +65,9 @@ export default function PublishButton({
       user.id,
     );
     if (publishedImageUrl) payload.image_url = publishedImageUrl;
+    if (exhibition.theme && exhibition.theme !== "macdinh") {
+      payload.theme = exhibition.theme;
+    }
 
     const { error } = await supabase.from("posts").insert(payload);
 
