@@ -213,7 +213,11 @@
     "cta": "Create share image",
     "pngSquare": "PNG · square",
     "zoom": "View larger",
-    "close": "Close"
+    "close": "Close",
+    "layout": "Text layout",
+    "layout_bottom": "Bottom",
+    "layout_split": "Split",
+    "layout_panel": "Card"
   },
   "Illustrate": {
     "header": "Illustration",

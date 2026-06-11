@@ -18,6 +18,10 @@ const SIZE = 1080; // export canvas — 1080×1080
 
 type Status = "idle" | "working" | "done" | "error";
 
+/** Text arrangement for the photo poster. */
+export type PosterLayout = "bottom" | "split" | "panel";
+const LAYOUTS: PosterLayout[] = ["bottom", "split", "panel"];
+
 /**
  * 1080×1080 share card with a responsive 1:1 preview and PNG export.
  * html-to-image is imported lazily inside the click handler so it never runs
@@ -31,6 +35,7 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
   const cardRef = useRef<HTMLDivElement>(null); // the real 1080px node (exported)
   const [status, setStatus] = useState<Status>("idle");
   const [zoomed, setZoomed] = useState(false);
+  const [layout, setLayout] = useState<PosterLayout>("bottom");
 
   // Esc + scroll-lock while the zoom lightbox is open.
   useEffect(() => {
@@ -95,6 +100,28 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
         <span className="h-px flex-1 bg-border-strong" />
       </div>
 
+      {/* Text-layout picker (poster only) */}
+      {imageUrl && (
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="eyebrow text-ink-faint">{t("layout")}</span>
+          {LAYOUTS.map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLayout(l)}
+              className={[
+                "rounded-full border px-3 py-1.5 text-sm transition-colors",
+                layout === l
+                  ? "border-accent bg-accent/5 text-accent ring-1 ring-accent/30"
+                  : "border-border-strong text-ink-soft hover:border-accent/50 hover:text-ink",
+              ].join(" ")}
+            >
+              {t(`layout_${l}`)}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Moderate-size preview; click to view larger. The exported PNG is
           still a full 1080². */}
       <button
@@ -103,7 +130,13 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
         aria-label={t("zoom")}
         className="block aspect-square w-full max-w-[340px] cursor-zoom-in overflow-hidden rounded-xl ring-1 ring-border transition hover:ring-accent/50"
       >
-        <Preview ex={ex} imageUrl={imageUrl} theme={theme} nodeRef={cardRef} />
+        <Preview
+          ex={ex}
+          imageUrl={imageUrl}
+          theme={theme}
+          layout={layout}
+          nodeRef={cardRef}
+        />
       </button>
 
       {/* Zoom lightbox */}
@@ -118,7 +151,7 @@ export default function ShareCard({ exhibition, imageUrl }: ShareCardProps) {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
-                <Preview ex={ex} imageUrl={imageUrl} theme={theme} />
+                <Preview ex={ex} imageUrl={imageUrl} theme={theme} layout={layout} />
               </div>
             </div>
             <button
@@ -157,11 +190,13 @@ function Preview({
   ex,
   imageUrl,
   theme,
+  layout,
   nodeRef,
 }: {
   ex: Exhibition;
   imageUrl?: string;
   theme: Theme;
+  layout: PosterLayout;
   nodeRef?: React.Ref<HTMLDivElement>;
 }) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -185,6 +220,7 @@ function Preview({
           exhibition={ex}
           imageUrl={imageUrl}
           theme={theme}
+          layout={layout}
         />
       </div>
     </div>
@@ -200,11 +236,13 @@ function ShareArtwork({
   exhibition: ex,
   imageUrl,
   theme: t,
+  layout = "bottom",
 }: {
   ref?: React.Ref<HTMLDivElement>;
   exhibition: Exhibition;
   imageUrl?: string;
   theme: Theme;
+  layout?: PosterLayout;
 }) {
   const mono = "var(--font-jetbrains), monospace";
   const display = "var(--font-display), ui-sans-serif, system-ui, sans-serif";
@@ -219,6 +257,7 @@ function ShareArtwork({
         t={t}
         mono={mono}
         display={display}
+        layout={layout}
       />
     );
   }
@@ -466,9 +505,9 @@ function ShareArtwork({
 }
 
 /**
- * Poster variant: the photo fills the whole 1080² and the text sits over a
- * bottom-weighted scrim (magazine-cover feel). Used when a featured image is
- * present. Text is light for legibility regardless of theme.
+ * Poster: the photo fills the whole 1080² and the text sits over it in one of
+ * three arrangements (`bottom` / `split` / `panel`). Text is light for
+ * legibility regardless of theme; facts show up to two lines.
  */
 function PosterArtwork({
   ref,
@@ -477,6 +516,7 @@ function PosterArtwork({
   t,
   mono,
   display,
+  layout,
 }: {
   ref?: React.Ref<HTMLDivElement>;
   ex: Exhibition;
@@ -484,9 +524,167 @@ function PosterArtwork({
   t: Theme;
   mono: string;
   display: string;
+  layout: PosterLayout;
 }) {
   const cream = "#f3e7cf";
   const light = "rgba(255,255,255,0.82)";
+
+  const Brand = () => (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <span
+        style={{
+          fontFamily: mono,
+          fontSize: 21,
+          letterSpacing: "0.32em",
+          textTransform: "uppercase",
+          color: cream,
+        }}
+      >
+        Bảo Tàng 1 Phút
+      </span>
+      <span
+        style={{
+          fontFamily: mono,
+          fontSize: 18,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: light,
+        }}
+      >
+        {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
+      </span>
+    </div>
+  );
+
+  const Head = (nameSize: number) => (
+    <div>
+      <div
+        style={{
+          fontFamily: mono,
+          fontSize: 16,
+          letterSpacing: "0.24em",
+          textTransform: "uppercase",
+          color: light,
+          marginBottom: 12,
+        }}
+      >
+        Hiện vật
+      </div>
+      <div
+        style={{
+          fontFamily: display,
+          fontSize: nameSize,
+          fontWeight: 600,
+          lineHeight: 1.16,
+          paddingTop: 8,
+          letterSpacing: "-0.01em",
+          textTransform: "uppercase",
+          color: "#ffffff",
+          display: "-webkit-box",
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
+        {ex.object_name}
+      </div>
+      <div
+        style={{ borderLeft: `4px solid ${t.accent}`, paddingLeft: 22, marginTop: 18 }}
+      >
+        <p
+          style={{
+            fontFamily: display,
+            fontWeight: 300,
+            fontSize: 31,
+            lineHeight: 1.36,
+            paddingTop: 4,
+            color: "rgba(255,255,255,0.96)",
+            margin: 0,
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          “{ex.share_quote}”
+        </p>
+      </div>
+    </div>
+  );
+
+  const Facts = () => (
+    <div>
+      <div
+        style={{
+          fontFamily: mono,
+          fontSize: 15,
+          letterSpacing: "0.24em",
+          textTransform: "uppercase",
+          color: cream,
+          marginBottom: 12,
+        }}
+      >
+        Ba điều thú vị
+      </div>
+      <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+        {ex.three_fun_facts.slice(0, 3).map((fact, i) => (
+          <li
+            key={i}
+            style={{ display: "flex", gap: 14, marginBottom: 12, alignItems: "baseline" }}
+          >
+            <span
+              style={{
+                fontFamily: display,
+                fontSize: 20,
+                color: cream,
+                flex: "0 0 auto",
+                lineHeight: 1.3,
+              }}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span
+              style={{
+                fontSize: 22,
+                lineHeight: 1.36,
+                color: "rgba(255,255,255,0.94)",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {fact}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  const Hashtags = () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
+      {ex.hashtags.map((tag) => (
+        <span
+          key={tag}
+          style={{
+            fontFamily: mono,
+            fontSize: 18,
+            letterSpacing: "0.12em",
+            color: light,
+          }}
+        >
+          #{cleanHashtag(tag)}
+        </span>
+      ))}
+    </div>
+  );
 
   return (
     <div
@@ -500,7 +698,6 @@ function PosterArtwork({
         overflow: "hidden",
       }}
     >
-      {/* Photo fills the card (the featured image is 1:1, so it covers cleanly). */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={imageUrl}
@@ -515,23 +712,48 @@ function PosterArtwork({
         }}
       />
 
-      {/* Top + bottom scrims for legibility. */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 22%)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 32%, rgba(0,0,0,0.4) 56%, rgba(0,0,0,0.08) 74%, transparent 86%)",
-        }}
-      />
+      {/* Scrims per layout */}
+      {layout === "panel" ? (
+        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.32)" }} />
+      ) : layout === "split" ? (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 30%, transparent 47%)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 28%, transparent 50%)",
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 20%)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 32%, rgba(0,0,0,0.4) 56%, rgba(0,0,0,0.08) 74%, transparent 86%)",
+            }}
+          />
+        </>
+      )}
 
       {/* Top accent bar */}
       <div
@@ -545,186 +767,75 @@ function PosterArtwork({
         }}
       />
 
-      {/* Content */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          padding: 64,
-          boxSizing: "border-box",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
-        {/* Brand row */}
+      {/* Content per layout */}
+      {layout === "panel" ? (
         <div
           style={{
+            position: "absolute",
+            inset: 0,
+            padding: 70,
+            boxSizing: "border-box",
             display: "flex",
             alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              background: "rgba(0,0,0,0.6)",
+              border: "1px solid rgba(255,255,255,0.14)",
+              borderRadius: 28,
+              padding: "48px 52px",
+              boxSizing: "border-box",
+            }}
+          >
+            {Brand()}
+            <div style={{ marginTop: 26 }}>{Head(50)}</div>
+            <div style={{ marginTop: 24 }}>{Facts()}</div>
+            <div style={{ marginTop: 20 }}>{Hashtags()}</div>
+          </div>
+        </div>
+      ) : layout === "split" ? (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            padding: 64,
+            boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
             justifyContent: "space-between",
           }}
         >
-          <span
-            style={{
-              fontFamily: mono,
-              fontSize: 21,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: cream,
-            }}
-          >
-            Bảo Tàng 1 Phút
-          </span>
-          <span
-            style={{
-              fontFamily: mono,
-              fontSize: 18,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: light,
-            }}
-          >
-            {ex.voice ? `Kể bởi ${ex.voice}` : "★"}
-          </span>
-        </div>
-
-        {/* Bottom block — object name, quote, 3 facts, hashtags */}
-        <div>
-          <div
-            style={{
-              fontFamily: mono,
-              fontSize: 16,
-              letterSpacing: "0.24em",
-              textTransform: "uppercase",
-              color: light,
-              marginBottom: 12,
-            }}
-          >
-            Hiện vật
+          <div>
+            {Brand()}
+            <div style={{ marginTop: 28 }}>{Head(50)}</div>
           </div>
-          <div
-            style={{
-              fontFamily: display,
-              fontSize: 54,
-              fontWeight: 600,
-              lineHeight: 1.16,
-              paddingTop: 8,
-              letterSpacing: "-0.01em",
-              textTransform: "uppercase",
-              color: "#ffffff",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            }}
-          >
-            {ex.object_name}
-          </div>
-          <div
-            style={{
-              borderLeft: `4px solid ${t.accent}`,
-              paddingLeft: 22,
-              marginTop: 18,
-            }}
-          >
-            <p
-              style={{
-                fontFamily: display,
-                fontWeight: 300,
-                fontSize: 31,
-                lineHeight: 1.36,
-                paddingTop: 4,
-                color: "rgba(255,255,255,0.96)",
-                margin: 0,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-            >
-              “{ex.share_quote}”
-            </p>
-          </div>
-
-          {/* 3 fun facts */}
-          <div style={{ marginTop: 24 }}>
-            <div
-              style={{
-                fontFamily: mono,
-                fontSize: 15,
-                letterSpacing: "0.24em",
-                textTransform: "uppercase",
-                color: cream,
-                marginBottom: 12,
-              }}
-            >
-              Ba điều thú vị
-            </div>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              {ex.three_fun_facts.slice(0, 3).map((fact, i) => (
-                <li
-                  key={i}
-                  style={{
-                    display: "flex",
-                    gap: 14,
-                    marginBottom: 10,
-                    alignItems: "baseline",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: display,
-                      fontSize: 20,
-                      color: cream,
-                      flex: "0 0 auto",
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 22,
-                      lineHeight: 1.35,
-                      color: "rgba(255,255,255,0.94)",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {fact}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div
-            style={{
-              marginTop: 18,
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 16,
-            }}
-          >
-            {ex.hashtags.map((tag) => (
-              <span
-                key={tag}
-                style={{
-                  fontFamily: mono,
-                  fontSize: 18,
-                  letterSpacing: "0.12em",
-                  color: light,
-                }}
-              >
-                #{cleanHashtag(tag)}
-              </span>
-            ))}
+          <div>
+            {Facts()}
+            <div style={{ marginTop: 16 }}>{Hashtags()}</div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            padding: 64,
+            boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          {Brand()}
+          <div>
+            {Head(54)}
+            <div style={{ marginTop: 24 }}>{Facts()}</div>
+            <div style={{ marginTop: 18 }}>{Hashtags()}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

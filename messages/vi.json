@@ -213,7 +213,11 @@
     "cta": "Tạo ảnh chia sẻ",
     "pngSquare": "PNG · vuông",
     "zoom": "Xem lớn",
-    "close": "Đóng"
+    "close": "Đóng",
+    "layout": "Bố cục chữ",
+    "layout_bottom": "Dồn đáy",
+    "layout_split": "Trên–dưới",
+    "layout_panel": "Thẻ chữ"
   },
   "Illustrate": {
     "header": "Ảnh minh hoạ",
