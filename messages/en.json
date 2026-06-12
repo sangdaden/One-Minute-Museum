@@ -327,5 +327,22 @@
     "di-san": { "label": "Heritage", "description": "Tangible & intangible heritage" },
     "trang-phuc": { "label": "Costume", "description": "Traditional attire" },
     "nghe-thuat-dan-gian": { "label": "Folk art", "description": "Painting, dance, folk music" }
+  },
+  "Footer": {
+    "blurb": "Preserving and sharing Vietnamese culture.",
+    "explore": "Explore",
+    "explorePosts": "Posts",
+    "exploreTopics": "Topics",
+    "exploreCollections": "Collections",
+    "support": "Support",
+    "supportFaq": "FAQ",
+    "supportGuide": "User guide",
+    "supportContact": "Contact",
+    "about": "About",
+    "aboutIntro": "About us",
+    "aboutTerms": "Terms of use",
+    "aboutPrivacy": "Privacy policy",
+    "rights": "© 2026 One-Minute Museum.",
+    "slogan": "Quick • Cultural • Inspiring"
   }
 }

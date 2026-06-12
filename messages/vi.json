@@ -327,5 +327,22 @@
     "di-san": { "label": "Di sản", "description": "Di sản vật thể & phi vật thể" },
     "trang-phuc": { "label": "Trang phục", "description": "Trang phục truyền thống" },
     "nghe-thuat-dan-gian": { "label": "Nghệ thuật dân gian", "description": "Tranh, múa, âm nhạc dân gian" }
+  },
+  "Footer": {
+    "blurb": "Giữ gìn và lan toả giá trị văn hoá Việt.",
+    "explore": "Khám phá",
+    "explorePosts": "Bài viết",
+    "exploreTopics": "Chủ đề",
+    "exploreCollections": "Bộ sưu tập",
+    "support": "Hỗ trợ",
+    "supportFaq": "Câu hỏi thường gặp",
+    "supportGuide": "Hướng dẫn sử dụng",
+    "supportContact": "Liên hệ",
+    "about": "Về chúng tôi",
+    "aboutIntro": "Giới thiệu",
+    "aboutTerms": "Điều khoản sử dụng",
+    "aboutPrivacy": "Chính sách bảo mật",
+    "rights": "© 2026 One-Minute Museum.",
+    "slogan": "Nhanh gọn • Văn hoá • Truyền cảm hứng"
   }
 }

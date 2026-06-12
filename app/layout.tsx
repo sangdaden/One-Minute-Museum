@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Be_Vietnam_Pro, JetBrains_Mono } from "next/font/g
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import "./globals.css";
+import SiteFooter from "@/components/SiteFooter";
 
 // Display — modern grotesque with character; carries headings & pull quotes.
 const display = Bricolage_Grotesque({
@@ -74,7 +75,10 @@ export default async function RootLayout({
         />
         <div className="grain" aria-hidden />
         <div className="relative z-10">
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            {children}
+            <SiteFooter />
+          </NextIntlClientProvider>
         </div>
       </body>
     </html>
