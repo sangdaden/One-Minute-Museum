@@ -28,6 +28,7 @@ export const CATEGORIES: Category[] = [
     keywords: [
       "di sản", "cố đô", "phố cổ", "hoàng thành", "unesco",
       "thánh địa", "vịnh", "kinh thành", "di tích",
+      "trống đồng", "đông sơn", "đồ đồng",
     ],
   },
   {
