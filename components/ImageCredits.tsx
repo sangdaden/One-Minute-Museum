@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react";
-import type { ImageCandidate, ImageRelevanceScore } from "@/lib/image-curation";
+import type { ImageCredit } from "@/lib/types";
 import ImageSourceBadge from "./ImageSourceBadge";
 
 /**
@@ -7,21 +7,21 @@ import ImageSourceBadge from "./ImageSourceBadge";
  * and (optionally) why it was selected. Never hide attribution.
  */
 export default function ImageCredits({
-  candidate,
-  score,
+  credit,
+  reason,
 }: {
-  candidate: ImageCandidate;
-  score?: ImageRelevanceScore;
+  credit: ImageCredit;
+  reason?: string;
 }) {
   return (
     <div className="space-y-1.5 text-xs text-ink-soft">
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <ImageSourceBadge source={candidate.source} />
-        {candidate.author && <span>· {candidate.author}</span>}
-        {candidate.license && <span>· {candidate.license}</span>}
+        <ImageSourceBadge source={credit.source} />
+        {credit.author && <span>· {credit.author}</span>}
+        {credit.license && <span>· {credit.license}</span>}
       </div>
       <a
-        href={candidate.sourceUrl}
+        href={credit.sourceUrl}
         target="_blank"
         rel="noreferrer noopener"
         className="inline-flex items-center gap-1 text-teal transition-colors hover:underline"
@@ -29,9 +29,7 @@ export default function ImageCredits({
         Nguồn
         <ExternalLink className="h-3 w-3" strokeWidth={2} />
       </a>
-      {score?.reason && (
-        <p className="leading-relaxed text-ink-faint">{score.reason}</p>
-      )}
+      {reason && <p className="leading-relaxed text-ink-faint">{reason}</p>}
     </div>
   );
 }

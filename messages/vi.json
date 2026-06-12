@@ -219,6 +219,16 @@
     "layout_split": "Trên–dưới",
     "layout_panel": "Thẻ chữ"
   },
+  "Cultural": {
+    "header": "Tìm ảnh văn hoá",
+    "hint": "Tìm ảnh thật từ Wikimedia (ưu tiên), có dẫn nguồn & giấy phép.",
+    "placeholder": "Chủ đề (vd: Múa rối nước)…",
+    "search": "Tìm",
+    "use": "Dùng ảnh này",
+    "empty": "Chưa tìm thấy ảnh phù hợp. Thử chủ đề khác nhé.",
+    "error": "Không tìm được ảnh lúc này. Thử lại nhé.",
+    "pickError": "Không tải được ảnh này. Thử ảnh khác nhé."
+  },
   "Illustrate": {
     "header": "Ảnh minh hoạ",
     "hint": "Chưa có ảnh? Tạo vài ảnh mẫu bằng AI rồi chọn một ảnh cho bài.",

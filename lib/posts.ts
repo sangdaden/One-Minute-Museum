@@ -19,6 +19,7 @@ export function exhibitionToPostInsert(ex: Exhibition, userId: string) {
     share_quote: ex.share_quote,
     hashtags: ex.hashtags,
     ...(ex.note ? { note: ex.note } : {}),
+    ...(ex.image_credit ? { image_credit: ex.image_credit } : {}),
   };
   return {
     user_id: userId,

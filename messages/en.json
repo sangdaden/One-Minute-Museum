@@ -219,6 +219,16 @@
     "layout_split": "Split",
     "layout_panel": "Card"
   },
+  "Cultural": {
+    "header": "Find a cultural image",
+    "hint": "Search real images from Wikimedia (preferred), with source & license.",
+    "placeholder": "Topic (e.g. water puppetry)…",
+    "search": "Search",
+    "use": "Use this image",
+    "empty": "No matching images found. Try another topic.",
+    "error": "Couldn't search images right now. Please try again.",
+    "pickError": "Couldn't load that image. Try another."
+  },
   "Illustrate": {
     "header": "Illustration",
     "hint": "No photo? Generate a few AI samples and pick one for your post.",

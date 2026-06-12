@@ -2,8 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Crop } from "lucide-react";
-import type { ApiError, Exhibition, Mode, Voice } from "@/lib/types";
+import { Crop, X } from "lucide-react";
+import type {
+  ApiError,
+  Exhibition,
+  ImageCredit,
+  Mode,
+  Voice,
+} from "@/lib/types";
 import { DEFAULT_MODE, DEFAULT_VOICE } from "@/lib/constants";
 import { saveExhibition, updateExhibition } from "@/lib/gallery";
 import ObjectInput from "@/components/ObjectInput";
@@ -13,6 +19,8 @@ import VoiceSelector from "@/components/VoiceSelector";
 import ThemePicker from "@/components/ThemePicker";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ImageSuggestions from "@/components/ImageSuggestions";
+import CulturalImagePicker from "@/components/CulturalImagePicker";
+import ImageCredits from "@/components/ImageCredits";
 import ImageCropper from "@/components/ImageCropper";
 import ExhibitionCard from "@/components/ExhibitionCard";
 import EditExhibitionForm from "@/components/EditExhibitionForm";
@@ -25,6 +33,7 @@ import ErrorState from "@/components/ErrorState";
 export default function CreatePage() {
   const t = useTranslations("Create");
   const tCrop = useTranslations("Cropper");
+  const tIll = useTranslations("Illustrate");
   const locale = useLocale();
   const [objectName, setObjectName] = useState("");
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
@@ -38,7 +47,9 @@ export default function CreatePage() {
   const [resultImage, setResultImage] = useState<string | null>(null);
   // Where the result image came from: an uploaded photo, an AI illustration, or
   // nothing yet. Drives whether the AI-illustration picker is offered.
-  const [imageSource, setImageSource] = useState<"upload" | "ai" | null>(null);
+  const [imageSource, setImageSource] = useState<
+    "upload" | "ai" | "curated" | null
+  >(null);
   const [editing, setEditing] = useState(false);
   const [cropping, setCropping] = useState(false);
 
@@ -109,6 +120,22 @@ export default function CreatePage() {
     setImageSource(null);
     setEditing(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Attach/clear attribution for a curated featured image (persisted in content).
+  function applyImageCredit(credit: ImageCredit | null) {
+    if (!exhibition) return;
+    const next: Exhibition = { ...exhibition };
+    if (credit) next.image_credit = credit;
+    else delete next.image_credit;
+    setExhibition(next);
+    updateExhibition(next);
+  }
+
+  function clearFeaturedImage() {
+    setResultImage(null);
+    setImageSource(null);
+    applyImageCredit(null);
   }
 
   return (
@@ -245,33 +272,62 @@ export default function CreatePage() {
                 </div>
               )}
 
-              {/* AI illustrations — only when no uploaded photo is attached. */}
-              {imageSource !== "upload" && (
-                <ImageSuggestions
-                  objectName={exhibition.object_name}
-                  chosen={imageSource === "ai" ? resultImage : null}
-                  onPick={(uri) => {
-                    setResultImage(uri);
-                    setImageSource("ai");
-                  }}
-                  onClear={() => {
-                    setResultImage(null);
-                    setImageSource(null);
-                  }}
-                />
+              {/* Pick a featured image: AI illustration or a real cultural image. */}
+              {!resultImage && (
+                <div className="space-y-7">
+                  <ImageSuggestions
+                    objectName={exhibition.object_name}
+                    chosen={null}
+                    onPick={(uri) => {
+                      setResultImage(uri);
+                      setImageSource("ai");
+                      applyImageCredit(null);
+                    }}
+                    onClear={() => {}}
+                  />
+                  <CulturalImagePicker
+                    topic={exhibition.object_name}
+                    onPick={(uri, cand) => {
+                      setResultImage(uri);
+                      setImageSource("curated");
+                      applyImageCredit({
+                        source: cand.source,
+                        author: cand.author,
+                        license: cand.license,
+                        sourceUrl: cand.sourceUrl,
+                        title: cand.title,
+                      });
+                    }}
+                  />
+                </div>
               )}
 
-              {/* Reframe the featured image into the app's 1:1 frame. */}
+              {/* Chosen image: credits (curated) + reframe / remove. */}
               {resultImage && (
-                <div className="flex justify-center">
-                  <button
-                    type="button"
-                    onClick={() => setCropping(true)}
-                    className="inline-flex items-center gap-2 rounded-full border border-border-strong px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent"
-                  >
-                    <Crop className="h-4 w-4" strokeWidth={1.75} />
-                    {tCrop("adjust")}
-                  </button>
+                <div className="flex flex-col items-center gap-3">
+                  {imageSource === "curated" && exhibition.image_credit && (
+                    <div className="w-full max-w-md rounded-xl border border-border bg-paper-card/60 p-3">
+                      <ImageCredits credit={exhibition.image_credit} />
+                    </div>
+                  )}
+                  <div className="flex flex-wrap items-center justify-center gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setCropping(true)}
+                      className="inline-flex items-center gap-2 rounded-full border border-border-strong px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                    >
+                      <Crop className="h-4 w-4" strokeWidth={1.75} />
+                      {tCrop("adjust")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={clearFeaturedImage}
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm text-ink-faint transition-colors hover:text-accent"
+                    >
+                      <X className="h-3.5 w-3.5" strokeWidth={2} />
+                      {tIll("remove")}
+                    </button>
+                  </div>
                 </div>
               )}
 

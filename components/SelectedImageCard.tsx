@@ -58,7 +58,7 @@ export default function SelectedImageCard({
             {candidate.description}
           </p>
         )}
-        <ImageCredits candidate={candidate} score={score} />
+        <ImageCredits credit={candidate} reason={score?.reason} />
       </figcaption>
     </figure>
   );

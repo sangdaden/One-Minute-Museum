@@ -8,6 +8,7 @@ import { rowToPost, rowToComment, postToExhibition } from "@/lib/posts";
 import { formatDate } from "@/lib/format";
 import type { Comment } from "@/lib/types";
 import ExhibitionCard from "@/components/ExhibitionCard";
+import ImageCredits from "@/components/ImageCredits";
 import SiteHeader from "@/components/SiteHeader";
 import ReactionBar from "@/components/ReactionBar";
 import CommentList from "@/components/CommentList";
@@ -36,6 +37,7 @@ export default async function PostPage({
 
   if (!postRow) notFound();
   const post = rowToPost(postRow);
+  const exhibition = postToExhibition(post);
 
   const { data: commentRows } = await supabase
     .from("comments")
@@ -95,10 +97,17 @@ export default async function PostPage({
 
         {/* Right: exhibition card + comments */}
         <div className="mt-10 space-y-10 lg:mt-0">
-          <ExhibitionCard
-            exhibition={postToExhibition(post)}
-            imageUrl={post.image_url ?? undefined}
-          />
+          <div className="space-y-3">
+            <ExhibitionCard
+              exhibition={exhibition}
+              imageUrl={post.image_url ?? undefined}
+            />
+            {exhibition.image_credit && (
+              <div className="rounded-xl border border-border bg-paper-card/60 p-3">
+                <ImageCredits credit={exhibition.image_credit} />
+              </div>
+            )}
+          </div>
 
           {/* Comments */}
           <section className="space-y-6">

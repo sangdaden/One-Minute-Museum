@@ -65,6 +65,17 @@ export interface Exhibition {
   theme?: string;
   /** Optional personal note (shown on the "Giấy note" theme). Stored in content. */
   note?: string;
+  /** Attribution for a curated (external) featured image; preserved on publish. */
+  image_credit?: ImageCredit;
+}
+
+/** Compact attribution for an image sourced via the curation pipeline. */
+export interface ImageCredit {
+  source: "wikimedia" | "unsplash" | "pexels" | "user_upload";
+  author?: string;
+  license?: string;
+  sourceUrl: string;
+  title?: string;
 }
 
 /** The exhibition content fields only (no id/meta) — stored as `content` jsonb. */
