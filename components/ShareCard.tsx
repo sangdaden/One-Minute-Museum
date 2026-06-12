@@ -879,6 +879,7 @@ function PosterArtwork({
             fontSize: 16,
             letterSpacing: "0.04em",
             color: "rgba(255,255,255,0.6)",
+            textShadow: "0 1px 3px rgba(0,0,0,0.7)",
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
