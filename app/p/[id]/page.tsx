@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MessageCircle } from "lucide-react";
@@ -5,7 +6,7 @@ import { getTranslations } from "next-intl/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import { rowToPost, rowToComment, postToExhibition } from "@/lib/posts";
-import { formatDate } from "@/lib/format";
+import { formatDate, truncate } from "@/lib/format";
 import type { Comment } from "@/lib/types";
 import ExhibitionCard from "@/components/ExhibitionCard";
 import ImageCredits from "@/components/ImageCredits";
@@ -15,6 +16,47 @@ import CommentList from "@/components/CommentList";
 import CommentForm from "@/components/CommentForm";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  if (!isSupabaseConfigured()) return {};
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("posts")
+    .select("object_name, content, image_url, language")
+    .eq("id", id)
+    .maybeSingle();
+  if (!data) return {};
+
+  const content = (data.content ?? {}) as { title?: string; hook?: string };
+  const title = `${content.title || data.object_name} · OMM`;
+  const description = truncate(content.hook ?? "", 160) || data.object_name;
+  const images = data.image_url ? [data.image_url as string] : ["/og-default.jpg"];
+  const locale = data.language === "en" ? "en_US" : "vi_VN";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: `/p/${id}`,
+      locale,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images,
+    },
+  };
+}
 
 export default async function PostPage({
   params,
