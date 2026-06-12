@@ -30,6 +30,7 @@ export default async function ExplorePage({
   const mode = MODES.includes(sp.mode as Mode) ? (sp.mode as Mode) : null;
   const topic = sp["chu-de"] && getCategory(sp["chu-de"]) ? sp["chu-de"]! : null;
   const q = (sp.q ?? "").trim();
+  const qLike = q.replace(/[\\%_]/g, "\\$&");
   const filtered = Boolean(topic || q); // topic/search disable pagination
 
   let posts: Post[] = [];
@@ -42,7 +43,7 @@ export default async function ExplorePage({
       .select("*, profiles(display_name, avatar_url), reactions(type, user_id), comments(count)")
       .order("created_at", { ascending: false });
 
-    if (q) query = query.ilike("object_name", `%${q}%`).limit(FEED_PAGE_SIZE);
+    if (q) query = query.ilike("object_name", `%${qLike}%`).limit(FEED_PAGE_SIZE);
     else if (topic) query = query.limit(60); // fetch a window, filter in JS
     else if (mode) query = query.eq("mode", mode).limit(FEED_PAGE_SIZE);
     else query = query.limit(FEED_PAGE_SIZE);

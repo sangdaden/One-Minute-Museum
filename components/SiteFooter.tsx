@@ -41,11 +41,25 @@ export default function SiteFooter() {
             <Play className="h-5 w-5" strokeWidth={1.6} />
           </div>
         </div>
-        {col(t("explore"), [
-          { label: t("explorePosts"), href: "/kham-pha" },
-          { label: t("exploreTopics"), href: "/chu-de" },
-          { label: t("exploreCollections"), href: "/chu-de" },
-        ])}
+        <div>
+          <h3 className="eyebrow mb-3 text-ink">{t("explore")}</h3>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/kham-pha" className="text-sm text-ink-soft transition-colors hover:text-accent">
+                {t("explorePosts")}
+              </Link>
+            </li>
+            <li>
+              <Link href="/chu-de" className="text-sm text-ink-soft transition-colors hover:text-accent">
+                {t("exploreTopics")}
+              </Link>
+            </li>
+            <li className="flex items-center gap-1.5 text-sm text-ink-faint">
+              {t("exploreCollections")}
+              <span className="rounded-full bg-paper-sunk px-1.5 py-0.5 text-[10px] text-ink-faint">{t("comingSoon")}</span>
+            </li>
+          </ul>
+        </div>
         {col(t("support"), [
           { label: t("supportFaq"), href: "/gioi-thieu" },
           { label: t("supportGuide"), href: "/gioi-thieu" },

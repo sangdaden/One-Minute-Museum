@@ -23,6 +23,10 @@ export default function HomeHero() {
   async function handleFile(file: File | undefined) {
     if (!file) return;
     setError(null);
+    if (file.size > 10 * 1024 * 1024) {
+      setError(t("heroError"));
+      return;
+    }
     setBusy(true);
     try {
       const dataUrl = await fileToDownscaledDataUrl(file);
