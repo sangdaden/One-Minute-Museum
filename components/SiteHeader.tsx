@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -19,6 +19,11 @@ export default function SiteHeader() {
   const router = useRouter();
   const [drawer, setDrawer] = useState(false);
   const [q, setQ] = useState("");
+
+  // Close the mobile drawer on any route change (incl. browser back/forward).
+  useEffect(() => {
+    setDrawer(false);
+  }, [pathname]);
 
   const links = [
     { href: "/kham-pha", label: t("explore") },
@@ -112,7 +117,7 @@ export default function SiteHeader() {
             {links.map((l) => navLink(l.href, l.label))}
             <span className="inline-flex items-center gap-1.5 text-sm text-ink-faint">
               {t("collections")}
-              <span className="rounded-full bg-paper-sunk px-1.5 py-0.5 text-[10px]">{t("comingSoon")}</span>
+              <span className="rounded-full bg-paper-sunk px-1.5 py-0.5 text-[10px] text-ink-faint">{t("comingSoon")}</span>
             </span>
           </nav>
         </div>
