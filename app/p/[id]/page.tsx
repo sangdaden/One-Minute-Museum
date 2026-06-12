@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { APP_DESC } from "@/app/layout";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import { rowToPost, rowToComment, postToExhibition } from "@/lib/posts";
@@ -24,38 +25,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   if (!isSupabaseConfigured()) return {};
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from("posts")
-    .select("object_name, content, image_url, language")
-    .eq("id", id)
-    .maybeSingle();
-  if (!data) return {};
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("posts")
+      .select("object_name, content, image_url, language")
+      .eq("id", id)
+      .maybeSingle();
+    if (!data) return {};
 
-  const content = (data.content ?? {}) as { title?: string; hook?: string };
-  const title = `${content.title || data.object_name} · OMM`;
-  const description = truncate(content.hook ?? "", 160) || data.object_name;
-  const images = data.image_url ? [data.image_url as string] : ["/og-default.jpg"];
-  const locale = data.language === "en" ? "en_US" : "vi_VN";
+    const content = (data.content ?? {}) as { title?: string; hook?: string };
+    const title = `${content.title || data.object_name} · OMM`;
+    const description = truncate(content.hook ?? "", 160) || APP_DESC;
+    const images = data.image_url ? [data.image_url as string] : ["/og-default.jpg"];
+    const locale = data.language === "en" ? "en_US" : "vi_VN";
 
-  return {
-    title,
-    description,
-    openGraph: {
+    return {
       title,
       description,
-      type: "article",
-      url: `/p/${id}`,
-      locale,
-      images,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images,
-    },
-  };
+      openGraph: { title, description, type: "article", url: `/p/${id}`, locale, images },
+      twitter: { card: "summary_large_image", title, description, images },
+    };
+  } catch {
+    return {};
+  }
 }
 
 export default async function PostPage({

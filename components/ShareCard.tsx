@@ -377,22 +377,6 @@ function ShareArtwork({
             />
           </div>
         )}
-        {imageUrl && creditLine(ex, L.photo) && (
-          <div
-            style={{
-              marginTop: 10,
-              fontFamily: mono,
-              fontSize: 15,
-              color: `${t.inkSoft}`,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {creditLine(ex, L.photo)}
-          </div>
-        )}
-
         {/* Hero — object name */}
         <div style={{ marginTop: imageUrl ? 22 : 28 }}>
           <div
