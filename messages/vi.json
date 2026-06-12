@@ -366,6 +366,15 @@
     "title": "Chủ đề",
     "intro": "Khám phá văn hoá Việt theo từng chủ đề — kiến trúc, di sản, trang phục và nghệ thuật dân gian."
   },
+  "About": {
+    "title": "Giới thiệu",
+    "lead": "One-Minute Museum biến mỗi bức ảnh đời thường thành một câu chuyện văn hoá Việt — nhanh gọn, thú vị và đáng nhớ.",
+    "storyTitle": "Ôm trọn văn hoá Việt",
+    "storyBody": "OMM đọc lên nghe như “Ôm” — một cái ôm dành cho di sản và đời sống Việt. Từ chiếc dép tổ ong đến trống đồng Đông Sơn, mỗi vật đều mang một câu chuyện đáng kể.",
+    "missionTitle": "Sứ mệnh",
+    "missionBody": "Giữ gìn và lan toả giá trị văn hoá Việt tới mọi người, bắt đầu từ những điều gần gũi nhất quanh ta.",
+    "cta": "Tạo bài viết đầu tiên"
+  },
   "Home": {
     "heroTitle1": "Biến mọi bức ảnh",
     "heroTitle2": "thành một câu chuyện",

@@ -366,6 +366,15 @@
     "title": "Topics",
     "intro": "Explore Vietnamese culture by topic — architecture, heritage, costume, and folk art."
   },
+  "About": {
+    "title": "About",
+    "lead": "One-Minute Museum turns everyday photos into stories of Vietnamese culture — quick, fun, and memorable.",
+    "storyTitle": "A hug for Vietnamese culture",
+    "storyBody": "OMM sounds like “Ôm” (to hug) — an embrace for Vietnamese heritage and daily life. From a humble sandal to a Đông Sơn drum, every object has a story worth telling.",
+    "missionTitle": "Mission",
+    "missionBody": "Preserve and spread Vietnamese culture for everyone, starting with the things closest to us.",
+    "cta": "Create your first post"
+  },
   "Home": {
     "heroTitle1": "Turn any photo",
     "heroTitle2": "into a story of",
