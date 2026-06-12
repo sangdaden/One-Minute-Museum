@@ -34,7 +34,8 @@ export default function SiteFooter() {
         <div>
           <Logo className="text-[1.2rem]" />
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-faint">{t("blurb")}</p>
-          <div className="mt-4 flex gap-2.5 text-ink-soft">
+          {/* Social placeholders — decorative until real channel URLs are wired. */}
+          <div aria-hidden className="mt-4 flex gap-2.5 text-ink-soft">
             <Globe className="h-5 w-5" strokeWidth={1.6} />
             <Share2 className="h-5 w-5" strokeWidth={1.6} />
             <Play className="h-5 w-5" strokeWidth={1.6} />
