@@ -19,7 +19,7 @@ export const CATEGORIES: Category[] = [
     icon: "Building2",
     keywords: [
       "đình", "chùa", "đền", "tháp", "thành", "cung", "lăng",
-      "nhà cổ", "cầu", "kiến trúc", "miếu", "văn miếu",
+      "nhà cổ", "cầu cổ", "kiến trúc", "miếu", "văn miếu",
     ],
   },
   {
@@ -43,7 +43,7 @@ export const CATEGORIES: Category[] = [
     slug: "nghe-thuat-dan-gian",
     icon: "Drama",
     keywords: [
-      "tranh", "đông hồ", "hàng trống", "múa rối", "chèo", "tuồng",
+      "tranh dân gian", "đông hồ", "hàng trống", "múa rối", "chèo", "tuồng",
       "cải lương", "ca trù", "quan họ", "dân ca", "gốm", "rối nước",
     ],
   },

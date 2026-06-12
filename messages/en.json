@@ -323,9 +323,9 @@
     "spatial": "3D graphics"
   },
   "Categories": {
-    "kien-truc": { "label": "Architecture", "desc": "Communal houses, temples, citadels" },
-    "di-san": { "label": "Heritage", "desc": "Tangible & intangible heritage" },
-    "trang-phuc": { "label": "Costume", "desc": "Traditional attire" },
-    "nghe-thuat-dan-gian": { "label": "Folk art", "desc": "Painting, dance, folk music" }
+    "kien-truc": { "label": "Architecture", "description": "Communal houses, temples, citadels" },
+    "di-san": { "label": "Heritage", "description": "Tangible & intangible heritage" },
+    "trang-phuc": { "label": "Costume", "description": "Traditional attire" },
+    "nghe-thuat-dan-gian": { "label": "Folk art", "description": "Painting, dance, folk music" }
   }
 }
