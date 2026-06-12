@@ -5,9 +5,10 @@ import { useTranslations } from "next-intl";
 import { Building2, Landmark, Shirt, Drama } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { CATEGORIES } from "@/lib/categories";
+import type { Category } from "@/lib/categories";
 import SectionTitle from "@/components/decor/SectionTitle";
 
-const ICONS: Record<string, LucideIcon> = { Building2, Landmark, Shirt, Drama };
+const ICONS: Record<Category["icon"], LucideIcon> = { Building2, Landmark, Shirt, Drama };
 
 export default function CategoryGrid() {
   const t = useTranslations("Home");
