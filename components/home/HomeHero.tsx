@@ -95,12 +95,32 @@ export default function HomeHero() {
           </p>
         </div>
 
-        {/* Decorative collage */}
-        <div className="relative hidden min-h-[260px] lg:block" aria-hidden>
-          <DongSonWatermark className="absolute right-4 top-2 w-64 text-gold/15" />
-          <div className="absolute left-6 top-6 h-40 w-56 -rotate-6 rounded-xl border-4 border-paper-card bg-gradient-to-br from-[#b9763a] to-[#8a4f28] shadow-xl" />
-          <div className="absolute bottom-6 right-10 h-32 w-32 rounded-full border-4 border-paper-card bg-[radial-gradient(circle,#caa24a,#7e5b23)] shadow-xl" />
-          <LotusMotif className="absolute bottom-2 left-16 w-16 text-accent/70" />
+        {/* Decorative collage — real Public-Domain / CC0 heritage photos
+            (Wikimedia Commons; credited on /gioi-thieu). */}
+        <div className="relative hidden min-h-[300px] lg:block" aria-hidden>
+          <DongSonWatermark className="absolute right-2 top-0 w-64 text-gold/15" />
+          {/* Huế imperial city (1932) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/landing/hero-1.jpg"
+            alt=""
+            className="absolute left-4 top-6 h-44 w-60 -rotate-6 rounded-xl border-4 border-paper-card object-cover shadow-xl"
+          />
+          {/* Hội An — Chùa Cầu at night */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/landing/hero-3.jpg"
+            alt=""
+            className="absolute bottom-4 right-6 h-40 w-52 rotate-3 rounded-xl border-4 border-paper-card object-cover shadow-xl"
+          />
+          {/* Đông Sơn drum detail — circular crop */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/landing/hero-2.jpg"
+            alt=""
+            className="absolute bottom-2 left-10 h-28 w-28 rounded-full border-4 border-paper-card object-cover shadow-xl"
+          />
+          <LotusMotif className="absolute -bottom-1 left-40 w-14 text-accent/70" />
         </div>
       </div>
     </section>

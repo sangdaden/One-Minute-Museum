@@ -331,10 +331,22 @@
     "spatial": "Đồ họa 3D"
   },
   "Categories": {
-    "kien-truc": { "label": "Kiến trúc", "description": "Đình, chùa, thành quách" },
-    "di-san": { "label": "Di sản", "description": "Di sản vật thể & phi vật thể" },
-    "trang-phuc": { "label": "Trang phục", "description": "Trang phục truyền thống" },
-    "nghe-thuat-dan-gian": { "label": "Nghệ thuật dân gian", "description": "Tranh, múa, âm nhạc dân gian" }
+    "kien-truc": {
+      "label": "Kiến trúc",
+      "description": "Đình, chùa, thành quách"
+    },
+    "di-san": {
+      "label": "Di sản",
+      "description": "Di sản vật thể & phi vật thể"
+    },
+    "trang-phuc": {
+      "label": "Trang phục",
+      "description": "Trang phục truyền thống"
+    },
+    "nghe-thuat-dan-gian": {
+      "label": "Nghệ thuật dân gian",
+      "description": "Tranh, múa, âm nhạc dân gian"
+    }
   },
   "Footer": {
     "blurb": "Giữ gìn và lan toả giá trị văn hoá Việt.",
@@ -374,7 +386,9 @@
     "storyBody": "OMM đọc lên nghe như “Ôm” — một cái ôm dành cho di sản và đời sống Việt. Từ chiếc dép tổ ong đến trống đồng Đông Sơn, mỗi vật đều mang một câu chuyện đáng kể.",
     "missionTitle": "Sứ mệnh",
     "missionBody": "Giữ gìn và lan toả giá trị văn hoá Việt tới mọi người, bắt đầu từ những điều gần gũi nhất quanh ta.",
-    "cta": "Tạo bài viết đầu tiên"
+    "cta": "Tạo bài viết đầu tiên",
+    "creditsTitle": "Nguồn ảnh",
+    "creditsIntro": "Ảnh trang trí trên trang được lấy từ Wikimedia Commons với giấy phép Public Domain / CC0. Xin trân trọng ghi nhận nguồn:"
   },
   "Home": {
     "heroTitle1": "Biến mọi bức ảnh",

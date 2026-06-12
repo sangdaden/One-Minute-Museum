@@ -331,10 +331,22 @@
     "spatial": "3D graphics"
   },
   "Categories": {
-    "kien-truc": { "label": "Architecture", "description": "Communal houses, temples, citadels" },
-    "di-san": { "label": "Heritage", "description": "Tangible & intangible heritage" },
-    "trang-phuc": { "label": "Costume", "description": "Traditional attire" },
-    "nghe-thuat-dan-gian": { "label": "Folk art", "description": "Painting, dance, folk music" }
+    "kien-truc": {
+      "label": "Architecture",
+      "description": "Communal houses, temples, citadels"
+    },
+    "di-san": {
+      "label": "Heritage",
+      "description": "Tangible & intangible heritage"
+    },
+    "trang-phuc": {
+      "label": "Costume",
+      "description": "Traditional attire"
+    },
+    "nghe-thuat-dan-gian": {
+      "label": "Folk art",
+      "description": "Painting, dance, folk music"
+    }
   },
   "Footer": {
     "blurb": "Preserving and sharing Vietnamese culture.",
@@ -374,7 +386,9 @@
     "storyBody": "OMM sounds like “Ôm” (to hug) — an embrace for Vietnamese heritage and daily life. From a humble sandal to a Đông Sơn drum, every object has a story worth telling.",
     "missionTitle": "Mission",
     "missionBody": "Preserve and spread Vietnamese culture for everyone, starting with the things closest to us.",
-    "cta": "Create your first post"
+    "cta": "Create your first post",
+    "creditsTitle": "Image credits",
+    "creditsIntro": "Decorative images on this site are from Wikimedia Commons under Public Domain / CC0 licenses. With thanks to the sources:"
   },
   "Home": {
     "heroTitle1": "Turn any photo",

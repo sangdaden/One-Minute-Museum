@@ -6,6 +6,7 @@ import { Building2, Landmark, Shirt, Drama } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { CATEGORIES } from "@/lib/categories";
 import type { Category } from "@/lib/categories";
+import { landingImage } from "@/lib/landing-images";
 import SectionTitle from "@/components/decor/SectionTitle";
 
 const ICONS: Record<Category["icon"], LucideIcon> = { Building2, Landmark, Shirt, Drama };
@@ -21,14 +22,25 @@ export default function CategoryGrid({ bare = false }: { bare?: boolean } = {}) 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {CATEGORIES.map((c) => {
           const Icon = ICONS[c.icon];
+          const img = landingImage(c.slug);
           return (
             <Link
               key={c.slug}
               href={`/kham-pha?chu-de=${c.slug}`}
               className="group overflow-hidden rounded-2xl border border-border bg-paper-card transition-shadow hover:shadow-md"
             >
-              <div className="relative flex h-28 items-end bg-gradient-to-br from-teal to-teal-deep">
-                <span className="absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-accent text-paper-card">
+              <div className="relative flex h-28 items-end overflow-hidden bg-gradient-to-br from-teal to-teal-deep">
+                {img && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={img.src}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                )}
+                {/* legibility wash under the icon badge */}
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/45 to-transparent" />
+                <span className="absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-accent text-paper-card shadow-sm">
                   <Icon className="h-4 w-4" strokeWidth={2} />
                 </span>
               </div>
