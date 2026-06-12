@@ -67,7 +67,7 @@ export default async function ExplorePage({
     <>
       <SiteHeader />
       <main className="mx-auto w-full max-w-[1100px] px-5 pb-24 pt-10 sm:px-8">
-        <SectionTitle>{heading}</SectionTitle>
+        <SectionTitle as="h1">{heading}</SectionTitle>
 
         {!filtered && (
           <div className="mb-6 flex flex-wrap gap-2">

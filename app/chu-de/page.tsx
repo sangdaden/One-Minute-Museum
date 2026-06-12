@@ -9,7 +9,7 @@ export default async function TopicsPage() {
     <>
       <SiteHeader />
       <main className="mx-auto w-full max-w-[1100px] px-5 pb-24 pt-10 sm:px-8">
-        <SectionTitle>{t("title")}</SectionTitle>
+        <SectionTitle as="h1">{t("title")}</SectionTitle>
         <p className="mb-8 max-w-2xl text-ink-soft">{t("intro")}</p>
         <CategoryGrid bare />
       </main>

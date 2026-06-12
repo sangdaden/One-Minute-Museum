@@ -27,7 +27,7 @@ export default async function AboutPage() {
         <section className="mt-12">
           <SectionTitle>{t("missionTitle")}</SectionTitle>
           <p className="max-w-2xl leading-relaxed text-ink-soft">{t("missionBody")}</p>
-          <Link href="/create" className="mt-6 inline-flex rounded-full bg-accent px-6 py-3 text-sm font-medium text-paper-card hover:bg-accent-deep">
+          <Link href="/create" className="mt-6 inline-flex rounded-full bg-accent px-6 py-3 text-sm font-medium text-paper-card transition-colors hover:bg-accent-deep">
             {t("cta")}
           </Link>
         </section>

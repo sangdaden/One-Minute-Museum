@@ -9,12 +9,15 @@ export default function SectionTitle({
   allHref,
   allLabel,
   center = false,
+  as = "h2",
 }: {
   children: React.ReactNode;
   allHref?: string;
   allLabel?: string;
   center?: boolean;
+  as?: "h1" | "h2";
 }) {
+  const Heading = as;
   const rule = (
     <span
       aria-hidden
@@ -24,9 +27,9 @@ export default function SectionTitle({
   return (
     <div className="mb-6 flex items-center gap-4">
       {center && <span aria-hidden className="h-px flex-1 bg-gradient-to-l from-gold/45 to-transparent" />}
-      <h2 className="font-serif text-2xl font-medium text-ink sm:text-[1.7rem]">
+      <Heading className="font-serif text-2xl font-medium text-ink sm:text-[1.7rem]">
         {children}
-      </h2>
+      </Heading>
       {rule}
       {allHref && (
         <Link href={allHref} className="shrink-0 text-sm text-accent transition-colors hover:text-accent-deep">
