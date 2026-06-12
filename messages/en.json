@@ -372,6 +372,21 @@
     "heroCreate": "Create a post",
     "heroExample": "See an example",
     "heroPrivacy": "Your photo stays private and is only used to generate content.",
-    "heroError": "Couldn't read that image. Please try another."
+    "heroError": "Couldn't read that image. Please try another.",
+    "featuredTitle": "Featured post",
+    "seeAll": "See all",
+    "readTime": "1 min read",
+    "save": "Save",
+    "funFact": "Fun fact",
+    "funFactFallback": "The Đông Sơn bronze drum is seen as a symbol of a wet-rice civilization over 2,000 years old.",
+    "howTitle": "How it works",
+    "how1Title": "Upload a photo",
+    "how1Desc": "Pick or drop a photo of a Vietnamese artifact, building, or heritage site.",
+    "how2Title": "AI analyzes it",
+    "how2Desc": "Our AI recognizes and analyzes the photo to surface its cultural value.",
+    "how3Title": "Get a post & fun fact",
+    "how3Desc": "Receive a concise write-up plus fun facts in about a minute.",
+    "featuredFallbackTitle": "Đông Sơn bronze drum",
+    "featuredFallbackExcerpt": "A symbol of wet-rice civilization, its fine motifs tell of people, nature, and ancient beliefs."
   }
 }

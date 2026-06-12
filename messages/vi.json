@@ -372,6 +372,21 @@
     "heroCreate": "Tạo bài viết",
     "heroExample": "Xem ví dụ",
     "heroPrivacy": "Ảnh của bạn được bảo mật và chỉ dùng để tạo nội dung.",
-    "heroError": "Không đọc được ảnh này. Hãy thử ảnh khác."
+    "heroError": "Không đọc được ảnh này. Hãy thử ảnh khác.",
+    "featuredTitle": "Bài viết nổi bật",
+    "seeAll": "Xem tất cả",
+    "readTime": "1 phút đọc",
+    "save": "Lưu",
+    "funFact": "Fun fact",
+    "funFactFallback": "Trống đồng Đông Sơn được xem là biểu tượng của nền văn minh lúa nước hơn 2.000 năm trước.",
+    "howTitle": "Cách hoạt động",
+    "how1Title": "Tải ảnh lên",
+    "how1Desc": "Chọn hoặc kéo thả ảnh về một hiện vật, công trình hay di sản văn hoá Việt.",
+    "how2Title": "AI phân tích",
+    "how2Desc": "AI nhận diện và phân tích để hiểu rõ giá trị văn hoá của bức ảnh.",
+    "how3Title": "Nhận bài viết & fun fact",
+    "how3Desc": "Nhận ngay bài viết ngắn gọn kèm những điều thú vị, chỉ trong khoảng 1 phút.",
+    "featuredFallbackTitle": "Trống đồng Đông Sơn",
+    "featuredFallbackExcerpt": "Biểu tượng của nền văn minh lúa nước, với hoạ tiết tinh xảo kể chuyện về con người, thiên nhiên và tín ngưỡng cổ xưa."
   }
 }
