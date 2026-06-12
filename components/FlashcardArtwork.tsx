@@ -1,6 +1,6 @@
 import type { Exhibition } from "@/lib/types";
 import type { Theme } from "@/lib/themes";
-import { cleanHashtag, cardLabels, stripWrappingQuotes } from "@/lib/format";
+import { cleanHashtag, cardLabels, stripWrappingQuotes, creditLine } from "@/lib/format";
 import OmmMark from "./OmmMark";
 
 export const FLASHCARD_SIZE = 1080;
@@ -152,6 +152,26 @@ function CoverBody({
               display: "block",
             }}
           />
+        </div>
+      )}
+      {imageUrl && creditLine(ex, L.photo) && (
+        <div
+          style={{
+            marginTop: -20,
+            marginBottom: 20,
+            textAlign: "center",
+            fontFamily: MONO,
+            fontSize: 16,
+            color: `${t.inkSoft}`,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            maxWidth: 520,
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          {creditLine(ex, L.photo)}
         </div>
       )}
       <div

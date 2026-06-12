@@ -10,6 +10,7 @@ import {
   cleanHashtag,
   stripWrappingQuotes,
   cardLabels,
+  creditLine,
 } from "@/lib/format";
 import { getTheme, type Theme } from "@/lib/themes";
 import OmmMark from "./OmmMark";
@@ -374,6 +375,21 @@ function ShareArtwork({
                 display: "block",
               }}
             />
+          </div>
+        )}
+        {imageUrl && creditLine(ex, L.photo) && (
+          <div
+            style={{
+              marginTop: 10,
+              fontFamily: mono,
+              fontSize: 15,
+              color: `${t.inkSoft}`,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {creditLine(ex, L.photo)}
           </div>
         )}
 
@@ -848,6 +864,27 @@ function PosterArtwork({
             <div style={{ marginTop: 24 }}>{Facts()}</div>
             <div style={{ marginTop: 18 }}>{Hashtags()}</div>
           </div>
+        </div>
+      )}
+
+      {creditLine(ex, L.photo) && (
+        <div
+          style={{
+            position: "absolute",
+            left: 70,
+            right: 70,
+            bottom: 26,
+            textAlign: "right",
+            fontFamily: mono,
+            fontSize: 16,
+            letterSpacing: "0.04em",
+            color: "rgba(255,255,255,0.6)",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {creditLine(ex, L.photo)}
         </div>
       )}
     </div>
