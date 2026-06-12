@@ -387,6 +387,10 @@
     "how3Title": "Nhận bài viết & fun fact",
     "how3Desc": "Nhận ngay bài viết ngắn gọn kèm những điều thú vị, chỉ trong khoảng 1 phút.",
     "featuredFallbackTitle": "Trống đồng Đông Sơn",
-    "featuredFallbackExcerpt": "Biểu tượng của nền văn minh lúa nước, với hoạ tiết tinh xảo kể chuyện về con người, thiên nhiên và tín ngưỡng cổ xưa."
+    "featuredFallbackExcerpt": "Biểu tượng của nền văn minh lúa nước, với hoạ tiết tinh xảo kể chuyện về con người, thiên nhiên và tín ngưỡng cổ xưa.",
+    "categoriesTitle": "Khám phá theo chủ đề",
+    "recentTitle": "Bài viết mới",
+    "recentEmpty": "Chưa có bài viết nào — hãy là người đầu tiên!",
+    "recentEmptyCta": "Tạo bài viết"
   }
 }

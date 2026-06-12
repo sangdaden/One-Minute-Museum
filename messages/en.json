@@ -387,6 +387,10 @@
     "how3Title": "Get a post & fun fact",
     "how3Desc": "Receive a concise write-up plus fun facts in about a minute.",
     "featuredFallbackTitle": "Đông Sơn bronze drum",
-    "featuredFallbackExcerpt": "A symbol of wet-rice civilization, its fine motifs tell of people, nature, and ancient beliefs."
+    "featuredFallbackExcerpt": "A symbol of wet-rice civilization, its fine motifs tell of people, nature, and ancient beliefs.",
+    "categoriesTitle": "Explore by topic",
+    "recentTitle": "Latest posts",
+    "recentEmpty": "No posts yet — be the first!",
+    "recentEmptyCta": "Create a post"
   }
 }
