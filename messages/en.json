@@ -371,6 +371,7 @@
     "heroDropHint": "JPG, PNG · up to 10MB",
     "heroCreate": "Create a post",
     "heroExample": "See an example",
-    "heroPrivacy": "Your photo stays private and is only used to generate content."
+    "heroPrivacy": "Your photo stays private and is only used to generate content.",
+    "heroError": "Couldn't read that image. Please try another."
   }
 }

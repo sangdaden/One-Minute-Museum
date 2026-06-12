@@ -29,6 +29,7 @@ import PublishButton from "@/components/PublishButton";
 import SiteHeader from "@/components/SiteHeader";
 import LoadingExhibition from "@/components/LoadingExhibition";
 import ErrorState from "@/components/ErrorState";
+import { PENDING_IMAGE_KEY } from "@/components/home/HomeHero";
 
 export default function CreatePage() {
   const t = useTranslations("Create");
@@ -60,10 +61,10 @@ export default function CreatePage() {
   useEffect(() => {
     const obj = new URLSearchParams(window.location.search).get("object");
     if (obj) setObjectName(obj);
-    const pending = sessionStorage.getItem("omm-pending-image");
+    const pending = sessionStorage.getItem(PENDING_IMAGE_KEY);
     if (pending) {
       setImage(pending);
-      sessionStorage.removeItem("omm-pending-image");
+      sessionStorage.removeItem(PENDING_IMAGE_KEY);
     }
   }, []);
 

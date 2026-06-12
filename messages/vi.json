@@ -371,6 +371,7 @@
     "heroDropHint": "Hỗ trợ JPG, PNG · tối đa 10MB",
     "heroCreate": "Tạo bài viết",
     "heroExample": "Xem ví dụ",
-    "heroPrivacy": "Ảnh của bạn được bảo mật và chỉ dùng để tạo nội dung."
+    "heroPrivacy": "Ảnh của bạn được bảo mật và chỉ dùng để tạo nội dung.",
+    "heroError": "Không đọc được ảnh này. Hãy thử ảnh khác."
   }
 }

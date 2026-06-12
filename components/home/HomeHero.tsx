@@ -18,14 +18,18 @@ export default function HomeHero() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [drag, setDrag] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleFile(file: File | undefined) {
     if (!file) return;
+    setError(null);
     setBusy(true);
     try {
       const dataUrl = await fileToDownscaledDataUrl(file);
       sessionStorage.setItem(PENDING_IMAGE_KEY, dataUrl);
       router.push("/create");
+    } catch {
+      setError(t("heroError"));
     } finally {
       setBusy(false);
     }
@@ -43,10 +47,18 @@ export default function HomeHero() {
           <p className="mt-5 max-w-md text-base leading-relaxed text-ink-soft">{t("heroLead")}</p>
 
           <div
+            role="button"
+            tabIndex={0}
             onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
             onDragLeave={() => setDrag(false)}
             onDrop={(e) => { e.preventDefault(); setDrag(false); handleFile(e.dataTransfer.files?.[0]); }}
             onClick={() => inputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                inputRef.current?.click();
+              }
+            }}
             className={`mt-6 cursor-pointer rounded-2xl border border-dashed px-6 py-7 text-center transition-colors ${drag ? "border-accent bg-paper-card" : "border-border-strong bg-paper-card/60"}`}
           >
             <input
@@ -60,6 +72,10 @@ export default function HomeHero() {
             <p className="text-sm text-ink-soft">{busy ? "…" : t("heroDrop")}</p>
             <p className="mt-1 text-xs text-ink-faint">{t("heroDropHint")}</p>
           </div>
+
+          {error && (
+            <p role="alert" className="mt-2 text-xs text-accent">{error}</p>
+          )}
 
           <div className="mt-5 flex flex-wrap gap-3">
             <Link href="/create" className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-paper-card shadow-[0_1px_0_var(--color-accent-deep)] transition-colors hover:bg-accent-deep">
