@@ -361,5 +361,16 @@
     "clear": "Xoá lọc",
     "emptyTopic": "Chưa có bài nào cho chủ đề này.",
     "emptySearch": "Không tìm thấy bài nào khớp."
+  },
+  "Home": {
+    "heroTitle1": "Biến mọi bức ảnh",
+    "heroTitle2": "thành một câu chuyện",
+    "heroTitle3": "văn hoá Việt.",
+    "heroLead": "Tải ảnh lên, nhận ngay bài viết ngắn gọn và những điều thú vị về văn hoá Việt Nam chỉ trong khoảng 1 phút.",
+    "heroDrop": "Kéo thả ảnh vào đây hoặc bấm để tải lên",
+    "heroDropHint": "Hỗ trợ JPG, PNG · tối đa 10MB",
+    "heroCreate": "Tạo bài viết",
+    "heroExample": "Xem ví dụ",
+    "heroPrivacy": "Ảnh của bạn được bảo mật và chỉ dùng để tạo nội dung."
   }
 }

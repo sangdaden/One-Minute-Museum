@@ -361,5 +361,16 @@
     "clear": "Clear filter",
     "emptyTopic": "No posts in this topic yet.",
     "emptySearch": "No posts match your search."
+  },
+  "Home": {
+    "heroTitle1": "Turn any photo",
+    "heroTitle2": "into a story of",
+    "heroTitle3": "Vietnamese culture.",
+    "heroLead": "Upload a photo and get a concise write-up plus fun facts about Vietnamese culture in about a minute.",
+    "heroDrop": "Drag a photo here or click to upload",
+    "heroDropHint": "JPG, PNG · up to 10MB",
+    "heroCreate": "Create a post",
+    "heroExample": "See an example",
+    "heroPrivacy": "Your photo stays private and is only used to generate content."
   }
 }

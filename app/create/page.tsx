@@ -55,10 +55,16 @@ export default function CreatePage() {
 
   const resultRef = useRef<HTMLDivElement>(null);
 
-  // Prefill the object from a quick-start link (e.g. /create?object=Áo mưa).
+  // Prefill the object from a quick-start link (e.g. /create?object=Áo mưa),
+  // and pick up a photo handed off from the home hero dropzone.
   useEffect(() => {
     const obj = new URLSearchParams(window.location.search).get("object");
     if (obj) setObjectName(obj);
+    const pending = sessionStorage.getItem("omm-pending-image");
+    if (pending) {
+      setImage(pending);
+      sessionStorage.removeItem("omm-pending-image");
+    }
   }, []);
 
   async function generate(name: string, selectedMode: Mode, selectedVoice: Voice) {
