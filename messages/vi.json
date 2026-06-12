@@ -362,6 +362,10 @@
     "emptyTopic": "Chưa có bài nào cho chủ đề này.",
     "emptySearch": "Không tìm thấy bài nào khớp."
   },
+  "Topics": {
+    "title": "Chủ đề",
+    "intro": "Khám phá văn hoá Việt theo từng chủ đề — kiến trúc, di sản, trang phục và nghệ thuật dân gian."
+  },
   "Home": {
     "heroTitle1": "Biến mọi bức ảnh",
     "heroTitle2": "thành một câu chuyện",

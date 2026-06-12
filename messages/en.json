@@ -362,6 +362,10 @@
     "emptyTopic": "No posts in this topic yet.",
     "emptySearch": "No posts match your search."
   },
+  "Topics": {
+    "title": "Topics",
+    "intro": "Explore Vietnamese culture by topic — architecture, heritage, costume, and folk art."
+  },
   "Home": {
     "heroTitle1": "Turn any photo",
     "heroTitle2": "into a story of",

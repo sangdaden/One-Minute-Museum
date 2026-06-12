@@ -10,12 +10,14 @@ import SectionTitle from "@/components/decor/SectionTitle";
 
 const ICONS: Record<Category["icon"], LucideIcon> = { Building2, Landmark, Shirt, Drama };
 
-export default function CategoryGrid() {
+export default function CategoryGrid({ bare = false }: { bare?: boolean } = {}) {
   const t = useTranslations("Home");
   const tCat = useTranslations("Categories");
   return (
-    <section className="mt-14">
-      <SectionTitle allHref="/chu-de" allLabel={t("seeAll")}>{t("categoriesTitle")}</SectionTitle>
+    <section className={bare ? "" : "mt-14"}>
+      {!bare && (
+        <SectionTitle allHref="/chu-de" allLabel={t("seeAll")}>{t("categoriesTitle")}</SectionTitle>
+      )}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {CATEGORIES.map((c) => {
           const Icon = ICONS[c.icon];
