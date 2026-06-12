@@ -34,6 +34,7 @@ const APP_DESC =
   "Ôm trọn văn hóa Việt. Biến những vật bình thường quanh bạn thành một triển lãm mini, đọc trong một phút.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: APP_TITLE,
   description: APP_DESC,
   applicationName: "Bảo Tàng 1 Phút",
@@ -43,11 +44,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     siteName: "Bảo Tàng 1 Phút",
+    images: ["/og-default.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: APP_TITLE,
     description: APP_DESC,
+    images: ["/og-default.jpg"],
   },
 };
 
