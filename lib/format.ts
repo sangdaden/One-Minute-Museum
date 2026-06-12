@@ -29,6 +29,7 @@ export function cardLabels(ex: Exhibition) {
     object: en ? "Object" : "Hiện vật",
     facts: en ? "Three fun facts" : "Ba điều thú vị",
     fact: en ? "Fun fact" : "Fun fact",
+    photo: en ? "Photo" : "Ảnh",
   };
 }
 
@@ -73,4 +74,35 @@ export function slugifyObjectName(name: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
   return slug || "exhibition";
+}
+
+/** Trim to `max` chars on a word-safe-ish boundary, adding an ellipsis if cut. */
+export function truncate(s: string, max: number): string {
+  const t = (s ?? "").trim();
+  if (t.length <= max) return t;
+  return t.slice(0, max - 1).trimEnd() + "…";
+}
+
+const IMAGE_SOURCE_NAMES: Record<string, string> = {
+  wikimedia: "Wikimedia Commons",
+  unsplash: "Unsplash",
+  pexels: "Pexels",
+  user_upload: "",
+};
+
+/**
+ * One-line attribution baked onto export artwork when the featured image came
+ * from the curation pipeline. Returns null for user uploads or when there is no
+ * credit, so callers can `{creditLine(ex, L.photo) && ...}`.
+ */
+export function creditLine(ex: Exhibition, photoLabel: string): string | null {
+  const c = ex.image_credit;
+  if (!c || c.source === "user_upload") return null;
+  const parts = [
+    c.author ? truncate(c.author, 28) : null,
+    c.license || null,
+    IMAGE_SOURCE_NAMES[c.source] || null,
+  ].filter(Boolean);
+  if (parts.length === 0) return null;
+  return `${photoLabel}: ${parts.join(" · ")}`;
 }
