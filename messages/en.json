@@ -18,7 +18,15 @@
     "explore": "Explore",
     "home": "Home",
     "gallery": "Collection",
-    "createCta": "Create exhibition"
+    "createCta": "Create exhibition",
+    "collections": "Collections",
+    "topics": "Topics",
+    "about": "About",
+    "comingSoon": "Coming soon",
+    "search": "Search",
+    "searchPlaceholder": "Search objects, heritage…",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "Create": {
     "heroLine1": "One-Minute",

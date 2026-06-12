@@ -18,7 +18,15 @@
     "explore": "Khám phá",
     "home": "Trang chủ",
     "gallery": "Bộ sưu tập",
-    "createCta": "Tạo triển lãm"
+    "createCta": "Tạo triển lãm",
+    "collections": "Bộ sưu tập",
+    "topics": "Chủ đề",
+    "about": "Giới thiệu",
+    "comingSoon": "Sắp ra mắt",
+    "search": "Tìm kiếm",
+    "searchPlaceholder": "Tìm hiện vật, di sản…",
+    "openMenu": "Mở menu",
+    "closeMenu": "Đóng menu"
   },
   "Create": {
     "heroLine1": "Bảo Tàng",
