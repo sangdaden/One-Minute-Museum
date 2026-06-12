@@ -1,15 +1,17 @@
 import type { ImageCandidate, ImageProvider } from "../types";
-import { mockCandidates } from "../mock-data";
+import { mockCandidates, USE_MOCK } from "../mock-data";
 
 /**
  * Unsplash — generic visual/demo imagery. Requires UNSPLASH_ACCESS_KEY; without
- * it, returns mock data. Always falls back to mock on error.
+ * it (or on error) returns no results, so it never injects off-topic mock images
+ * into a live search. Set IMAGE_CURATION_USE_MOCK=true to force mock data.
  */
 export const unsplashProvider: ImageProvider = {
   source: "unsplash",
   async search(query, limit = 4) {
+    if (USE_MOCK) return mockCandidates("unsplash", query, limit);
     const key = process.env.UNSPLASH_ACCESS_KEY;
-    if (!key) return mockCandidates("unsplash", query, limit);
+    if (!key) return [];
     try {
       const params = new URLSearchParams({
         query,
@@ -46,9 +48,9 @@ export const unsplashProvider: ImageProvider = {
           sourceUrl: links.html ?? `https://unsplash.com/photos/${r.id}`,
         });
       }
-      return out.length ? out : mockCandidates("unsplash", query, limit);
+      return out;
     } catch {
-      return mockCandidates("unsplash", query, limit);
+      return [];
     }
   },
 };

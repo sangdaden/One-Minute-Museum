@@ -1,10 +1,13 @@
 import type { ImageCandidate, ImageSource } from "./types";
 
 /**
- * Mock candidates so the pipeline + UI work without external API keys/network.
- * Image URLs point at local placeholder paths (which may not exist yet) — the
- * UI falls back to a warm gradient instead of a broken image.
+ * Mock candidates so the pipeline + UI work fully offline. Off by default —
+ * providers only return these when IMAGE_CURATION_USE_MOCK=true, because the
+ * seed images are fixed cultural placeholders unrelated to the actual query and
+ * point at local paths that may not exist (UI shows a warm gradient instead of
+ * a broken image). Live Wikimedia (no key) is the real default source.
  */
+export const USE_MOCK = process.env.IMAGE_CURATION_USE_MOCK === "true";
 const SEED = [
   {
     slug: "dong-son-drum",

@@ -1,10 +1,13 @@
 import type { ImageCandidate, ImageProvider } from "../types";
-import { mockCandidates } from "../mock-data";
+import { mockCandidates, USE_MOCK } from "../mock-data";
 
 /**
  * Wikimedia Commons — preferred for cultural/historical/heritage assets. No API
- * key required. Falls back to mock data on any error/timeout so the UI is never
- * broken.
+ * key required and reachable without credentials, so it is the default source.
+ *
+ * Returns real results (possibly empty) — it does NOT silently swap in mock
+ * cultural images, because those out-rank and hide the genuine matches a search
+ * actually found. Set IMAGE_CURATION_USE_MOCK=true to force mock data offline.
  */
 const API =
   process.env.WIKIMEDIA_API_URL ?? "https://commons.wikimedia.org/w/api.php";
@@ -16,6 +19,7 @@ function stripHtml(s?: string): string | undefined {
 export const wikimediaProvider: ImageProvider = {
   source: "wikimedia",
   async search(query, limit = 8) {
+    if (USE_MOCK) return mockCandidates("wikimedia", query, limit);
     try {
       const params = new URLSearchParams({
         action: "query",
@@ -57,9 +61,9 @@ export const wikimediaProvider: ImageProvider = {
           tags: [],
         });
       }
-      return out.length ? out : mockCandidates("wikimedia", query, limit);
+      return out;
     } catch {
-      return mockCandidates("wikimedia", query, limit);
+      return [];
     }
   },
 };

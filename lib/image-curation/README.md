@@ -36,16 +36,20 @@ keep when `finalScore ≥ 75` **and** `sourceUrl` **and** license/author present
 
 | Var | Used by | Notes |
 |---|---|---|
-| `WIKIMEDIA_API_URL` | Wikimedia provider | Defaults to `https://commons.wikimedia.org/w/api.php`; no key needed |
-| `UNSPLASH_ACCESS_KEY` | Unsplash provider | Without it → mock data |
-| `PEXELS_API_KEY` | Pexels provider | Without it → mock data |
+| `WIKIMEDIA_API_URL` | Wikimedia provider | Defaults to `https://commons.wikimedia.org/w/api.php`; no key needed — the default live source |
+| `UNSPLASH_ACCESS_KEY` | Unsplash provider | Without it → returns no results (not mock) |
+| `PEXELS_API_KEY` | Pexels provider | Without it → returns no results (not mock) |
+| `IMAGE_CURATION_USE_MOCK` | All providers | Set to `true` to force offline mock data (fixed cultural placeholders, unrelated to the query) |
 | `OPENAI_API_KEY` / `AI_PROVIDER_API_KEY` | (future) LLM scoring | Not used yet — see TODO above |
 
-Never hardcode keys. With no keys / no network, every provider falls back to
-mock candidates (`mock-data.ts`) so the UI keeps working; the demo at
-`/images-demo` and the API route both run offline.
+Never hardcode keys. By default the pipeline runs on **live Wikimedia** (no key)
+and returns real, attributed images; when a search has no matches it returns an
+empty list (the picker shows an empty state) rather than swapping in off-topic
+cultural placeholders that out-rank and hide genuine matches. Mock data is opt-in
+via `IMAGE_CURATION_USE_MOCK=true` for fully offline development.
 
 ## Resilience
 
-Mock image URLs point at local placeholder paths that may not exist yet — the
-UI (`SelectedImageCard`) falls back to a warm gradient, never a broken image.
+Mock image URLs (when `IMAGE_CURATION_USE_MOCK=true`) point at local placeholder
+paths that may not exist — the UI (`SelectedImageCard`) falls back to a warm
+gradient, never a broken image.

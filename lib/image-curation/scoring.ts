@@ -3,7 +3,11 @@ import type { ImageCandidate, ImageRelevanceScore } from "./types";
 /**
  * Image relevance scoring.
  *
- *   finalScore = relevance*0.45 + cultural*0.30 + visual*0.15 + license*0.10
+ *   finalScore = relevance*0.50 + cultural*0.20 + visual*0.20 + license*0.10
+ *
+ * Relevance-led on purpose: this app catalogs everyday Vietnamese objects, not
+ * only heritage artefacts, so "is this a real photo of the object" matters more
+ * than "is it overtly cultural". Cultural is a tie-breaker, not a gate.
  *
  * Keep an image only when finalScore >= MIN_FINAL_SCORE, it has a sourceUrl,
  * and license/attribution metadata is present.
@@ -14,13 +18,13 @@ import type { ImageCandidate, ImageRelevanceScore } from "./types";
  */
 
 export const WEIGHTS = {
-  relevance: 0.45,
-  cultural: 0.3,
-  visual: 0.15,
+  relevance: 0.5,
+  cultural: 0.2,
+  visual: 0.2,
   license: 0.1,
 } as const;
 
-export const MIN_FINAL_SCORE = 75;
+export const MIN_FINAL_SCORE = 55;
 
 const CULTURAL_TERMS = [
   "việt", "vietnam", "vietnamese", "đông sơn", "dong son", "huế", "hue",
@@ -40,9 +44,13 @@ export function scoreImageMock(
   const hay = `${c.title} ${c.description ?? ""} ${(c.tags ?? []).join(" ")}`.toLowerCase();
   const topicWords = topic.toLowerCase().split(/\s+/).filter((w) => w.length > 1);
   const matches = topicWords.filter((w) => hay.includes(w)).length;
+  // A candidate only reaches scoring because a provider's full-text search
+  // already matched the query, so give it a relevance floor. Term overlap is a
+  // bonus on top — without it, Vietnamese topics never match English Commons
+  // titles and every real result gets unfairly filtered out.
   const relevanceScore = topicWords.length
-    ? clamp((matches / topicWords.length) * 100)
-    : 50;
+    ? clamp(60 + (matches / topicWords.length) * 40)
+    : 65;
 
   const culturalHits = CULTURAL_TERMS.filter((term) => hay.includes(term)).length;
   const culturalScore = clamp(
@@ -64,8 +72,10 @@ export function scoreImageMock(
   const shouldUse =
     finalScore >= MIN_FINAL_SCORE && Boolean(c.sourceUrl) && licenseScore > 0;
 
+  const cultureNote =
+    culturalScore >= 60 ? `, đậm yếu tố văn hoá Việt (${culturalScore}/100)` : "";
   const reason = shouldUse
-    ? `Khớp chủ đề (${relevanceScore}/100) và có yếu tố văn hoá Việt (${culturalScore}/100); nguồn ${c.source} có dẫn nguồn + giấy phép.`
+    ? `Khớp chủ đề (${relevanceScore}/100)${cultureNote}; nguồn ${c.source} có dẫn nguồn + giấy phép.`
     : `Điểm tổng ${finalScore} dưới ngưỡng ${MIN_FINAL_SCORE}, hoặc thiếu dẫn nguồn/giấy phép.`;
 
   return {

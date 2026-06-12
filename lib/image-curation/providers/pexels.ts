@@ -1,15 +1,17 @@
 import type { ImageCandidate, ImageProvider } from "../types";
-import { mockCandidates } from "../mock-data";
+import { mockCandidates, USE_MOCK } from "../mock-data";
 
 /**
- * Pexels — generic visual/demo imagery. Requires PEXELS_API_KEY; without it,
- * returns mock data. Always falls back to mock on error.
+ * Pexels — generic visual/demo imagery. Requires PEXELS_API_KEY; without it (or
+ * on error) returns no results, so it never injects off-topic mock images into a
+ * live search. Set IMAGE_CURATION_USE_MOCK=true to force mock data.
  */
 export const pexelsProvider: ImageProvider = {
   source: "pexels",
   async search(query, limit = 4) {
+    if (USE_MOCK) return mockCandidates("pexels", query, limit);
     const key = process.env.PEXELS_API_KEY;
-    if (!key) return mockCandidates("pexels", query, limit);
+    if (!key) return [];
     try {
       const params = new URLSearchParams({
         query,
@@ -39,9 +41,9 @@ export const pexelsProvider: ImageProvider = {
           sourceUrl: (ph.url as string) ?? "https://www.pexels.com",
         });
       }
-      return out.length ? out : mockCandidates("pexels", query, limit);
+      return out;
     } catch {
-      return mockCandidates("pexels", query, limit);
+      return [];
     }
   },
 };
