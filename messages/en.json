@@ -321,5 +321,11 @@
     "classical": "Classical art",
     "minimal": "Minimalist",
     "spatial": "3D graphics"
+  },
+  "Categories": {
+    "kien-truc": { "label": "Architecture", "desc": "Communal houses, temples, citadels" },
+    "di-san": { "label": "Heritage", "desc": "Tangible & intangible heritage" },
+    "trang-phuc": { "label": "Costume", "desc": "Traditional attire" },
+    "nghe-thuat-dan-gian": { "label": "Folk art", "desc": "Painting, dance, folk music" }
   }
 }

@@ -321,5 +321,11 @@
     "classical": "Cổ điển",
     "minimal": "Tối giản",
     "spatial": "Đồ họa 3D"
+  },
+  "Categories": {
+    "kien-truc": { "label": "Kiến trúc", "desc": "Đình, chùa, thành quách" },
+    "di-san": { "label": "Di sản", "desc": "Di sản vật thể & phi vật thể" },
+    "trang-phuc": { "label": "Trang phục", "desc": "Trang phục truyền thống" },
+    "nghe-thuat-dan-gian": { "label": "Nghệ thuật dân gian", "desc": "Tranh, múa, âm nhạc dân gian" }
   }
 }
