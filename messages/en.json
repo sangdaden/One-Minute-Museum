@@ -352,5 +352,14 @@
     "aboutPrivacy": "Privacy policy",
     "rights": "© 2026 One-Minute Museum.",
     "slogan": "Quick • Cultural • Inspiring"
+  },
+  "Explore": {
+    "title": "Explore",
+    "subtitle": "Cultural stories from the community.",
+    "topicHeading": "Topic: {name}",
+    "searchHeading": "Results for \"{q}\"",
+    "clear": "Clear filter",
+    "emptyTopic": "No posts in this topic yet.",
+    "emptySearch": "No posts match your search."
   }
 }

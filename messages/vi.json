@@ -352,5 +352,14 @@
     "aboutPrivacy": "Chính sách bảo mật",
     "rights": "© 2026 One-Minute Museum.",
     "slogan": "Nhanh gọn • Văn hoá • Truyền cảm hứng"
+  },
+  "Explore": {
+    "title": "Khám phá",
+    "subtitle": "Những câu chuyện văn hoá từ cộng đồng.",
+    "topicHeading": "Chủ đề: {name}",
+    "searchHeading": "Kết quả cho \"{q}\"",
+    "clear": "Xoá lọc",
+    "emptyTopic": "Chưa có bài nào cho chủ đề này.",
+    "emptySearch": "Không tìm thấy bài nào khớp."
   }
 }
