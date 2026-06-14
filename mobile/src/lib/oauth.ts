@@ -1,6 +1,4 @@
 import * as WebBrowser from "expo-web-browser";
-import * as AppleAuthentication from "expo-apple-authentication";
-import * as Crypto from "expo-crypto";
 import { makeRedirectUri } from "expo-auth-session";
 import { supabase } from "./supabase";
 
@@ -36,27 +34,16 @@ export async function signInWithGoogle(): Promise<void> {
   if (exErr) throw exErr;
 }
 
-/** Apple via the native button → Supabase signInWithIdToken (nonce-hashed). */
+/**
+ * Apple Sign In is disabled for now — its entitlement needs a paid Apple
+ * Developer account and `expo-apple-authentication` (uninstalled) would
+ * otherwise force a signed build. The real native implementation lives in git
+ * history; in Sub-project 5: reinstall `expo-apple-authentication`, re-add
+ * `usesAppleSignIn` + the plugin in app.config.ts, restore the flow here, and
+ * flip APPLE_SIGN_IN_ENABLED to true.
+ */
 export async function signInWithApple(): Promise<void> {
-  const rawNonce = Crypto.randomUUID();
-  const hashedNonce = await Crypto.digestStringAsync(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    rawNonce,
-  );
-  const credential = await AppleAuthentication.signInAsync({
-    requestedScopes: [
-      AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-      AppleAuthentication.AppleAuthenticationScope.EMAIL,
-    ],
-    nonce: hashedNonce,
-  });
-  if (!credential.identityToken) throw new Error("Không lấy được Apple token");
-  const { error } = await supabase.auth.signInWithIdToken({
-    provider: "apple",
-    token: credential.identityToken,
-    nonce: rawNonce,
-  });
-  if (error) throw error;
+  throw new Error("Apple Sign In sẽ bật ở bản sau");
 }
 
 export async function signOut(): Promise<void> {
