@@ -1,5 +1,6 @@
 import type { Exhibition, GenerateRequest, Mode } from "./types";
 import { DEFAULT_LANGUAGE, DEFAULT_VOICE } from "./constants";
+import { primaryCategory } from "./categories";
 
 /**
  * Mock exhibition generator.
@@ -154,6 +155,7 @@ export function generateMockExhibition(req: GenerateRequest): Exhibition {
     language: req.language ?? DEFAULT_LANGUAGE,
     created_at: new Date().toISOString(),
     ...template,
+    category: primaryCategory({ object_name: name, content: template })?.slug ?? "khac",
     share_quote: voicedShareQuote(template.share_quote, voice),
   };
 }

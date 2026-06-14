@@ -3,6 +3,7 @@ import { APIError, RateLimitError, AuthenticationError } from "openai";
 import type { ApiErrorCode, Exhibition, GenerateRequest } from "./types";
 import { DEFAULT_LANGUAGE, DEFAULT_VOICE } from "./constants";
 import { cleanHashtag } from "./format";
+import { CATEGORY_SLUGS, coerceCategory } from "./categories";
 
 /**
  * Real LLM-backed exhibition generator.
@@ -85,7 +86,12 @@ Ràng buộc:
 - reflection_question phải gợi suy nghĩ, không quá nghiêm trọng.
 - share_quote tối đa 20 từ.
 - hashtags không dấu hoặc tiếng Anh, dễ dùng trên social, từ 2 đến 5 cái.
-- QUAN TRỌNG: Giọng kể chỉ thay đổi cách diễn đạt và lựa chọn từ ngữ, KHÔNG thay đổi tính chính xác hay mức độ chắc chắn của thông tin. Vẫn dùng ngôn ngữ thận trọng khi không chắc, không bịa năm tháng/người/số liệu, và vẫn đúng JSON schema.`;
+- QUAN TRỌNG: Giọng kể chỉ thay đổi cách diễn đạt và lựa chọn từ ngữ, KHÔNG thay đổi tính chính xác hay mức độ chắc chắn của thông tin. Vẫn dùng ngôn ngữ thận trọng khi không chắc, không bịa năm tháng/người/số liệu, và vẫn đúng JSON schema.
+- category: phân loại VẬT vào ĐÚNG MỘT chủ đề sau (trả slug):
+  do-gia-dung (đồ gia dụng: phích, nồi cơm, quạt, ghế…), am-thuc (ẩm thực & đồ uống),
+  di-lai (xe cộ & đi lại: xe máy, mũ bảo hiểm…), tuoi-tho (tuổi thơ & hoài niệm: bút bi, đồ chơi…),
+  trang-phuc (thời trang & trang phục: dép, áo dài, nón…), di-san (di sản & kiến trúc: chùa, đình, di tích…),
+  nghe-thuat-dan-gian (nghệ thuật dân gian: tranh Đông Hồ, múa rối…). Dùng "khac" nếu không hợp nhóm nào.`;
 }
 
 // User prompt for the image (multimodal) path — model identifies the object.
@@ -115,7 +121,12 @@ Ràng buộc:
 - hook tối đa 2 câu; mỗi fun fact 1-2 câu, đúng 3 fun fact.
 - reflection_question gợi suy nghĩ; share_quote tối đa 20 từ.
 - hashtags không dấu hoặc tiếng Anh, 2-5 cái.
-- QUAN TRỌNG (ảnh): Mô tả VẬT, KHÔNG nhận diện hay mô tả người cụ thể trong ảnh. Không suy đoán thương hiệu/năm/thông số chỉ từ ảnh nếu không chắc — dùng ngôn ngữ thận trọng. Giọng kể chỉ đổi cách diễn đạt, không bịa thông tin. Output đúng JSON schema.`;
+- QUAN TRỌNG (ảnh): Mô tả VẬT, KHÔNG nhận diện hay mô tả người cụ thể trong ảnh. Không suy đoán thương hiệu/năm/thông số chỉ từ ảnh nếu không chắc — dùng ngôn ngữ thận trọng. Giọng kể chỉ đổi cách diễn đạt, không bịa thông tin. Output đúng JSON schema.
+- category: phân loại VẬT vào ĐÚNG MỘT chủ đề sau (trả slug):
+  do-gia-dung (đồ gia dụng: phích, nồi cơm, quạt, ghế…), am-thuc (ẩm thực & đồ uống),
+  di-lai (xe cộ & đi lại: xe máy, mũ bảo hiểm…), tuoi-tho (tuổi thơ & hoài niệm: bút bi, đồ chơi…),
+  trang-phuc (thời trang & trang phục: dép, áo dài, nón…), di-san (di sản & kiến trúc: chùa, đình, di tích…),
+  nghe-thuat-dan-gian (nghệ thuật dân gian: tranh Đông Hồ, múa rối…). Dùng "khac" nếu không hợp nhóm nào.`;
 }
 
 /**
@@ -137,6 +148,7 @@ const RESPONSE_SCHEMA = {
     "reflection_question",
     "share_quote",
     "hashtags",
+    "category",
   ],
   properties: {
     title: { type: "string" },
@@ -149,6 +161,7 @@ const RESPONSE_SCHEMA = {
     reflection_question: { type: "string" },
     share_quote: { type: "string" },
     hashtags: { type: "array", items: { type: "string" } },
+    category: { type: "string", enum: CATEGORY_SLUGS as unknown as string[] },
   },
 } as const;
 
@@ -314,6 +327,7 @@ export async function generateExhibitionWithLLM(
   }
 
   const content = validateContent(parsed);
+  const category = coerceCategory((parsed as Record<string, unknown>).category);
 
   // object_name: model-identified for the image path, else the user's input.
   let resolvedName = objectName;
@@ -330,6 +344,7 @@ export async function generateExhibitionWithLLM(
     mode: req.mode,
     voice,
     language,
+    category,
     created_at: new Date().toISOString(),
     ...content,
   };
