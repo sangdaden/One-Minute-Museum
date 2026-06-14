@@ -7,7 +7,7 @@ import { rowToPost } from "@/lib/posts";
 import { FEED_PAGE_SIZE } from "@/lib/constants";
 import { MODES } from "@/lib/types";
 import type { Mode, Post } from "@/lib/types";
-import { getCategory, filterByCategory } from "@/lib/categories";
+import { getCategory, matchesCategory } from "@/lib/categories";
 import SiteHeader from "@/components/SiteHeader";
 import StoriesTray from "@/components/StoriesTray";
 import FeedPost from "@/components/FeedPost";
@@ -51,7 +51,7 @@ export default async function ExplorePage({
 
     const { data } = await query;
     posts = (data ?? []).map(rowToPost);
-    if (topic) posts = filterByCategory(posts, topic);
+    if (topic) posts = posts.filter((p) => matchesCategory(p, topic));
     if (!filtered) {
       nextBefore = posts.length === FEED_PAGE_SIZE ? posts[posts.length - 1].created_at : null;
     }

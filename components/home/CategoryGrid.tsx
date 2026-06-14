@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Armchair, UtensilsCrossed, Bike, ToyBrick, Shirt, Landmark, Drama, Shapes } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { CATEGORIES } from "@/lib/categories";
+import { BROWSE_CATEGORIES, FEATURED_SLUGS } from "@/lib/categories";
 import type { Category } from "@/lib/categories";
 import { landingImage } from "@/lib/landing-images";
 import SectionTitle from "@/components/decor/SectionTitle";
@@ -14,13 +14,16 @@ const ICONS: Record<Category["icon"], LucideIcon> = { Armchair, UtensilsCrossed,
 export default function CategoryGrid({ bare = false }: { bare?: boolean } = {}) {
   const t = useTranslations("Home");
   const tCat = useTranslations("Categories");
+  const list = bare
+    ? BROWSE_CATEGORIES
+    : BROWSE_CATEGORIES.filter((c) => FEATURED_SLUGS.includes(c.slug));
   return (
     <section className={bare ? "" : "mt-14"}>
       {!bare && (
         <SectionTitle allHref="/chu-de" allLabel={t("seeAll")}>{t("categoriesTitle")}</SectionTitle>
       )}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {CATEGORIES.map((c) => {
+        {list.map((c) => {
           const Icon = ICONS[c.icon];
           const img = landingImage(c.slug);
           return (
