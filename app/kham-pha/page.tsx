@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
@@ -82,8 +83,9 @@ export default async function ExplorePage({
         )}
 
         {filtered && (
-          <Link href="/kham-pha" className="mb-6 inline-block text-sm text-accent hover:text-accent-deep">
-            ← {t("clear")}
+          <Link href="/kham-pha" className="mb-6 inline-flex items-center gap-1.5 text-sm text-accent hover:text-accent-deep">
+            <ArrowLeft className="h-4 w-4" strokeWidth={2} />
+            {t("clear")}
           </Link>
         )}
 

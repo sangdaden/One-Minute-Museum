@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 /**
  * Serif section heading with a gold gradient rule and an optional "see all"
@@ -32,8 +33,9 @@ export default function SectionTitle({
       </Heading>
       {rule}
       {allHref && (
-        <Link href={allHref} className="shrink-0 text-sm text-accent transition-colors hover:text-accent-deep">
-          {allLabel} →
+        <Link href={allHref} className="inline-flex shrink-0 items-center gap-1 text-sm text-accent transition-colors hover:text-accent-deep">
+          {allLabel}
+          <ArrowRight className="h-4 w-4" strokeWidth={2} />
         </Link>
       )}
     </div>

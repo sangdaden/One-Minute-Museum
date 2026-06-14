@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Exhibition } from "@/lib/types";
@@ -103,7 +104,7 @@ export default function GalleryPage() {
               className="mt-2 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-paper-card transition-colors hover:bg-accent-deep"
             >
               {t("emptyCta")}
-              <span aria-hidden>→</span>
+              <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={2} />
             </Link>
           </div>
         ) : (
