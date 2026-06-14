@@ -3,6 +3,7 @@ import { View, Text, Pressable, Platform, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useAuth } from "@/lib/auth";
+import { APPLE_SIGN_IN_ENABLED } from "@/lib/oauth";
 
 export default function SignIn() {
   const { signInWithGoogle, signInWithApple } = useAuth();
@@ -36,7 +37,7 @@ export default function SignIn() {
             Tiếp tục với Google
           </Text>
         </Pressable>
-        {Platform.OS === "ios" && (
+        {Platform.OS === "ios" && APPLE_SIGN_IN_ENABLED && (
           <Pressable
             disabled={busy}
             onPress={() => run(signInWithApple)}

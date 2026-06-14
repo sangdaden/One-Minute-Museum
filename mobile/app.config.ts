@@ -10,18 +10,14 @@ const config: ExpoConfig = {
   icon: "./assets/images/icon.png",
   ios: {
     bundleIdentifier: "com.onomi.oneminutemuseum",
-    usesAppleSignIn: true,
+    // usesAppleSignIn re-enabled in Sub-project 5 (needs a paid Apple Developer
+    // account; its entitlement otherwise blocks unsigned simulator builds).
     supportsTablet: true,
   },
   android: {
     package: "com.onomi.oneminutemuseum",
   },
-  plugins: [
-    "expo-router",
-    "expo-apple-authentication",
-    "expo-web-browser",
-    "expo-font",
-  ],
+  plugins: ["expo-router", "expo-web-browser", "expo-font"],
   experiments: { typedRoutes: true },
 };
 

@@ -6,6 +6,14 @@ import { supabase } from "./supabase";
 
 WebBrowser.maybeCompleteAuthSession();
 
+/**
+ * Apple Sign In is temporarily disabled: its entitlement requires a paid Apple
+ * Developer account and otherwise blocks unsigned simulator builds. Re-enable
+ * (here + `usesAppleSignIn` + the `expo-apple-authentication` plugin) in
+ * Sub-project 5 when the paid account is set up.
+ */
+export const APPLE_SIGN_IN_ENABLED = false;
+
 /** Google via Supabase OAuth + an in-app browser, returning to the omm:// scheme. */
 export async function signInWithGoogle(): Promise<void> {
   const redirectTo = makeRedirectUri({ scheme: "omm", path: "auth" });
