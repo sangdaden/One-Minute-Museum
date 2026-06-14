@@ -63,6 +63,8 @@ export interface Exhibition {
   voice?: string;
   /** Vietnamese theme id (presentation only; not part of generated content). */
   theme?: string;
+  /** Content topic slug (see lib/categories). Stored as a post column. */
+  category?: string;
   /** Optional personal note (shown on the "Giấy note" theme). Stored in content. */
   note?: string;
   /** Attribution for a curated (external) featured image; preserved on publish. */
@@ -81,7 +83,7 @@ export interface ImageCredit {
 /** The exhibition content fields only (no id/meta) — stored as `content` jsonb. */
 export type ExhibitionContent = Omit<
   Exhibition,
-  "id" | "object_name" | "mode" | "voice" | "language" | "created_at" | "theme"
+  "id" | "object_name" | "mode" | "voice" | "language" | "created_at" | "theme" | "category"
 >;
 
 /** A published exhibition (row in `posts`), optionally with its author. */
@@ -96,6 +98,8 @@ export interface Post {
   content: ExhibitionContent;
   /** Vietnamese theme id chosen for this post. */
   theme?: string | null;
+  /** Content topic slug. */
+  category?: string | null;
   /** Public URL of the object photo (Supabase Storage), if published with one. */
   image_url?: string | null;
   author?: { display_name: string | null; avatar_url: string | null };

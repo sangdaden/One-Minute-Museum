@@ -27,6 +27,7 @@ export function exhibitionToPostInsert(ex: Exhibition, userId: string) {
     mode: ex.mode,
     voice: ex.voice ?? null,
     language: ex.language,
+    category: ex.category ?? null,
     content,
   };
 }
@@ -41,6 +42,7 @@ interface PostRow {
   created_at: string;
   content: ExhibitionContent;
   theme?: string | null;
+  category?: string | null;
   image_url?: string | null;
   profiles?: { display_name: string | null; avatar_url: string | null } | null;
   reactions?: { type: string; user_id: string }[] | null;
@@ -59,6 +61,7 @@ export function rowToPost(row: PostRow): Post {
     created_at: row.created_at,
     content: row.content,
     theme: row.theme ?? null,
+    category: row.category ?? null,
     image_url: row.image_url ?? null,
     author: row.profiles
       ? {
@@ -107,6 +110,7 @@ export function postToExhibition(post: Post): Exhibition {
     language: post.language,
     created_at: post.created_at,
     theme: post.theme ?? undefined,
+    category: post.category ?? undefined,
     ...post.content,
   };
 }
