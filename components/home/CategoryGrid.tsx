@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Building2, Landmark, Shirt, Drama } from "lucide-react";
+import { Armchair, UtensilsCrossed, Bike, ToyBrick, Shirt, Landmark, Drama, Shapes } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { CATEGORIES } from "@/lib/categories";
 import type { Category } from "@/lib/categories";
 import { landingImage } from "@/lib/landing-images";
 import SectionTitle from "@/components/decor/SectionTitle";
 
-const ICONS: Record<Category["icon"], LucideIcon> = { Building2, Landmark, Shirt, Drama };
+const ICONS: Record<Category["icon"], LucideIcon> = { Armchair, UtensilsCrossed, Bike, ToyBrick, Shirt, Landmark, Drama, Shapes };
 
 export default function CategoryGrid({ bare = false }: { bare?: boolean } = {}) {
   const t = useTranslations("Home");

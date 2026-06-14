@@ -331,22 +331,14 @@
     "spatial": "3D graphics"
   },
   "Categories": {
-    "kien-truc": {
-      "label": "Architecture",
-      "description": "Communal houses, temples, citadels"
-    },
-    "di-san": {
-      "label": "Heritage",
-      "description": "Tangible & intangible heritage"
-    },
-    "trang-phuc": {
-      "label": "Costume",
-      "description": "Traditional attire"
-    },
-    "nghe-thuat-dan-gian": {
-      "label": "Folk art",
-      "description": "Painting, dance, folk music"
-    }
+    "do-gia-dung": { "label": "Household", "description": "Home & kitchen items" },
+    "am-thuc": { "label": "Food & drink", "description": "Everyday food and drinks" },
+    "di-lai": { "label": "Getting around", "description": "Vehicles & travel gear" },
+    "tuoi-tho": { "label": "Childhood & nostalgia", "description": "Objects from childhood" },
+    "trang-phuc": { "label": "Fashion & dress", "description": "Clothes, shoes, accessories" },
+    "di-san": { "label": "Heritage & architecture", "description": "Monuments, relics, antiquities" },
+    "nghe-thuat-dan-gian": { "label": "Folk art", "description": "Folk painting, dance, music" },
+    "khac": { "label": "Other", "description": "Not in a topic yet" }
   },
   "Footer": {
     "blurb": "Preserving and sharing Vietnamese culture.",

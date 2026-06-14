@@ -331,22 +331,14 @@
     "spatial": "Đồ họa 3D"
   },
   "Categories": {
-    "kien-truc": {
-      "label": "Kiến trúc",
-      "description": "Đình, chùa, thành quách"
-    },
-    "di-san": {
-      "label": "Di sản",
-      "description": "Di sản vật thể & phi vật thể"
-    },
-    "trang-phuc": {
-      "label": "Trang phục",
-      "description": "Trang phục truyền thống"
-    },
-    "nghe-thuat-dan-gian": {
-      "label": "Nghệ thuật dân gian",
-      "description": "Tranh, múa, âm nhạc dân gian"
-    }
+    "do-gia-dung": { "label": "Đồ gia dụng", "description": "Vật dụng trong nhà, bếp núc" },
+    "am-thuc": { "label": "Ẩm thực & đồ uống", "description": "Món ăn, thức uống thường ngày" },
+    "di-lai": { "label": "Xe cộ & đi lại", "description": "Phương tiện và đồ đi đường" },
+    "tuoi-tho": { "label": "Tuổi thơ & hoài niệm", "description": "Đồ vật gắn với tuổi thơ" },
+    "trang-phuc": { "label": "Thời trang & trang phục", "description": "Quần áo, giày dép, phụ kiện" },
+    "di-san": { "label": "Di sản & kiến trúc", "description": "Công trình, di tích, cổ vật" },
+    "nghe-thuat-dan-gian": { "label": "Nghệ thuật dân gian", "description": "Tranh, múa, âm nhạc dân gian" },
+    "khac": { "label": "Khác", "description": "Chưa thuộc nhóm nào" }
   },
   "Footer": {
     "blurb": "Giữ gìn và lan toả giá trị văn hoá Việt.",
