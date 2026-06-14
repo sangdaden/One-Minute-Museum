@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { APP_DESC } from "@/app/layout";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -87,9 +86,10 @@ export default async function PostPage({
     <>
       <SiteHeader />
       <main className="mx-auto w-full max-w-[1440px] px-5 pb-24 pt-9 sm:px-8 sm:pt-12">
-      <div className="lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
-        {/* Left: author + reactions + comment count (sticky) */}
-        <aside className="space-y-5 lg:sticky lg:top-24">
+      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-12">
+        {/* Left: author + reactions + discussion (fills the column).
+            On mobile it sits below the exhibition (order-2). */}
+        <aside className="order-2 space-y-5 lg:order-none">
           <Link
             href={`/u/${post.user_id}`}
             className="group flex items-center gap-3"
@@ -118,34 +118,15 @@ export default async function PostPage({
             </div>
           </Link>
 
-          <div className="space-y-3 border-t border-border pt-5">
+          <div className="border-t border-border pt-5">
             <ReactionBar
               postId={post.id}
               initialReactions={post.reactions ?? []}
             />
-            <span className="inline-flex items-center gap-1.5 text-xs text-ink-faint">
-              <MessageCircle className="h-4 w-4" strokeWidth={1.75} />
-              {comments.length}
-            </span>
-          </div>
-        </aside>
-
-        {/* Right: exhibition card + comments */}
-        <div className="mt-10 space-y-10 lg:mt-0">
-          <div className="space-y-3">
-            <ExhibitionCard
-              exhibition={exhibition}
-              imageUrl={post.image_url ?? undefined}
-            />
-            {exhibition.image_credit && (
-              <div className="rounded-xl border border-border bg-paper-card/60 p-3">
-                <ImageCredits credit={exhibition.image_credit} />
-              </div>
-            )}
           </div>
 
           {/* Comments */}
-          <section className="space-y-6">
+          <section className="space-y-6 border-t border-border pt-5">
             <div className="flex items-center gap-3">
               <h2 className="eyebrow text-ink">
                 {t("comments", { count: comments.length })}
@@ -155,6 +136,19 @@ export default async function PostPage({
             <CommentList comments={comments} />
             <CommentForm postId={post.id} />
           </section>
+        </aside>
+
+        {/* Right: the exhibition (the star content). First on mobile. */}
+        <div className="order-1 space-y-3 lg:order-none">
+          <ExhibitionCard
+            exhibition={exhibition}
+            imageUrl={post.image_url ?? undefined}
+          />
+          {exhibition.image_credit && (
+            <div className="rounded-xl border border-border bg-paper-card/60 p-3">
+              <ImageCredits credit={exhibition.image_credit} />
+            </div>
+          )}
         </div>
       </div>
       </main>
