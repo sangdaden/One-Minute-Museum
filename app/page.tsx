@@ -13,25 +13,74 @@ import RecentPosts, { type RecentItem } from "@/components/home/RecentPosts";
 
 export const dynamic = "force-dynamic";
 
+/** Featured = most-interacted post within this rolling window. */
+const FEATURED_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * The post id with the most interactions (reactions + comments, weighted
+ * equally) created since `sinceISO`, or null when there were none in the window.
+ */
+async function mostInteractedPostId(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  sinceISO: string,
+): Promise<string | null> {
+  const [reactions, comments] = await Promise.all([
+    supabase.from("reactions").select("post_id").gte("created_at", sinceISO),
+    supabase.from("comments").select("post_id").gte("created_at", sinceISO),
+  ]);
+  const counts = new Map<string, number>();
+  for (const row of [...(reactions.data ?? []), ...(comments.data ?? [])]) {
+    const id = (row as { post_id: string }).post_id;
+    counts.set(id, (counts.get(id) ?? 0) + 1);
+  }
+  let topId: string | null = null;
+  let topCount = 0;
+  for (const [id, n] of counts) {
+    if (n > topCount) {
+      topCount = n;
+      topId = id;
+    }
+  }
+  return topId;
+}
+
 export default async function HomePage() {
   const configured = isSupabaseConfigured();
   const tCat = await getTranslations("Categories");
 
+  const POST_SELECT =
+    "*, profiles(display_name, avatar_url), reactions(type, user_id), comments(count)";
+
   let posts: Post[] = [];
+  let featuredPost: Post | null = null;
   if (configured) {
     const supabase = await createClient();
     const { data } = await supabase
       .from("posts")
-      .select(
-        "*, profiles(display_name, avatar_url), reactions(type, user_id), comments(count)",
-      )
+      .select(POST_SELECT)
       .order("created_at", { ascending: false })
       .limit(10);
     posts = (data ?? []).map(rowToPost);
+
+    // Featured = the post with the most interactions in the last 24h. The hot
+    // post may be older than the latest 10, so fetch it by id.
+    const sinceISO = new Date(Date.now() - FEATURED_WINDOW_MS).toISOString();
+    const topId = await mostInteractedPostId(supabase, sinceISO);
+    if (topId) {
+      const { data: topRow } = await supabase
+        .from("posts")
+        .select(POST_SELECT)
+        .eq("id", topId)
+        .maybeSingle();
+      if (topRow) featuredPost = rowToPost(topRow);
+    }
   }
 
-  // Featured = newest post with an image, else newest post.
-  const featuredPost = posts.find((p) => p.image_url) ?? posts[0] ?? null;
+  // Fallback when nobody interacted in the window: newest post with an image,
+  // else newest post.
+  if (!featuredPost) {
+    featuredPost = posts.find((p) => p.image_url) ?? posts[0] ?? null;
+  }
   const recentPosts = posts.filter((p) => p.id !== featuredPost?.id).slice(0, 4);
 
   const featured: FeaturedData | null = featuredPost
