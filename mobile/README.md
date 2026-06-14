@@ -1,56 +1,38 @@
-# Welcome to your Expo app 👋
+# OMM mobile (Expo) — Foundation
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Native iOS/Android client for One-Minute Museum. Expo Router + NativeWind +
+Supabase auth. Reuses the web's pure-TS domain files via the `@omm/*` alias.
 
-## Get started
+## First run (needs a Mac + Xcode)
 
-1. Install dependencies
-
+1. **Env:** `cp .env.example .env` and fill `EXPO_PUBLIC_SUPABASE_URL` +
+   `EXPO_PUBLIC_SUPABASE_ANON_KEY` (same Supabase project as the web app).
+2. **Supabase Auth providers:** enable **Google** and **Apple**; add the redirect
+   URL `omm://auth`. (Apple needs an Apple Developer account + a Services ID/key;
+   Google needs an OAuth client id.)
+3. **Dev build** — auth & native modules do NOT run in Expo Go:
    ```bash
-   npm install
+   npx expo run:ios     # builds + opens on a simulator/device
+   # or: npx eas build --profile development --platform ios
    ```
+   (Android: `npx expo run:android`.)
 
-2. Start the app
+## Verify (on device)
 
-   ```bash
-   npx expo start
-   ```
+- App launches into the 5-tab Heritage-Warm shell (Trang chủ · Thư viện · ＋ ·
+  Bộ sưu tập · Cá nhân) with the top bar.
+- Tabs navigate; placeholder screens render with brand fonts (Lora + Be Vietnam Pro).
+- Avatar / Cá nhân → **Đăng nhập** → **Google** and **Apple** sign-in complete.
+- Restart the app → the session persists. **Đăng xuất** clears it.
 
-In the output, you'll find options to open the app in a
+## What's here (Sub-project 0)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Shell only — theme, navigation, auth, API client skeleton, placeholder screens.
+Feed, create flow, collections, share, etc. arrive in later sub-projects.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Notes
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Build-time verification used here: `npx tsc --noEmit` + `npx expo export`
+  (full Metro bundle). Runtime/auth behavior is verified on a device.
+- Shared code: `@omm/*` → the repo-root `../lib/*` (pure-TS: types, categories,
+  format) via Metro `watchFolders` + a babel/tsconfig alias.
