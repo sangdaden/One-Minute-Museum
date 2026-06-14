@@ -7,7 +7,7 @@ const config: ExpoConfig = {
   version: "1.0.0",
   orientation: "portrait",
   userInterfaceStyle: "light",
-  icon: "./assets/expo.icon/icon.json",
+  icon: "./assets/images/icon.png",
   ios: {
     bundleIdentifier: "com.onomi.oneminutemuseum",
     usesAppleSignIn: true,
