@@ -35,8 +35,9 @@ interface Props {
 /** Chip selector for a post's content topic. Includes the "Khác" catch-all. */
 export default function CategorySelector({ value, onChange, disabled }: Props) {
   const t = useTranslations("Categories");
+  const tc = useTranslations("Create");
   return (
-    <div role="radiogroup" className="flex flex-wrap gap-2">
+    <div role="radiogroup" aria-label={tc("sectionCategory")} className="flex flex-wrap gap-2">
       {CATEGORIES.map((c) => {
         const Icon = ICONS[c.icon];
         const selected = c.slug === value;
