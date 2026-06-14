@@ -45,7 +45,9 @@
     "lobbyTitle": "Pick an ordinary object and turn it into a little exhibition.",
     "lobbyBody": "Type an object above, or tap a suggestion from the collection.",
     "generateError": "Couldn't create the exhibition right now. Please try again.",
-    "suggestionsHeader": "Vietnam Everyday Collection"
+    "suggestionsHeader": "Vietnam Everyday Collection",
+    "sectionCategory": "Topic",
+    "categoryHint": "AI suggested — you can change it"
   },
   "Object": {
     "label": "Your object",

@@ -45,7 +45,9 @@
     "lobbyTitle": "Chọn một vật bình thường và biến nó thành một triển lãm nhỏ.",
     "lobbyBody": "Nhập một vật ở trên, hoặc chạm vào một gợi ý trong bộ sưu tập.",
     "generateError": "Không tạo được triển lãm lúc này. Thử lại nhé.",
-    "suggestionsHeader": "Đồ vật đời thường Việt"
+    "suggestionsHeader": "Đồ vật đời thường Việt",
+    "sectionCategory": "Chủ đề",
+    "categoryHint": "AI đề xuất — bạn có thể đổi"
   },
   "Object": {
     "label": "Hiện vật của bạn",

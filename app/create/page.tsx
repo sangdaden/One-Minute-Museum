@@ -17,6 +17,7 @@ import ImageUpload from "@/components/ImageUpload";
 import ModeSelector from "@/components/ModeSelector";
 import VoiceSelector from "@/components/VoiceSelector";
 import ThemePicker from "@/components/ThemePicker";
+import CategorySelector from "@/components/CategorySelector";
 import SuggestedObjects from "@/components/SuggestedObjects";
 import ImageSuggestions from "@/components/ImageSuggestions";
 import CulturalImagePicker from "@/components/CulturalImagePicker";
@@ -249,6 +250,21 @@ export default function CreatePage() {
             />
           ) : (
             <div className="space-y-8">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="eyebrow text-ink">{t("sectionCategory")}</span>
+                  <span className="text-xs text-ink-faint">{t("categoryHint")}</span>
+                </div>
+                <CategorySelector
+                  value={exhibition.category ?? "khac"}
+                  onChange={(cat) => {
+                    const updated = { ...exhibition, category: cat };
+                    setExhibition(updated);
+                    updateExhibition(updated);
+                  }}
+                />
+              </div>
+
               <div className="flex flex-col gap-2">
                 <span className="eyebrow text-ink">{t("sectionStyle")}</span>
                 <ThemePicker
